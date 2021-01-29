@@ -13,136 +13,100 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Month;
+import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
+import java.time.temporal.ChronoUnit;
 import java.util.Locale;
 
 public abstract class CommonFactory {
-    private WebDriver driver;
-    private ExtentTest test;
-
     @FindBy(xpath = "//div[@class='uitk-grid']/a[@href='/']")
     protected WebElement expediaLogo;
-
     @FindBy(xpath = "//div[@id='gc-custom-header-tool-bar-shop-menu']/button")
     protected WebElement moreTravelMenuButton;
-
     @FindBy(xpath = "//div[@id='gc-custom-header-tool-bar-shop-menu']"
             + "/div/div/div/div[@class='custom-menu-section custom-menu-section-list']/div/a[@href='/Hotels']")
     protected WebElement moreTravelMenuStays;
-
     @FindBy(xpath = "//div[@id='gc-custom-header-tool-bar-shop-menu']"
             + "/div/div/div/div[@class='custom-menu-section custom-menu-section-list']/div/a[@href='/Flights']")
     protected WebElement moreTravelMenuFlights;
-
     @FindBy(xpath = "//div[@id='gc-custom-header-tool-bar-shop-menu']"
             + "/div/div/div/div[@class='custom-menu-section custom-menu-section-list']/div/a[@href='/Cars']")
     protected WebElement moreTravelMenuCars;
-
     @FindBy(xpath = "//div[@id='gc-custom-header-tool-bar-shop-menu']"
             + "/div/div/div/div[@class='custom-menu-section custom-menu-section-list']/div/a[@href='/Vacation-Packages']")
     protected WebElement moreTravelMenuPackages;
-
     @FindBy(xpath = "//div[@id='gc-custom-header-tool-bar-shop-menu']"
             + "/div/div/div/div[@class='custom-menu-section custom-menu-section-list']/div/a[@href='/things-to-do']")
     protected WebElement moreTravelMenuThingsToDo;
-
     @FindBy(xpath = "//div[@id='gc-custom-header-tool-bar-shop-menu']"
             + "/div/div/div/div[@class='custom-menu-section custom-menu-section-list']/div/a[@href='/Cruises']")
     protected WebElement moreTravelMenuCruises;
-
     @FindBy(xpath = "//div[@id='gc-custom-header-tool-bar-shop-menu']"
             + "/div/div/div/div[@class='custom-menu-section custom-menu-section-list']/div/a[@href='/deals']")
     protected WebElement moreTravelMenuDeals;
-
     @FindBy(xpath = "//div[text()='Fran�ais']")
     protected WebElement francais;
-
     @FindBy(id = "listYourProperty")
     protected WebElement listYourProperty;
-
     @FindBy(id = "support-cs")
     protected WebElement support;
-
     @FindBy(id = "itinerary")
     protected WebElement trips;
-
     @FindBy(xpath = "//div[@id='gc-custom-header-nav-bar-acct-menu']/button")
     protected WebElement signInMenuButton;
-
     @FindBy(xpath = "//div[@class='actions']/a[@data-stid='link-header-account-signin']")
     protected WebElement signInButton;
-
     @FindBy(xpath = "//div[@class='actions']/a[@data-stid='link-header-account-signup']")
     protected WebElement createAFreeAccount;
-
     @FindBy(xpath = "//a[@href='/lists']")
     protected WebElement listOfFavorites;
-
     @FindBy(xpath = "//a[@href='/rewards/howitworks']")
     protected WebElement expediaRewards;
-
     @FindBy(xpath = "//a[@href='/p/info-other/feedback']")
     protected WebElement feedback;
-
     /**
-     * This button is in the calendar date selector panel. It allows the user to
-     * select a check in date.
+     * This button is in the calendar date selector panel. It allows the user to select a check in date.
      */
     @FindBy(xpath = "//div[@class='uitk-flex uitk-flex-align-items-center uitk-toolbar uitk-new-date-picker-toolbar']/section/section/button[@type='button'][1]")
     protected WebElement calendarCheckInButton;
-
     /**
-     * This button is in the calendar date selector panel. It allows the user to
-     * select a check out date.
+     * This button is in the calendar date selector panel. It allows the user to select a check out date.
      */
     @FindBy(xpath = "//div[@class='uitk-flex uitk-flex-align-items-center uitk-toolbar uitk-new-date-picker-toolbar']/section/section/button[@type='button'][2]")
     protected WebElement calendarCheckOutButton;
-
-    @FindBy(xpath = "//div[@class='uitk-flex uitk-flex-justify-content-space-between uitk-new-date-picker-menu-pagination-container']/button[1]")
+    @FindBy(xpath = "//div[contains(@class,'uitk-date-picker-menu-pagination-container')]/button[1]")
     protected WebElement calendarBackArrow;
-
-    @FindBy(xpath = "//div[@class='uitk-flex uitk-flex-justify-content-space-between uitk-new-date-picker-menu-pagination-container']/button[2]")
+    @FindBy(xpath = "//div[contains(@class,'uitk-date-picker-menu-pagination-container')]/button[2]")
     protected WebElement calendarForwardArrow;
-
     @FindBy(xpath = "//button[@data-stid='apply-date-picker']")
     protected WebElement calendarDoneButton;
-
     @FindBy(xpath = "//button[@data-testid='submit-button']")
     protected WebElement searchButton;
-
     @FindBy(xpath = "//div[@class='uitk-flex uitk-flex-align-items-center uitk-toolbar uitk-new-date-picker-toolbar']/section/section/button[@type='button'][1]/span")
     protected WebElement calendarCheckInSpan;
-
     @FindBy(xpath = "//div[@class='uitk-flex uitk-flex-align-items-center uitk-toolbar uitk-new-date-picker-toolbar']/section/section/button[@type='button'][2]/span")
     protected WebElement calendarCheckOutSpan;
-
     @FindBy(xpath = "//div[@class='uitk-new-date-picker-month'][1]/h2")
     protected WebElement leftCalendarHeader;
-
     @FindBy(xpath = "//div[@class='uitk-new-date-picker-month'][2]/h2")
     protected WebElement rightCalendarHeader;
-
     @FindBy(xpath = "//a[@href='?pwaLob=wizard-thirdPartyPackage-pwa']")
     protected WebElement allInclusiveVacationsTab;
-
     @FindBy(xpath = "//a[@href='?pwaLob=wizard-car-pwa']")
     protected WebElement carsTab;
-
     @FindBy(xpath = "//a[@href='?pwaLob=wizard-cruise-pwa']")
     protected WebElement cruisesTab;
-
     @FindBy(xpath = "//a[@href='?pwaLob=wizard-flight-pwa']")
     protected WebElement flightsTab;
-
     @FindBy(xpath = "//a[@href='?pwaLob=wizard-hotel-pwa-v2']")
     protected WebElement staysTab;
-
     @FindBy(xpath = "//a[@href='?pwaLob=wizard-lx-pwa']")
     protected WebElement thingsToDoTab;
-
     @FindBy(xpath = "//a[@href='?pwaLob=wizard-package-pwa']")
     protected WebElement vacationPackagesTab;
+    private WebDriver driver;
+    private ExtentTest test;
 
     /**
      * Constructor
@@ -220,9 +184,8 @@ public abstract class CommonFactory {
     }
 
     /**
-     * Clicks on the "Stays" menu option in the "More travel" menu. This method will
-     * fail if the "More travel" menu hasn't been expanded previously, (Use
-     * clickMoreTravelMenu() first).
+     * Clicks on the "Stays" menu option in the "More travel" menu. This method will fail if the "More travel" menu
+     * hasn't been expanded previously, (Use clickMoreTravelMenu() first).
      */
     public void clickMoreTravelStays() {
         moreTravelMenuStays.click();
@@ -230,9 +193,8 @@ public abstract class CommonFactory {
     }
 
     /**
-     * Clicks on the "Flights" menu option in the "More travel" menu. This method
-     * will fail if the "More travel" menu hasn't been expanded previously, (Use
-     * clickMoreTravelMenu() first).
+     * Clicks on the "Flights" menu option in the "More travel" menu. This method will fail if the "More travel" menu
+     * hasn't been expanded previously, (Use clickMoreTravelMenu() first).
      */
     public void clickMoreTravelFlights() {
         moreTravelMenuFlights.click();
@@ -240,9 +202,8 @@ public abstract class CommonFactory {
     }
 
     /**
-     * Clicks on the "Cars" menu option in the "More travel" menu. This method will
-     * fail if the "More travel" menu hasn't been expanded previously, (Use
-     * clickMoreTravelMenu() first).
+     * Clicks on the "Cars" menu option in the "More travel" menu. This method will fail if the "More travel" menu
+     * hasn't been expanded previously, (Use clickMoreTravelMenu() first).
      */
     public void clickMoreTravelCars() {
         moreTravelMenuCars.click();
@@ -250,9 +211,8 @@ public abstract class CommonFactory {
     }
 
     /**
-     * Clicks on the "Packages" menu option in the "More travel" menu. This method
-     * will fail if the "More travel" menu hasn't been expanded previously, (Use
-     * clickMoreTravelMenu() first).
+     * Clicks on the "Packages" menu option in the "More travel" menu. This method will fail if the "More travel" menu
+     * hasn't been expanded previously, (Use clickMoreTravelMenu() first).
      */
     public void clickMoreTravelPackages() {
         moreTravelMenuPackages.click();
@@ -260,9 +220,8 @@ public abstract class CommonFactory {
     }
 
     /**
-     * Clicks on the "Things to do" menu option in the "More travel" menu. This
-     * method will fail if the "More travel" menu hasn't been expanded previously,
-     * (Use clickMoreTravelMenu() first).
+     * Clicks on the "Things to do" menu option in the "More travel" menu. This method will fail if the "More travel"
+     * menu hasn't been expanded previously, (Use clickMoreTravelMenu() first).
      */
     public void clickMoreTravelThingsToDo() {
         moreTravelMenuThingsToDo.click();
@@ -270,9 +229,8 @@ public abstract class CommonFactory {
     }
 
     /**
-     * Clicks on the "Cruises" menu option in the "More travel" menu. This method
-     * will fail if the "More travel" menu hasn't been expanded previously, (Use
-     * clickMoreTravelMenu() first).
+     * Clicks on the "Cruises" menu option in the "More travel" menu. This method will fail if the "More travel" menu
+     * hasn't been expanded previously, (Use clickMoreTravelMenu() first).
      */
     public void clickMoreTravelCruises() {
         moreTravelMenuCruises.click();
@@ -280,9 +238,8 @@ public abstract class CommonFactory {
     }
 
     /**
-     * Clicks on the "Deals" menu option in the "More travel" menu. This method will
-     * fail if the "More travel" menu hasn't been expanded previously, (Use
-     * clickMoreTravelMenu() first).
+     * Clicks on the "Deals" menu option in the "More travel" menu. This method will fail if the "More travel" menu
+     * hasn't been expanded previously, (Use clickMoreTravelMenu() first).
      */
     public void clickMoreTravelDeals() {
         moreTravelMenuDeals.click();
@@ -370,8 +327,8 @@ public abstract class CommonFactory {
     }
 
     /**
-     * Clicks on the check in date button in the calendar date picker panel so that
-     * the user can click a date on the calendar and set it as their check in date.
+     * Clicks on the check in date button in the calendar date picker panel so that the user can click a date on the
+     * calendar and set it as their check in date.
      */
     public void clickCalendarCheckInDate() {
         calendarCheckInButton.click();
@@ -379,8 +336,8 @@ public abstract class CommonFactory {
     }
 
     /**
-     * Clicks on the check out date button in the calendar date picker panel so that
-     * the user can click a date on the calendar and set it as their check out date.
+     * Clicks on the check out date button in the calendar date picker panel so that the user can click a date on the
+     * calendar and set it as their check out date.
      */
     public void clickCalendarCheckOutDate() {
         calendarCheckOutButton.click();
@@ -415,22 +372,20 @@ public abstract class CommonFactory {
     /**
      * Finds the specified day button in the calendar date picker panel.
      *
-     * @param month The month for the date we are selecting. E.g.,
-     *              "Month.FEBRUARY"
+     * @param month The month for the date we are selecting. E.g., "Month.FEBRUARY"
      * @param day   The day number for the date we are selecting.
      * @param year  The year for the date we are selecting.
      * @return The calendar day button as a WebElement.
      */
     protected WebElement getCalendarDay(Month month, int day, int year) {
         return driver.findElement(By.xpath("//button[@aria-label='"
-                + month.getDisplayName(TextStyle.SHORT, Locale.US) + " " + day + ", " + year + "']"));
+                + month.getDisplayName(TextStyle.SHORT, Locale.US) + " " + day + ", " + year + ".']"));
     }
 
     /**
      * Clicks on the specified day button in the calendar date picker panel.
      *
-     * @param month The month for the date we are selecting. E.g.,
-     *              "Month.FEBRUARY"
+     * @param month The month for the date we are selecting. E.g., "Month.FEBRUARY"
      * @param date  The day number for the date we are selecting.
      * @param year  The year for the date we are selecting.
      */
@@ -452,11 +407,10 @@ public abstract class CommonFactory {
     }
 
     /**
-     * Method used to log messages from the test class rather than the page factory,
-     * typically for pass/fail messages.
+     * Method used to log messages from the test class rather than the page factory, typically for pass/fail messages.
      *
-     * @param status
-     * @param message
+     * @param status The status of the log. E.g., 'LogStatus.INFO', 'LogStatus.ERROR'
+     * @param message The message inside the log.
      */
     public void log(LogStatus status, String message) {
         test.log(status, message);
@@ -476,8 +430,7 @@ public abstract class CommonFactory {
     }
 
     /**
-     * Takes a screenshot of the browser window and returns its file path as a
-     * string.
+     * Takes a screenshot of the browser window and returns its file path as a string.
      *
      * @param driver   The WebDriver instance.
      * @param fileName The file name the screenshot will be saved as.
@@ -491,8 +444,7 @@ public abstract class CommonFactory {
     }
 
     /**
-     * Formats the file path of a screenshot so that it may be added to the Extent
-     * Reports HTML document as a log.
+     * Formats the file path of a screenshot so that it may be added to the Extent Reports HTML document as a log.
      *
      * @param path The path of the screenshot.
      * @return The formatted screenshot path as a string.
@@ -517,23 +469,32 @@ public abstract class CommonFactory {
         return calendarCheckOutSpan.getText();
     }
 
+    /**
+     * Get the visible (i.e. not hidden by CSS) text of the left calendar header.
+     *
+     * @return The visible text of the left calendar header.
+     */
     public String getLeftCalendarHeaderText() {
         return leftCalendarHeader.getText();
     }
 
+    /**
+     * Get the visible (i.e. not hidden by CSS) text of the right calendar header.
+     *
+     * @return The visible text of the right calendar header.
+     */
     public String getRightCalendarHeaderText() {
         return rightCalendarHeader.getText();
     }
 
     /**
-     * Clicks a search result generated after typing in a location in one of the
-     * search fields, (Leaving from, Going to, etc)
+     * Clicks a search result generated after typing in a location in one of the search fields, (Leaving from, Going to,
+     * etc)
      *
-     * @param city   - This parameter is the top bolded text that appears in one of
-     *               the search results. (e.g., New York (JFK - John F. Kennedy
-     *               Intl.)
-     * @param region - This parameter is the bottom text that appears in one of the
-     *               search results. (e.g., New York, United States of America)
+     * @param city   - This parameter is the top bolded text that appears in one of the search results. (e.g., New York
+     *               (JFK - John F. Kennedy Intl.)
+     * @param region - This parameter is the bottom text that appears in one of the search results. (e.g., New York,
+     *               United States of America)
      */
 
     public void clickSearchResult(String city, String region) {
@@ -577,9 +538,13 @@ public abstract class CommonFactory {
      * Navigates to the present month on the calendar panel.
      */
     public void navigateToPresentMonth() {
-        LocalDate now = LocalDate.now();
+        //Create YearMonth object and get the current date.
+        YearMonth now = YearMonth.now();
+        //Create DateTimeFormatter so that we may format the YearMonth object into a string that can be compared to
+        //the text of the header element on the calendar.
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MMMM yyyy");
         String currentMonthYear = now.format(dtf);
+
         while (!getLeftCalendarHeaderText().equals(currentMonthYear)) {
             clickCalendarBackArrow();
         }
@@ -594,15 +559,12 @@ public abstract class CommonFactory {
     public boolean isCalendarBackArrowDisabled() {
         final String attribute = "disabled";
         if (calendarBackArrow.getAttribute(attribute) == null) {
-            // If disabled = null, then it is not disabled, which is bad.
             log(LogStatus.ERROR, "The calendar back arrow button did not have the 'disabled' attribute.");
             return false;
         } else if (calendarBackArrow.getAttribute(attribute).equals("true")) {
-            // If disabled = true, then it is disabled which is what we want.
             log(LogStatus.INFO, "The calendar back arrow button is disabled, which is the expected behavior.");
             return true;
         } else {
-            // If disabled does not equal true or null, then something has gone terribly wrong.
             log(LogStatus.ERROR,
                     "The calendar back arrow button's 'disabled' attribute is equal to something other than the expected values of 'null' and 'true', which means something has gone wrong.");
             return false;
@@ -616,17 +578,13 @@ public abstract class CommonFactory {
      */
     public boolean isCalendarForwardArrowDisabled() {
         final String attribute = "disabled";
-        // Return true if the forward arrow is disabled, else return false.
         if (calendarForwardArrow.getAttribute(attribute) == null) {
-            // If disabled = null, then it is not disabled, which is bad.
             log(LogStatus.ERROR, "The calendar forward arrow button did not have the 'disabled' attribute.");
             return false;
         } else if (calendarForwardArrow.getAttribute(attribute).equals("true")) {
-            // If disabled = true, then it is disabled which is what we want.
             log(LogStatus.INFO, "The calendar forward arrow button is disabled, which is the expected behavior.");
             return true;
         } else {
-            // If disabled does not equal true or null, then something has gone terribly wrong.
             log(LogStatus.ERROR,
                     "The calendar forward arrow button's 'disabled' attribute is equal to something other than the expected values of 'null' and 'true', which means something has gone wrong.");
             return false;
@@ -690,14 +648,20 @@ public abstract class CommonFactory {
         return true;
     }
 
+    /**
+     * Verifies user is unable to book a date that is over 500 days from today.
+     *
+     * @param fiveHundredDaysIntoFuture LocalDate object whose date is 500 days ahead of the present day.
+     * @return True if the day buttons which are over 500 days in the future are disabled, else false.
+     */
     public Boolean isUserUnableToSelectDayOver500InFuture(LocalDate fiveHundredDaysIntoFuture) {
         int startingDisabledDate = fiveHundredDaysIntoFuture.getDayOfMonth() + 1;
         int daysInMonth = fiveHundredDaysIntoFuture.lengthOfMonth();
 
         // For loop that checks each day button in the calendar between the day that is
         // 500 days in the future, and the final day of that month. E.g., May 09th
-        // 2022 is 500 days from now, and the month of May ends on the 31st that year,
-        // so each day between the 9th and 31st should have the disabled attribute. If
+        // 2022 is 500 days from now, and the month of May ends on the 31st of that year,
+        // so each day starting from the 10th to the 31st should have the disabled attribute. If
         // all of the expected days are disabled, return true, else return false.
         for (int x = startingDisabledDate; x < (daysInMonth + 1); x++) {
             try {
@@ -720,21 +684,264 @@ public abstract class CommonFactory {
         return true;
     }
 
+    /**
+     * Navigates to the desired month & year. Will fail if the month is either in the past or if the first day of the
+     * month is over 500 days in the future.
+     *
+     * @param month The month for the date we are navigating to. E.g., "Month.FEBRUARY"
+     * @param year  The year for the date we are navigating to.
+     */
+    public void navigateToMonth(Month month, int year) {
+        //Create DateTimeFormatter to format the left calendar header's text into something that can be parsed.
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM yyyy", Locale.ENGLISH);
+        //Create a YearMonth object from the parameters passed.
+        YearMonth desiredYearMonth = YearMonth.of(year, month);
+     /*    Create YearMonth object for the left calendar header by formatting and parsing the text from the left calendar
+        header WebElement.*/
+        YearMonth leftCalendarHeaderDate = YearMonth.parse(getLeftCalendarHeaderText(), formatter);
+        /*  Create YearMonth object for the right calendar header by taking the date of the left calendar
+        header YearMonth object and adding one month.*/
+        YearMonth rightCalendarHeaderDate = leftCalendarHeaderDate.plusMonths(1);
+
+        //Navigate forwards or backwards in the calendar, depending on whether the date is in the past or the future.
+        if (desiredYearMonth.isAfter(rightCalendarHeaderDate)) {
+            navigateToFutureMonth(month, year);
+        } else if (desiredYearMonth.isBefore(leftCalendarHeaderDate)) {
+            navigateToPastMonth(month, year);
+        }
+    }
+
+    /**
+     * Navigates to the desired month & year of a calendar date and clicks it. Will fail if the date is either in the
+     * past or over 500 days in the future.
+     *
+     * @param month The month for the date we are selecting. E.g., "Month.FEBRUARY"
+     * @param day   The day number for the date we are selecting.
+     * @param year  The year for the date we are selecting.
+     */
+    public void clickCalendarDayAfterNavigating(Month month, int day, int year) {
+        navigateToMonth(month, year);
+        clickCalendarDay(month, day, year);
+    }
+
+    /**
+     * Verifies that the check in day button, check out day button and all the day buttons between are highlighted
+     * correctly. You must have the check in button & check out button selected and be at the check out button's month
+     * on the calendar upon calling this method
+     *
+     * @param checkInDate  The check in date, which will be the first date button we click.
+     * @param checkOutDate The check out date, which will be the last date button we click.
+     * @return True if the check in day button, check out day button and all the day buttons between are highlighted
+     * correctly, else false.
+     */
     public Boolean isCalendarHighlightingDaysCorrectly(LocalDate checkInDate, LocalDate checkOutDate) {
-        /*
-        Xpaths to identify characteristics of day buttons.
-
-        Check In Date Button(First Day Selected): aria label determines if it is the first selected date or the check in date..
-        //button[@aria-label='Jan 27, 2021 selected, current check in date.']
-
-        All the days between check in and check out date: class is the determining factor of whether or not it is selected.
-        //button[@class='uitk-new-date-picker-day selected' and @aria-label='Jan 29, 2021']
-
-        Check Out Date Button(Last Day Selected): aria label determines if it is the second selected date or the check out date.
-        //button[@aria-label='Feb 5, 2021 selected, current check out date.']
-
+        /*Start by verifying that the check out date,(the second date selected), is highlighted correctly.
+        Then verify that every single day button between the check out date and the check in date,
+        (first date selected), is also highlighted correctly. Finally, verify the check in date is highlighted
+        correctly.
          */
 
+        //Verify that the check out date is highlighted correctly.
+        try {
+            driver.findElement(By.xpath("//button[@aria-label='"
+                    + checkOutDate.getMonth().getDisplayName(TextStyle.SHORT, Locale.US) + " "
+                    + checkOutDate.getDayOfMonth() + ", " + checkOutDate.getYear()
+                    + " selected, current check out date.']"));
+            log(LogStatus.INFO, "The calendar check out day button for: " + checkOutDate.getMonth().getDisplayName(TextStyle.SHORT, Locale.US)
+                    + " " + checkOutDate.getDayOfMonth() + ", " + checkOutDate.getYear()
+                    + " was highlighted correctly.");
+            //If driver finds this element with this xpath, we know it's highlighted correctly.
+        } catch (NoSuchElementException e) {
+            log(LogStatus.ERROR,
+                    "The calendar check out day button for: " + checkOutDate.getMonth().getDisplayName(TextStyle.SHORT, Locale.US)
+                            + " " + checkOutDate.getDayOfMonth() + ", " + checkOutDate.getYear()
+                            + " was not highlighted correctly.");
+            return false;
+        }
+        //Get the difference between the two dates in months.
+        int monthDifference = (int) ChronoUnit.MONTHS.between(checkInDate, checkOutDate);
+        /*Subtract one day from the check out date object since we have already verified that the check out
+        date button is highlighted correctly*/
+        checkOutDate = checkOutDate.minusDays(1);
+        if (monthDifference > 1) {
+            //Month cycling loop that will eventually bring us back to our check in date.
+            for (int monthCounter = 0; monthCounter < monthDifference + 1; monthCounter++) {
+                /*Loop that cycles through all the days on the right hand calendar panel,
+                starting from the day before the check out day to the 1st of the month */
+                for (int dayCounter = checkOutDate.getDayOfMonth(); dayCounter > 0; dayCounter--) {
+                    /*Verify that the day buttons in between the check in date and check out date are
+                    highlighted correctly.*/
+                    try {
+                        driver.findElement(By.xpath("//button[@class='uitk-date-picker-day uitk-new-date-picker-day selected' and @aria-label='"
+                                + checkOutDate.getMonth().getDisplayName(TextStyle.SHORT, Locale.US)
+                                + " " + dayCounter + ", " + checkOutDate.getYear() + ".']"));
+                        System.out.println("Found button on right side : " + checkOutDate.getMonth().getDisplayName(TextStyle.SHORT, Locale.US)
+                                + " " + dayCounter + ", " + checkOutDate.getYear());
+                        //If driver finds this element with this xpath, we know it's highlighted correctly.
+                    } catch (NoSuchElementException e) {
+                        log(LogStatus.ERROR,
+                                "The calendar day button for: " + checkOutDate.getMonth().getDisplayName(TextStyle.SHORT, Locale.US)
+                                        + " " + dayCounter + ", " + checkOutDate.getYear()
+                                        + " was not highlighted correctly.");
+                        return false;
+                    }
+                }
+                /*  After checking all the days on the right hand side calendar, we need to take the check out
+                date object and subtract 1 month from it so that we may start checking the days on the left hand side
+                calendar to see if they are also highlighted correctly.
+                    Set the day of month number of the check out date to the last day listed on the left hand calendar
+                by getting the number of days in the month for that year.*/
+                checkOutDate = checkOutDate.minusMonths(1);
+                checkOutDate = checkOutDate.withDayOfMonth(checkOutDate.lengthOfMonth());
+
+                /* Start cycling through all the days on the left hand side calendar, starting from the last day of the
+                 * month to the 1st of the month. */
+                for (int dayCounter = checkOutDate.getDayOfMonth(); dayCounter > 0; dayCounter--) {
+                    /* If we arrive at the check in date, verify that it is highlighted correctly. If it is, we are done
+                     * searching so return true. Else, return false. */
+                    if (dayCounter == checkInDate.getDayOfMonth() && checkOutDate.getMonth().equals(checkInDate.getMonth())
+                            && checkOutDate.getYear() == checkInDate.getYear()) {
+                        try {
+                            driver.findElement(By.xpath("//button[@aria-label='"
+                                    + checkInDate.getMonth().getDisplayName(TextStyle.SHORT, Locale.US) + " "
+                                    + checkInDate.getDayOfMonth() + ", " + checkInDate.getYear() + " selected, current check in date.']"));
+                            //If driver finds this element with this xpath, we know it's highlighted correctly.
+                            log(LogStatus.INFO, "All days between the check in and check out date were highlighted correctly.");
+                            log(LogStatus.INFO, "The calendar check in day button for: " + checkInDate.getMonth().getDisplayName(TextStyle.SHORT, Locale.US)
+                                    + " " + dayCounter + ", " + checkInDate.getYear() + " was highlighted correctly.");
+                            return true;
+                        } catch (NoSuchElementException e) {
+                            log(LogStatus.ERROR,
+                                    "The check in day button for: " + checkOutDate.getMonth().getDisplayName(TextStyle.SHORT, Locale.US)
+                                            + " " + dayCounter + ", " + checkOutDate.getYear()
+                                            + " was not highlighted correctly.");
+                            return false;
+                        }
+                    }
+                    //Verify that the day buttons in between the check in date and check out date are highlighted correctly.
+                    try {
+                        System.out.println("Found button on left side : " + checkOutDate.getMonth().getDisplayName(TextStyle.SHORT, Locale.US)
+                                + " " + dayCounter + ", " + checkOutDate.getYear());
+                        driver.findElement(By.xpath("//button[@class='uitk-date-picker-day uitk-new-date-picker-day selected' and @aria-label='"
+                                + checkOutDate.getMonth().getDisplayName(TextStyle.SHORT, Locale.US)
+                                + " " + dayCounter + ", " + checkOutDate.getYear() + ".']"));
+                        //If driver finds this element with this xpath, we know it's highlighted correctly.
+                    } catch (NoSuchElementException e) {
+                        log(LogStatus.ERROR,
+                                "The calendar day button for: " + checkOutDate.getMonth().getDisplayName(TextStyle.SHORT, Locale.US)
+                                        + " " + dayCounter + ", " + checkOutDate.getYear()
+                                        + " was not highlighted correctly.");
+                        return false;
+                    }
+                }
+                clickCalendarBackArrow();
+                /* Upon completing one iteration of the loop, we will click the back arrow on the calendar and begin
+                verifying that the calendar date buttons for the month we were just looking at on the left hand side
+                are displayed correctly on the right hand side as we go back a month. */
+            }
+        } else if (monthDifference > 0) {
+               /*Loop that cycles through all the days on the right hand calendar panel,
+                starting from the day before the check out day to the 1st of the month */
+            for (int dayCounter = checkOutDate.getDayOfMonth(); dayCounter > 0; dayCounter--) {
+                    /*Verify that the day buttons in between the check in date and check out date are
+                    highlighted correctly.*/
+                try {
+                    driver.findElement(By.xpath("//button[@class='uitk-date-picker-day uitk-new-date-picker-day selected' and @aria-label='"
+                            + checkOutDate.getMonth().getDisplayName(TextStyle.SHORT, Locale.US)
+                            + " " + dayCounter + ", " + checkOutDate.getYear() + ".']"));
+                    //If driver finds this element with this xpath, we know it's highlighted correctly.
+                } catch (NoSuchElementException e) {
+                    log(LogStatus.ERROR,
+                            "The calendar day button for: " + checkOutDate.getMonth().getDisplayName(TextStyle.SHORT, Locale.US)
+                                    + " " + dayCounter + ", " + checkOutDate.getYear()
+                                    + " was not highlighted correctly.");
+                    return false;
+                }
+            }
+                /*  After checking all the days on the right hand side calendar, we need to take the check out
+                date object and subtract 1 month from it so that we may start checking the days on the left hand side
+                calendar to see if they are also highlighted correctly.
+                    Set the day of month number of the check out date to the last day listed on the left hand calendar
+                by getting the number of days in the month for that year.*/
+            checkOutDate = checkOutDate.minusMonths(1);
+            checkOutDate = checkOutDate.withDayOfMonth(checkOutDate.lengthOfMonth());
+
+            /* Start cycling through all the days on the left hand side calendar, starting from the last day of the
+             * month to the 1st of the month. */
+            for (int dayCounter = checkOutDate.getDayOfMonth(); dayCounter > 0; dayCounter--) {
+                /* If we arrive at the check in date, verify that it is highlighted correctly. If it is, we are done
+                 * searching so return true. Else, return false. */
+                if (dayCounter == checkInDate.getDayOfMonth() && checkOutDate.getMonth().equals(checkInDate.getMonth())
+                        && checkOutDate.getYear() == checkInDate.getYear()) {
+                    try {
+                        driver.findElement(By.xpath("//button[@aria-label='"
+                                + checkInDate.getMonth().getDisplayName(TextStyle.SHORT, Locale.US) + " "
+                                + dayCounter + ", " + checkInDate.getYear() + " selected, current check in date.']"));
+                        //If driver finds this element with this xpath, we know it's highlighted correctly.
+                        log(LogStatus.INFO, "All days between the check in and check out date were highlighted correctly.");
+                        log(LogStatus.INFO, "The calendar check in day button for: " + checkInDate.getMonth().getDisplayName(TextStyle.SHORT, Locale.US)
+                                + " " + dayCounter + ", " + checkInDate.getYear() + " was highlighted correctly.");
+                        return true;
+                    } catch (NoSuchElementException e) {
+                        log(LogStatus.ERROR,
+                                "The check in day button for: " + checkOutDate.getMonth().getDisplayName(TextStyle.SHORT, Locale.US)
+                                        + " " + dayCounter + ", " + checkOutDate.getYear() + " was not highlighted correctly.");
+                        return false;
+                    }
+                }
+                //Verify that the day buttons in between the check in date and check out date are highlighted correctly.
+                try {
+                    driver.findElement(By.xpath("//button[@class='uitk-date-picker-day uitk-new-date-picker-day selected' and @aria-label='"
+                            + checkOutDate.getMonth().getDisplayName(TextStyle.SHORT, Locale.US)
+                            + " " + dayCounter + ", " + checkOutDate.getYear() + ".']"));
+                    //If driver finds this element with this xpath, we know it's highlighted correctly.
+                } catch (NoSuchElementException e) {
+                    log(LogStatus.ERROR,
+                            "The calendar day button for: " + checkOutDate.getMonth().getDisplayName(TextStyle.SHORT, Locale.US)
+                                    + " " + dayCounter + ", " + checkOutDate.getYear()
+                                    + " was not highlighted correctly.");
+                    return false;
+                }
+            }
+        } else if (monthDifference == 0) {
+            for (int dayCounter = checkOutDate.getDayOfMonth(); dayCounter > checkInDate.getDayOfMonth() - 1; dayCounter--) {
+                /* If we arrive at the check in date, verify that it is highlighted correctly. If it is, we are done
+                 * searching so return true. Else, return false. */
+                if (dayCounter == checkInDate.getDayOfMonth()) {
+                    try {
+                        driver.findElement(By.xpath("//button[@aria-label='"
+                                + checkInDate.getMonth().getDisplayName(TextStyle.SHORT, Locale.US) + " "
+                                + dayCounter + ", " + checkInDate.getYear()
+                                + " selected, current check in date.']"));
+                        //If driver finds this element with this xpath, we know it's highlighted correctly.
+                        log(LogStatus.INFO, "All days between the check in and check out date were highlighted correctly.");
+                        log(LogStatus.INFO, "The calendar check in day button for: " + checkOutDate.getMonth().getDisplayName(TextStyle.SHORT, Locale.US)
+                                + " " + dayCounter + ", " + checkOutDate.getYear()
+                                + " was highlighted correctly.");
+                        return true;
+                    } catch (NoSuchElementException e) {
+                        log(LogStatus.ERROR,
+                                "The check in day button for: " + checkOutDate.getMonth().getDisplayName(TextStyle.SHORT, Locale.US)
+                                        + " " + dayCounter + ", " + checkOutDate.getYear()
+                                        + " was not highlighted correctly.");
+                        return false;
+                    }
+                }
+                //Verify that the day buttons in between the check in date and check out date are highlighted correctly.
+                try {
+                    driver.findElement(By.xpath("//button[@class='uitk-date-picker-day uitk-new-date-picker-day selected' and @aria-label='"
+                            + checkOutDate.getMonth().getDisplayName(TextStyle.SHORT, Locale.US)
+                            + " " + dayCounter + ", " + checkOutDate.getYear() + ".']"));
+                    //If driver finds this element with this xpath, we know it's highlighted correctly.
+                } catch (NoSuchElementException e) {
+                    log(LogStatus.ERROR,
+                            "The calendar day button for: " + checkOutDate.getMonth().getDisplayName(TextStyle.SHORT, Locale.US)
+                                    + " " + dayCounter + ", " + checkOutDate.getYear()
+                                    + " was not highlighted correctly.");
+                    return false;
+                }
+            }
+        }
         return true;
     }
 }

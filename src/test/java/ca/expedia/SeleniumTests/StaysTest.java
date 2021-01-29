@@ -1,22 +1,20 @@
 package ca.expedia.SeleniumTests;
 
-import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.Month;
-import java.time.format.DateTimeFormatter;
-
+import ca.expedia.SeleniumTests.PageFactory.StaysFactory;
+import com.relevantcodes.extentreports.ExtentReports;
+import com.relevantcodes.extentreports.ExtentTest;
+import com.relevantcodes.extentreports.LogStatus;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import com.relevantcodes.extentreports.ExtentReports;
-import com.relevantcodes.extentreports.ExtentTest;
-import com.relevantcodes.extentreports.LogStatus;
-
-import ca.expedia.SeleniumTests.PageFactory.StaysFactory;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
 
 
 public class StaysTest extends TestBase {
@@ -150,16 +148,15 @@ public class StaysTest extends TestBase {
     }
 
     @Test
-    public void verifyCalendarDaysAreHighlightedCorrectly(){
+    public void verifyCalendarDaysAreHighlightedCorrectly() {
         f.createTestReport(report, "Verify Calendar Days Are Highlighted Correctly");
         f.clickStaysTab();
         f.clickCheckIn();
-        LocalDate presentDate = LocalDate.now();
-        LocalDate date500DaysIntoFuture = presentDate.plusDays(500);
-        f.navigateToPresentMonth();
-        f.clickCalendarDay(presentDate.getMonth(), presentDate.getDayOfMonth(), presentDate.getYear());
-        f.navigateToFutureMonth(date500DaysIntoFuture.getMonth(), date500DaysIntoFuture.getYear());
-        f.clickCalendarDay(date500DaysIntoFuture.getMonth(),
+        LocalDate presentDate = LocalDate.of(2021,3,15);
+        LocalDate date500DaysIntoFuture = LocalDate.now().plusDays(500);
+        f.clickCalendarDayAfterNavigating(presentDate.getMonth(), presentDate.getDayOfMonth(), presentDate.getYear());
+        f.clickCalendarDayAfterNavigating(date500DaysIntoFuture.getMonth(),
                 date500DaysIntoFuture.getDayOfMonth(), date500DaysIntoFuture.getYear());
+        Assert.assertTrue(f.isCalendarHighlightingDaysCorrectly(presentDate, date500DaysIntoFuture));
     }
 }
