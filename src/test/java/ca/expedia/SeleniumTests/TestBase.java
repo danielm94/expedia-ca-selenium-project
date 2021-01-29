@@ -36,6 +36,6 @@ public abstract class TestBase {
 
     @AfterClass
     public void afterClass() {
-        //WebDriverPool.DEFAULT.dismissAll();
+        WebDriverPool.DEFAULT.dismissAll();
     }
 }
