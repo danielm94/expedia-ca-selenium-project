@@ -9,12 +9,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
-import java.time.LocalDate;
-import java.time.YearMonth;
-import java.time.format.DateTimeFormatter;
-import java.time.format.TextStyle;
-import java.util.Locale;
-
 /* ToDo:
  * Add logging infrastructure to page factory.
  * Finish creating WebElements for everything on the page.
@@ -24,16 +18,19 @@ public class StaysFactory extends CommonFactory {
     private WebDriver driver;
 
     @FindBy(xpath = "//div[@id='location-field-destination-menu']//button")
-    private WebElement staysGoingToButton;
+    private WebElement goingToButton;
 
     @FindBy(id = "location-field-destination")
-    private WebElement staysGoingToInput;
+    private WebElement goingToInput;
 
     @FindBy(xpath = "//ul[@data-stid='location-field-destination-results']")
-    private WebElement staysGoingToResultList;
+    private WebElement goingToResultList;
 
-    @FindBy(xpath = "//button[@class='uitk-button uitk-button-small uitk-clear-button']")
-    private WebElement clearButton;
+    @FindBy(xpath = "//div[@id='location-field-destination-menu']//button[contains(@class,'uitk-clear-button')]")
+    private WebElement goingToClearButton;
+
+    @FindBy(xpath = "//div[@id='location-field-origin-menu']//button[contains(@class,'uitk-clear-button')]")
+    private WebElement leavingFromClearButton;
 
     @FindBy(id = "add-flight-switch")
     private WebElement addFlightCheckbox;
@@ -42,22 +39,25 @@ public class StaysFactory extends CommonFactory {
     private WebElement addCarCheckbox;
 
     @FindBy(xpath = "//button[@data-testid='add-room-button']")
-    private WebElement staysTravellersAddAnotherRoomButton;
+    private WebElement travellersAddAnotherRoomButton;
 
     @FindBy(xpath = "//button[@data-testid='guests-done-button']")
-    private WebElement staysTravellersDoneButton;
+    private WebElement travellersDoneButton;
 
     @FindBy(xpath = "//button[@data-stid='location-field-origin-menu-trigger']")
-    private WebElement staysLeavingFromButton;
+    private WebElement leavingFromButton;
 
     @FindBy(id = "location-field-origin")
-    private WebElement staysLeavingFromInput;
+    private WebElement leavingFromInput;
 
     @FindBy(xpath = "//ul[@data-stid='location-field-origin-results']")
-    private WebElement staysLeavingFromResultList;
+    private WebElement leavingFromResultList;
 
     @FindBy(xpath = "//button[@data-testid='guests-done-button']")
     private WebElement travellersDone;
+
+    @FindBy(xpath = "//button[@data-testid='guests-done-button']/span")
+    private WebElement travellersDoneSubText;
 
     @FindBy(xpath = "//div[@class='uitk-empty-state-body']")
     private WebElement goingToEmptyState;
@@ -93,33 +93,39 @@ public class StaysFactory extends CommonFactory {
     }
 
     /**
-     * Clicks on the "Going to" button in the "Stays" tab so that we can access the
-     * input field and send keys to it.
+     * Clicks on the "Going to" button in the "Stays" tab so that we can access the input field and send keys to it.
      */
     public void clickGoingTo() {
-        staysGoingToButton.click();
+        goingToButton.click();
         log(LogStatus.INFO, "Clicked on 'Going to'.");
     }
 
     /**
-     * Types the destination into the "Going to" input field. Requires
-     * clickStaysGoingToButton() method to be used before.
+     * Types the destination into the "Going to" input field. Requires clickStaysGoingToButton() method to be used
+     * before.
      *
      * @param destination The destination you wish to search for.
      */
     public void sendKeysGoingTo(String destination) {
-        staysGoingToInput.clear();
-        staysGoingToInput.sendKeys(destination);
+        goingToInput.clear();
+        goingToInput.sendKeys(destination);
         log(LogStatus.INFO, "Typed '" + destination + "' into the 'Going to' field.");
     }
 
     /**
-     * Clicks the clear button. Will use this method for all instances of it for now
-     * unless I run into issues.
+     * Clicks the clear button for the going to field.
      */
-    public void clickClear() {
-        clearButton.click();
-        log(LogStatus.INFO, "Clicked on the X button that clears the text field.");
+    public void clickGoingToClear() {
+        goingToClearButton.click();
+        log(LogStatus.INFO, "Clicked on the X button and cleared the 'Going to' field.");
+    }
+
+    /**
+     * Clicks the clear button for the going to field.
+     */
+    public void clickLeavingFromClear() {
+        leavingFromClearButton.click();
+        log(LogStatus.INFO, "Clicked on the X button and cleared the 'Leaving from' field.");
     }
 
     /**
@@ -139,9 +145,8 @@ public class StaysFactory extends CommonFactory {
     }
 
     /**
-     * Clicks the "Check-in" button so the user may open the calendar and select a
-     * check in date from the calendar date picker panel. Works for all tabs except
-     * for "Multi-city" in flights tab.
+     * Clicks the "Check-in" button so the user may open the calendar and select a check in date from the calendar date
+     * picker panel. Works for all tabs except for "Multi-city" in flights tab.
      */
     public void clickCheckIn() {
         checkInButton.click();
@@ -149,9 +154,8 @@ public class StaysFactory extends CommonFactory {
     }
 
     /**
-     * Clicks the "Check-out" button so the user may open the calendar and select a
-     * check out date from the calendar date picker panel. Works for all tabs except
-     * for "Multi-city" in flights tab.
+     * Clicks the "Check-out" button so the user may open the calendar and select a check out date from the calendar
+     * date picker panel. Works for all tabs except for "Multi-city" in flights tab.
      */
     public void clickCheckOut() {
         checkOutButton.click();
@@ -159,10 +163,9 @@ public class StaysFactory extends CommonFactory {
     }
 
     /**
-     * Clicks the "Travellers" button to open the travellers submenu in the "Stays"
-     * tab.
+     * Clicks the "Travellers" button to open the travellers submenu in the "Stays" tab.
      */
-    public void clickTravellerTab() {
+    public void clickTravellersButton() {
         try {
             WebElement staysTravellerButton = driver
                     .findElement(By.xpath("//button[@data-testid='travelers-field-trigger']"));
@@ -236,13 +239,12 @@ public class StaysFactory extends CommonFactory {
      * Clicks the add another room button. You may only have a maximum of 8 rooms.
      */
     public void clickTravellersAddRoom() {
-        staysTravellersAddAnotherRoomButton.click();
+        travellersAddAnotherRoomButton.click();
         log(LogStatus.INFO, "Clicked on the 'Add another room button' in the travellers tab.");
     }
 
     /**
-     * Clicks the remove room button. There must be at least 2 rooms available on
-     * the travellers panel.
+     * Clicks the remove room button. There must be at least 2 rooms available on the travellers panel.
      *
      * @param room The room number of the element. Range: 2-8
      */
@@ -317,21 +319,20 @@ public class StaysFactory extends CommonFactory {
     }
 
     /**
-     * Clicks the "Leaving from" input so that we may send keys to it. Requires
-     * clicking the "Add a flight" checkbox first.
+     * Clicks the "Leaving from" input so that we may send keys to it. Requires clicking the "Add a flight" checkbox
+     * first.
      */
     public void clickLeavingFrom() {
-        staysLeavingFromButton.click();
+        leavingFromButton.click();
         log(LogStatus.INFO, "Clicked on 'Leaving from'.");
     }
 
     /**
-     * Sends keys to the "Leaving from" input. Requires clicking on the input first,
-     * (use clickStaysLeavingFrom())
+     * Sends keys to the "Leaving from" input. Requires clicking on the input first, (use clickStaysLeavingFrom())
      */
     public void sendKeysLeavingFrom(String keys) {
-        staysLeavingFromInput.clear();
-        staysLeavingFromInput.sendKeys(keys);
+        leavingFromInput.clear();
+        leavingFromInput.sendKeys(keys);
         log(LogStatus.INFO, "Sent the following keys to the 'Leaving from' input: '" + keys + "'");
     }
 
@@ -352,11 +353,15 @@ public class StaysFactory extends CommonFactory {
     }
 
     public String getGoingToButtonText() {
-        return staysGoingToButton.getText();
+        return goingToButton.getText();
+    }
+
+    public String getLeavingFromButtonText() {
+        return leavingFromButton.getText();
     }
 
     public String getGoingToPlaceholderText() {
-        return staysGoingToInput.getAttribute("placeholder");
+        return goingToInput.getAttribute("placeholder");
     }
 
     public String getGoingToEmptyStateText() {
@@ -390,5 +395,34 @@ public class StaysFactory extends CommonFactory {
 
     public String getAddACarLabelText() {
         return addACarLabel.getText();
+    }
+
+    public String getLeavingFromInputValue() {
+        return leavingFromInput.getAttribute("value");
+    }
+
+    public String getGoingToInputValue() {
+        return goingToInput.getAttribute("value");
+    }
+
+    public String getTravellersDoneButtonSubText(){
+        return travellersDoneSubText.getText();
+    }
+    //TODO: Add javadoc
+    public Boolean isTravellersPanelDisplayingRooms(int rooms) {
+        for (int x = rooms; x > 0; x--) {
+            try {
+                driver.findElement(By.xpath("//div[@data-testid='room-" + x + "']"));
+            } catch (NoSuchElementException e) {
+                log(LogStatus.ERROR, "Room " + x + " was not displayed on the travellers panel correctly.");
+                return false;
+            }
+        }
+        if (rooms > 1) {
+            log(LogStatus.INFO, rooms + " rooms were displayed on the travellers panel correctly.");
+        } else {
+            log(LogStatus.INFO, rooms + " room was displayed on the travellers panel correctly.");
+        }
+        return true;
     }
 }

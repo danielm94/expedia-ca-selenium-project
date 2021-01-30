@@ -18,7 +18,7 @@ public class CruisesTest extends TestBase{
 	private CruisesFactory f;
 	private ExtentReports report;
 	private ExtentTest test;
-	private final String REPORT_NAME = "cruises_tab";
+	private final String REPORT_NAME = "cruises-tab";
 	private String originalWindowHandle;
 
 	@BeforeMethod

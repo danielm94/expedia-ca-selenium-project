@@ -68,12 +68,12 @@ public abstract class CommonFactory {
     /**
      * This button is in the calendar date selector panel. It allows the user to select a check in date.
      */
-    @FindBy(xpath = "//div[@class='uitk-flex uitk-flex-align-items-center uitk-toolbar uitk-new-date-picker-toolbar']/section/section/button[@type='button'][1]")
+    @FindBy(xpath = "//button[1]/span[@class='uitk-date-picker-selection-date']")
     protected WebElement calendarCheckInButton;
     /**
      * This button is in the calendar date selector panel. It allows the user to select a check out date.
      */
-    @FindBy(xpath = "//div[@class='uitk-flex uitk-flex-align-items-center uitk-toolbar uitk-new-date-picker-toolbar']/section/section/button[@type='button'][2]")
+    @FindBy(xpath = "//button[2]/span[@class='uitk-date-picker-selection-date']")
     protected WebElement calendarCheckOutButton;
     @FindBy(xpath = "//div[contains(@class,'uitk-date-picker-menu-pagination-container')]/button[1]")
     protected WebElement calendarBackArrow;
@@ -83,10 +83,6 @@ public abstract class CommonFactory {
     protected WebElement calendarDoneButton;
     @FindBy(xpath = "//button[@data-testid='submit-button']")
     protected WebElement searchButton;
-    @FindBy(xpath = "//div[@class='uitk-flex uitk-flex-align-items-center uitk-toolbar uitk-new-date-picker-toolbar']/section/section/button[@type='button'][1]/span")
-    protected WebElement calendarCheckInSpan;
-    @FindBy(xpath = "//div[@class='uitk-flex uitk-flex-align-items-center uitk-toolbar uitk-new-date-picker-toolbar']/section/section/button[@type='button'][2]/span")
-    protected WebElement calendarCheckOutSpan;
     @FindBy(xpath = "//div[@class='uitk-new-date-picker-month'][1]/h2")
     protected WebElement leftCalendarHeader;
     @FindBy(xpath = "//div[@class='uitk-new-date-picker-month'][2]/h2")
@@ -105,6 +101,8 @@ public abstract class CommonFactory {
     protected WebElement thingsToDoTab;
     @FindBy(xpath = "//a[@href='?pwaLob=wizard-package-pwa']")
     protected WebElement vacationPackagesTab;
+    @FindBy(xpath="//section[@class='header-region no-stripe']")
+    protected WebElement clickOffMenuLocation;
     private WebDriver driver;
     private ExtentTest test;
 
@@ -397,6 +395,12 @@ public abstract class CommonFactory {
     }
 
     /**
+     * Clicks on the header of the website in order to close a menu.
+     */
+    public void clickOffMenu(){
+        clickOffMenuLocation.click();
+    }
+    /**
      * Starts the report for a specified test.
      *
      * @param report The ExtentReports object from the test class.
@@ -409,7 +413,7 @@ public abstract class CommonFactory {
     /**
      * Method used to log messages from the test class rather than the page factory, typically for pass/fail messages.
      *
-     * @param status The status of the log. E.g., 'LogStatus.INFO', 'LogStatus.ERROR'
+     * @param status  The status of the log. E.g., 'LogStatus.INFO', 'LogStatus.ERROR'
      * @param message The message inside the log.
      */
     public void log(LogStatus status, String message) {
@@ -461,12 +465,12 @@ public abstract class CommonFactory {
         log(LogStatus.INFO, "Clicked on the 'Search' button.");
     }
 
-    public String getCalendarCheckInSpanText() {
-        return calendarCheckInSpan.getText();
+    public String getCalendarCheckInButtonText() {
+        return calendarCheckInButton.getText();
     }
 
-    public String getCalendarCheckOutSpanText() {
-        return calendarCheckOutSpan.getText();
+    public String getCalendarCheckOutButtonText() {
+        return calendarCheckOutButton.getText();
     }
 
     /**
@@ -552,7 +556,7 @@ public abstract class CommonFactory {
     }
 
     /**
-     * Verifies whether the "disabled" attribute of the calendarBackArrow button equals true or not.
+     * Checks whether the "disabled" attribute of the calendarBackArrow button equals true or not.
      *
      * @return True if the button is disabled, else false.
      */
@@ -572,7 +576,7 @@ public abstract class CommonFactory {
     }
 
     /**
-     * Verifies whether the "disabled" attribute of the calendarForwardArrow button equals true or not.
+     * Checks whether the "disabled" attribute of the calendarForwardArrow button equals true or not.
      *
      * @return True if the button is disabled, else false.
      */
@@ -592,7 +596,7 @@ public abstract class CommonFactory {
     }
 
     /**
-     * Verifies that the user is unable to select a day that is in the past on the calendar.
+     * Checks that the user is unable to select a day that is in the past on the calendar.
      *
      * @return True if all the buttons which are in the past are disabled, else false.
      */
@@ -649,7 +653,7 @@ public abstract class CommonFactory {
     }
 
     /**
-     * Verifies user is unable to book a date that is over 500 days from today.
+     * Checks user is unable to book a date that is over 500 days from today.
      *
      * @param fiveHundredDaysIntoFuture LocalDate object whose date is 500 days ahead of the present day.
      * @return True if the day buttons which are over 500 days in the future are disabled, else false.
@@ -725,7 +729,7 @@ public abstract class CommonFactory {
     }
 
     /**
-     * Verifies that the check in day button, check out day button and all the day buttons between are highlighted
+     * Checks that the check in day button, check out day button and all the day buttons between are highlighted
      * correctly. You must have the check in button & check out button selected and be at the check out button's month
      * on the calendar upon calling this method
      *
@@ -775,8 +779,6 @@ public abstract class CommonFactory {
                         driver.findElement(By.xpath("//button[@class='uitk-date-picker-day uitk-new-date-picker-day selected' and @aria-label='"
                                 + checkOutDate.getMonth().getDisplayName(TextStyle.SHORT, Locale.US)
                                 + " " + dayCounter + ", " + checkOutDate.getYear() + ".']"));
-                        System.out.println("Found button on right side : " + checkOutDate.getMonth().getDisplayName(TextStyle.SHORT, Locale.US)
-                                + " " + dayCounter + ", " + checkOutDate.getYear());
                         //If driver finds this element with this xpath, we know it's highlighted correctly.
                     } catch (NoSuchElementException e) {
                         log(LogStatus.ERROR,
@@ -820,8 +822,6 @@ public abstract class CommonFactory {
                     }
                     //Verify that the day buttons in between the check in date and check out date are highlighted correctly.
                     try {
-                        System.out.println("Found button on left side : " + checkOutDate.getMonth().getDisplayName(TextStyle.SHORT, Locale.US)
-                                + " " + dayCounter + ", " + checkOutDate.getYear());
                         driver.findElement(By.xpath("//button[@class='uitk-date-picker-day uitk-new-date-picker-day selected' and @aria-label='"
                                 + checkOutDate.getMonth().getDisplayName(TextStyle.SHORT, Locale.US)
                                 + " " + dayCounter + ", " + checkOutDate.getYear() + ".']"));

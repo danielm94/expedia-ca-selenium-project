@@ -21,7 +21,7 @@ public class CarsTest extends TestBase {
     private CarsFactory f;
     private ExtentReports report;
     private ExtentTest test;
-    private final String REPORT_NAME = "carsTab";
+    private final String REPORT_NAME = "cars-tab";
     private String originalWindowHandle;
 
     @BeforeMethod

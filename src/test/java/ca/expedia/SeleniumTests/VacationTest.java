@@ -19,7 +19,7 @@ public class VacationTest extends TestBase {
     private VacationFactory f;
     private ExtentReports report;
     private ExtentTest test;
-    private final String REPORT_NAME = "vacation_tab";
+    private final String REPORT_NAME = "vacation-tab";
     private String originalWindowHandle;
 
     @BeforeMethod
