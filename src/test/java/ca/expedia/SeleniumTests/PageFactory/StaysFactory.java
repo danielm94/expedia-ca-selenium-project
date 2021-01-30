@@ -9,10 +9,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
-/* ToDo:
- * Add logging infrastructure to page factory.
- * Finish creating WebElements for everything on the page.
- */
 public class StaysFactory extends CommonFactory {
 
     private WebDriver driver;
@@ -167,15 +163,15 @@ public class StaysFactory extends CommonFactory {
      */
     public void clickTravellersButton() {
         try {
-            WebElement staysTravellerButton = driver
-                    .findElement(By.xpath("//button[@data-testid='travelers-field-trigger']"));
-            staysTravellerButton.click();
-            log(LogStatus.INFO, "Clicked on the 'Travellers' button");
-        } catch (NoSuchElementException e) {
             WebElement alternativeStaysTravellerButton = driver
                     .findElement(By.xpath("//a[@data-testid='travelers-field']"));
             alternativeStaysTravellerButton.click();
             log(LogStatus.INFO, "Clicked on the 'Travellers' anchor tag.");
+        } catch (NoSuchElementException e) {
+            WebElement staysTravellerButton = driver
+                    .findElement(By.xpath("//button[@data-testid='travelers-field-trigger']"));
+            staysTravellerButton.click();
+            log(LogStatus.INFO, "Clicked on the 'Travellers' button");
         }
     }
 

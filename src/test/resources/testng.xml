@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
 <suite name="Tests" verbose="5">
   <test name="Test1">
     <classes>
+      <class name="ca.expedia.SeleniumTests.AllInclusiveTest"/>
+      <class name="ca.expedia.SeleniumTests.CarsTest"/>
+      <class name="ca.expedia.SeleniumTests.CruisesTest"/>
+      <class name="ca.expedia.SeleniumTests.FlightsTest"/>
       <class name="ca.expedia.SeleniumTests.StaysTest"/>
+      <class name="ca.expedia.SeleniumTests.ThingsToDoTest"/>
+      <class name="ca.expedia.SeleniumTests.VacationTest"/>
     </classes>
   </test>  
 </suite>

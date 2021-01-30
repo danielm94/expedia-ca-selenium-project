@@ -387,8 +387,8 @@ public abstract class CommonFactory {
      * @param date  The day number for the date we are selecting.
      * @param year  The year for the date we are selecting.
      */
-
-    public void clickCalendarDay(Month month, int date, int year) {
+//TODO: MAKE THIS PROTECTED, CHANGE METHOD NAME TO selectCalendarDay(), USE METHOD THAT NAVIGATES TO DATES BEFORE CLICKING
+    protected void selectCalendarDay(Month month, int date, int year) {
         WebElement calendarDay = getCalendarDay(month, date, year);
         calendarDay.click();
         log(LogStatus.INFO, "Clicked on the calendar day button for " + month.getDisplayName(TextStyle.SHORT, Locale.US) + " " + date + ", " + year);
@@ -401,13 +401,14 @@ public abstract class CommonFactory {
         clickOffMenuLocation.click();
     }
     /**
-     * Starts the report for a specified test.
+     * Starts the report for a specified test and returns the instance as an ExtentTest object.
      *
      * @param report The ExtentReports object from the test class.
      * @param name   The name of the test that will show up in the report.
      */
-    public void createTestReport(ExtentReports report, String name) {
+    public ExtentTest createTestReport(ExtentReports report, String name) {
         test = report.startTest(name);
+        return test;
     }
 
     /**
@@ -600,7 +601,7 @@ public abstract class CommonFactory {
      *
      * @return True if all the buttons which are in the past are disabled, else false.
      */
-    public Boolean isUserUnableToSelectDayInPast() {
+    public Boolean isUserUnableToSelectDayInPast(Boolean isYesterdayDisabled) {
         // Issues - cannot consistently identify when the day yesterday from today will
         // be disabled on the calendar. It can be 3:00AM on the 5th of January EST, yet
         // the 4th of January will still be enabled. Not sure if a bug or it is an issue
@@ -616,18 +617,35 @@ public abstract class CommonFactory {
         // the current day minus one and count down until we reach 0.
         // While we are counting down the days, we are checking to see if they are disabled.
         if (dayToday != 1) {
-            for (int x = (dayToday - 1); x > 0; x--) {
-                try {
-                    // If driver finds the element using this xpath then we know it's disabled.
-                    driver.findElement(By.xpath("//button[@aria-label='"
-                            + now.getMonth().getDisplayName(TextStyle.SHORT, Locale.US)
-                            + " " + x + ", " + now.getYear() + ", date disabled']"));
-                } catch (NoSuchElementException e) {
-                    // If NoSuchElementException is thrown, that means the calendar day button was enabled, return false.
-                    log(LogStatus.ERROR, "The calendar day of "
-                            + now.getMonth().getDisplayName(TextStyle.SHORT, Locale.US) + " "
-                            + x + ", " + now.getYear() + " did not have the disabled attribute.");
-                    return false;
+            if(isYesterdayDisabled) {
+                for (int x = (dayToday - 1); x > 0; x--) {
+                    try {
+                        // If driver finds the element using this xpath then we know it's disabled.
+                        driver.findElement(By.xpath("//button[@aria-label='"
+                                + now.getMonth().getDisplayName(TextStyle.SHORT, Locale.US)
+                                + " " + x + ", " + now.getYear() + ", date disabled']"));
+                    } catch (NoSuchElementException e) {
+                        // If NoSuchElementException is thrown, that means the calendar day button was enabled, return false.
+                        log(LogStatus.ERROR, "The calendar day of "
+                                + now.getMonth().getDisplayName(TextStyle.SHORT, Locale.US) + " "
+                                + x + ", " + now.getYear() + " did not have the disabled attribute.");
+                        return false;
+                    }
+                }
+            }else{
+                for (int x = (dayToday - 2); x > 0; x--) {
+                    try {
+                        // If driver finds the element using this xpath then we know it's disabled.
+                        driver.findElement(By.xpath("//button[@aria-label='"
+                                + now.getMonth().getDisplayName(TextStyle.SHORT, Locale.US)
+                                + " " + x + ", " + now.getYear() + ", date disabled']"));
+                    } catch (NoSuchElementException e) {
+                        // If NoSuchElementException is thrown, that means the calendar day button was enabled, return false.
+                        log(LogStatus.ERROR, "The calendar day of "
+                                + now.getMonth().getDisplayName(TextStyle.SHORT, Locale.US) + " "
+                                + x + ", " + now.getYear() + " did not have the disabled attribute.");
+                        return false;
+                    }
                 }
             }
         }
@@ -723,9 +741,9 @@ public abstract class CommonFactory {
      * @param day   The day number for the date we are selecting.
      * @param year  The year for the date we are selecting.
      */
-    public void clickCalendarDayAfterNavigating(Month month, int day, int year) {
+    public void clickCalendarDay(Month month, int day, int year) {
         navigateToMonth(month, year);
-        clickCalendarDay(month, day, year);
+        selectCalendarDay(month, day, year);
     }
 
     /**
