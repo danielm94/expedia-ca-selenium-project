@@ -21,7 +21,7 @@ public class ThingsToDoTest extends TestBase {
     private ThingsToDoFactory f;
     private ExtentReports report;
     private ExtentTest test;
-    private final String REPORT_NAME = "things_to_do_tab";
+    private final String REPORT_NAME = "things-to-do-tab";
     private String originalWindowHandle;
 
     @BeforeMethod

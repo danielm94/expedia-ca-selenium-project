@@ -21,7 +21,7 @@ public class AllInclusiveTest extends TestBase {
 	private AllInclusiveFactory f;
 	private ExtentReports report;
 	private ExtentTest test;
-	private final String REPORT_NAME = "all_inclusive_tab";
+	private final String REPORT_NAME = "all-inclusive-tab";
 	private String originalWindowHandle;
 
 	@BeforeMethod

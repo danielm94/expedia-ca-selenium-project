@@ -21,7 +21,7 @@ public class StaysTest extends TestBase {
     private StaysFactory f;
     private ExtentReports report;
     private ExtentTest test;
-    private final String REPORT_NAME = "stays_tab";
+    private final String REPORT_NAME = "stays-tab";
     private String originalWindowHandle;
 
     @BeforeMethod
@@ -71,7 +71,7 @@ public class StaysTest extends TestBase {
         f.clickCalendarCheckOutDate();
         f.clickCalendarDay(Month.FEBRUARY, 24, 2021);
         f.clickCalendarDone();
-        f.clickTravellerTab();
+        f.clickTravellersButton();
         f.clickTravellersAddRoom();
         f.clickTravellersAddRoom();
         f.clickTravellersChildrenInc(3);
@@ -99,19 +99,9 @@ public class StaysTest extends TestBase {
         f.clickAddCar();
     }
 
-    @Test(enabled = false)
-    public void bigAssAssertionTest() {
-        f.createTestReport(report, "Big Ass Assertion Test");
-        f.clickCheckIn();
-        for (int x = 0; x < 5; x++) {
-            f.clickCalendarForwardArrow();
-        }
-        //Assert.assertTrue(f.verifyCalendarDaysAreHighlightedCorrectly());
-    }
-
     @Test
-    public void verifyUserCannotAccessPastMonth() {
-        f.createTestReport(report, "Verify User Cannot Access A Month That Is In The Past");
+    public void assertUserCannotAccessPastMonth() {
+        f.createTestReport(report, "Assert User Cannot Access A Month That Is In The Past");
         f.clickStaysTab();
         f.clickCheckIn();
         f.navigateToPresentMonth();
@@ -119,18 +109,18 @@ public class StaysTest extends TestBase {
     }
 
     @Test
-    public void verifyUserCannotAccessMonth500DaysAhead() {
-        f.createTestReport(report, "Verify User Cannot Access Month That Is Over 500 Days Ahead.");
+    public void assertUserCannotAccessMonth500DaysAhead() {
+        LocalDate fiveHundredDaysAhead = LocalDate.now().plusDays(500);
+        f.createTestReport(report, "Assert User Cannot Access Month That Is Over 500 Days Ahead.");
         f.clickStaysTab();
         f.clickCheckIn();
-        LocalDate fiveHundredDaysAhead = LocalDate.now().plusDays(500);
-        f.navigateToFutureMonth(fiveHundredDaysAhead.getMonth(), fiveHundredDaysAhead.getYear());
+        f.navigateToMonth(fiveHundredDaysAhead.getMonth(), fiveHundredDaysAhead.getYear());
         Assert.assertTrue(f.isCalendarForwardArrowDisabled());
     }
 
     @Test
-    public void verifyUserCannotSelectDayInPast() {
-        f.createTestReport(report, "Verify User Cannot Select A Calendar Day That Is In The Past");
+    public void assertUserCannotSelectDayInPast() {
+        f.createTestReport(report, "Assert User Cannot Select A Calendar Day That Is In The Past");
         f.clickStaysTab();
         f.clickCheckIn();
         f.navigateToPresentMonth();
@@ -138,25 +128,70 @@ public class StaysTest extends TestBase {
     }
 
     @Test
-    public void verifyUserCannotSelectDaysThatAre500DaysInFuture() {
-        f.createTestReport(report, "Verify User Cannot Select A Day That Is Over 500 Days In The Future");
+    public void assertUserCannotSelectDaysThatAre500DaysInFuture() {
+        LocalDate fiveHundredDaysAhead = LocalDate.now().plusDays(500);
+        f.createTestReport(report, "Assert User Cannot Select A Day That Is Over 500 Days In The Future");
         f.clickStaysTab();
         f.clickCheckIn();
-        LocalDate fiveHundredDaysAhead = LocalDate.now().plusDays(500);
-        f.navigateToFutureMonth(fiveHundredDaysAhead.getMonth(), fiveHundredDaysAhead.getYear());
+        f.navigateToMonth(fiveHundredDaysAhead.getMonth(), fiveHundredDaysAhead.getYear());
         Assert.assertTrue(f.isUserUnableToSelectDayOver500InFuture(fiveHundredDaysAhead));
     }
 
     @Test
-    public void verifyCalendarDaysAreHighlightedCorrectly() {
-        f.createTestReport(report, "Verify Calendar Days Are Highlighted Correctly");
+    public void assertCalendarDaysAreHighlightedCorrectly() {
+        LocalDate presentDate = LocalDate.now();
+        LocalDate date500DaysIntoFuture = LocalDate.now().plusDays(500);
+        f.createTestReport(report, "Assert Calendar Days Are Highlighted Correctly");
         f.clickStaysTab();
         f.clickCheckIn();
-        LocalDate presentDate = LocalDate.of(2021,3,15);
-        LocalDate date500DaysIntoFuture = LocalDate.now().plusDays(500);
         f.clickCalendarDayAfterNavigating(presentDate.getMonth(), presentDate.getDayOfMonth(), presentDate.getYear());
         f.clickCalendarDayAfterNavigating(date500DaysIntoFuture.getMonth(),
                 date500DaysIntoFuture.getDayOfMonth(), date500DaysIntoFuture.getYear());
         Assert.assertTrue(f.isCalendarHighlightingDaysCorrectly(presentDate, date500DaysIntoFuture));
+    }
+
+    @Test
+    public void assertUserCanClearGoingToFieldWithXButton(){
+        f.createTestReport(report,"Assert User Can Clear Going To Field With 'x' Button");
+        f.clickStaysTab();
+        f.clickGoingTo();
+        f.sendKeysGoingTo("Toronto");
+        f.clickGoingToClear();
+        Assert.assertEquals(f.getGoingToInputValue(),"");
+        f.sendKeysGoingTo("Toronto");
+        f.clickSearchResult("Toronto (YYZ - Pearson Intl.)", "Ontario, Canada");
+        f.clickGoingTo();
+        f.clickGoingToClear();
+        Assert.assertEquals(f.getGoingToInputValue(),"");
+        f.clickOffMenu();
+        Assert.assertEquals(f.getGoingToButtonText(),"");
+    }
+
+    @Test
+    public void assertUserCanClearLeavingFromFieldWithXButton(){
+        f.createTestReport(report,"Assert User Can Clear Leaving From Field With 'x' Button");
+        f.clickStaysTab();
+        f.clickAddFlight();
+        f.clickLeavingFrom();
+        f.sendKeysLeavingFrom("Toronto");
+        f.clickLeavingFromClear();
+        Assert.assertEquals(f.getLeavingFromInputValue(),"");
+        f.sendKeysLeavingFrom("Toronto");
+        f.clickSearchResult("Toronto (YYZ - Pearson Intl.)", "Ontario, Canada");
+        f.clickLeavingFrom();
+        f.clickLeavingFromClear();
+        Assert.assertEquals(f.getLeavingFromInputValue(),"");
+        f.clickOffMenu();
+        Assert.assertEquals(f.getLeavingFromButtonText(),"");
+    }
+    @Test()
+    public void assertCorrectNumberOfRoomsAreDisplayed() {
+        f.createTestReport(report,"Assert The Correct Number of Rooms Are Displayed For Travellers");
+        f.clickStaysTab();
+        Assert.assertEquals(f.getTravellersText(), "1 room, 2 travellers");
+        f.clickTravellersButton();
+        Assert.assertTrue(f.isTravellersPanelDisplayingRooms(1));
+        Assert.assertEquals(f.getTravellersDoneButtonSubText(), "1 room, 2 travellers");
+        f.clickTravellersAddRoom();
     }
 }
