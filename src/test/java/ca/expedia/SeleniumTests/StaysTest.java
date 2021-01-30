@@ -154,6 +154,6 @@ public class StaysTest extends TestBase {
         Assert.assertTrue(f.isTravellersPanelDisplayingRooms(1));
         Assert.assertEquals(f.getTravellersDoneButtonSubText(), "1 room, 2 travellers");
         f.clickTravellersAddRoom();
-        System.out.println("Hello jenkins.");
+        System.out.println("Hello jenkins2.");
     }
 }
