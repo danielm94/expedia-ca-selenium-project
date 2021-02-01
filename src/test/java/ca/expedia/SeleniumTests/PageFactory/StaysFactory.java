@@ -404,7 +404,7 @@ public class StaysFactory extends CommonFactory {
     public String getTravellersDoneButtonSubText(){
         return travellersDoneSubText.getText();
     }
-    //TODO: Add javadoc
+    //TODO: MAKE THIS WORK FOR 1 ROOM AT A TIME.
     public Boolean isTravellersPanelDisplayingRooms(int rooms) {
         for (int x = rooms; x > 0; x--) {
             try {
