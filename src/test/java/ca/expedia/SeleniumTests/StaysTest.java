@@ -104,7 +104,7 @@ public class StaysTest extends TestBase {
     @Test
     public void assertCalendarDaysAreHighlightedCorrectly() {
         LocalDate presentDate = LocalDate.now();
-        LocalDate date500DaysIntoFuture = LocalDate.now().plusDays(500);
+        LocalDate date500DaysIntoFuture = LocalDate.now().plusDays(450);
         test = f.createTestReport(report, "Assert Calendar Days Are Highlighted Correctly");
         f.clickStaysTab();
         f.clickCheckIn();
