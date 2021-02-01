@@ -1,14 +1,17 @@
 package ca.expedia.SeleniumTests;
 
 import ca.expedia.SeleniumTests.PageFactory.StaysFactory;
+import com.relevantcodes.extentreports.LogStatus;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import java.time.LocalDate;
 import java.time.Month;
 
-
+//TODO: ADD SOFT ASSERTIONS WHERE APPLICABLE TO ALL TESTS
+//TODO: Log test outcome at the end of every test.
 public class StaysTest extends TestBase {
     private StaysFactory f;
 
@@ -112,47 +115,251 @@ public class StaysTest extends TestBase {
     }
 
     @Test
-    public void assertUserCanClearGoingToFieldWithXButton(){
-        test = f.createTestReport(report,"Assert User Can Clear Going To Field With 'x' Button");
+    public void assertUserCanClearGoingToFieldWithXButton() {
+        test = f.createTestReport(report, "Assert User Can Clear Going To Field With 'x' Button");
         f.clickStaysTab();
         f.clickGoingTo();
         f.sendKeysGoingTo("Toronto");
         f.clickGoingToClear();
-        Assert.assertEquals(f.getGoingToInputValue(),"");
+        Assert.assertEquals(f.getGoingToInputValue(), "");
         f.sendKeysGoingTo("Toronto");
         f.clickSearchResult("Toronto (YYZ - Pearson Intl.)", "Ontario, Canada");
         f.clickGoingTo();
         f.clickGoingToClear();
-        Assert.assertEquals(f.getGoingToInputValue(),"");
+        Assert.assertEquals(f.getGoingToInputValue(), "");
         f.clickOffMenu();
-        Assert.assertEquals(f.getGoingToButtonText(),"");
+        Assert.assertEquals(f.getGoingToButtonText(), "");
     }
 
     @Test
-    public void assertUserCanClearLeavingFromFieldWithXButton(){
-        test = f.createTestReport(report,"Assert User Can Clear Leaving From Field With 'x' Button");
+    public void assertUserCanClearLeavingFromFieldWithXButton() {
+        test = f.createTestReport(report, "Assert User Can Clear Leaving From Field With 'x' Button");
         f.clickStaysTab();
         f.clickAddFlight();
         f.clickLeavingFrom();
         f.sendKeysLeavingFrom("Toronto");
         f.clickLeavingFromClear();
-        Assert.assertEquals(f.getLeavingFromInputValue(),"");
+        Assert.assertEquals(f.getLeavingFromInputValue(), "");
         f.sendKeysLeavingFrom("Toronto");
         f.clickSearchResult("Toronto (YYZ - Pearson Intl.)", "Ontario, Canada");
         f.clickLeavingFrom();
         f.clickLeavingFromClear();
-        Assert.assertEquals(f.getLeavingFromInputValue(),"");
+        Assert.assertEquals(f.getLeavingFromInputValue(), "");
         f.clickOffMenu();
-        Assert.assertEquals(f.getLeavingFromButtonText(),"");
+        Assert.assertEquals(f.getLeavingFromButtonText(), "");
     }
+
     @Test()
-    public void assertCorrectNumberOfRoomsAreDisplayed() {
-        test = f.createTestReport(report,"Assert The Correct Number of Rooms Are Displayed For Travellers");
+    public void assertTravellersPanelDisplaysCorrectHeaderText() {
+        test = f.createTestReport(report, "Assert That The Header Inside The Travellers Panel Is Displaying The Correct Text");
         f.clickStaysTab();
-        Assert.assertEquals(f.getTravellersText(), "1 room, 2 travellers");
         f.clickTravellersButton();
-        Assert.assertTrue(f.isTravellersPanelDisplayingRooms(1));
-        Assert.assertEquals(f.getTravellersDoneButtonSubText(), "1 room, 2 travellers");
-        f.clickTravellersAddRoom();
+        Assert.assertEquals(f.getTravellersPanelHeaderText(), "Travellers");
+        f.log(LogStatus.PASS, "The header inside the travellers panel displayed the correct text.");
+    }
+
+    @Test
+    public void assertTravellersPanelDisplaysCorrectRoomHeaderText() {
+        test = f.createTestReport(report, "Assert That The Room Headers Inside The Travellers Panel Are Displaying The Correct Text");
+        SoftAssert sa = new SoftAssert();
+        f.clickStaysTab();
+        sa.assertEquals(f.getStaysTabSpanText(), "Stays");
+        f.clickTravellersButton();
+        sa.assertEquals(f.getTravellersButtonText(), "1 room, 2 travellers");
+        for (int x = 1; x < 9; x++) {
+            Assert.assertEquals(f.getTravellersRoomHeaderText(x), "Room " + x);
+            if (x < 8) {
+                sa.assertEquals(f.getTravellersAddAnotherRoomText(), "Add another room");
+                f.clickTravellersAddRoom();
+            }
+        }
+        f.log(LogStatus.PASS, "The room headers inside the travellers panel displayed the correct text.");
+        sa.assertAll();
+    }
+
+    @Test
+    public void assertTravellersPanelDisplaysCorrectAdultsLabel() {
+        test = f.createTestReport(report, "Assert That The Adults Labels Inside The Travellers Panel Are Displaying The Correct Text");
+        SoftAssert sa = new SoftAssert();
+        f.clickStaysTab();
+        sa.assertEquals(f.getStaysTabSpanText(), "Stays");
+        f.clickTravellersButton();
+        sa.assertEquals(f.getTravellersButtonText(), "1 room, 2 travellers");
+        for (int x = 1; x < 9; x++) {
+            Assert.assertEquals(f.getTravellersAdultsLabelText(x), "Adults");
+            if (x < 8) {
+                sa.assertEquals(f.getTravellersAddAnotherRoomText(), "Add another room");
+                f.clickTravellersAddRoom();
+            }
+        }
+        f.log(LogStatus.INFO, "The 'Adults' labels inside the travellers panel displayed the correct text.");
+        sa.assertAll();
+    }
+
+    @Test
+    public void assertTravellersPanelDisplaysCorrectChildrenLabel() {
+        test = f.createTestReport(report, "Assert That The Children Labels Inside The Travellers Panel Are Displaying The Correct Text");
+        SoftAssert sa = new SoftAssert();
+        f.clickStaysTab();
+        sa.assertEquals(f.getStaysTabSpanText(), "Stays");
+        f.clickTravellersButton();
+        sa.assertEquals(f.getTravellersButtonText(), "1 room, 2 travellers");
+        for (int x = 1; x < 9; x++) {
+            Assert.assertEquals(f.getTravellersChildrenLabelText(x), "Children\n" +
+                    "Ages 0 to 17");
+            if (x < 8) {
+                sa.assertEquals(f.getTravellersAddAnotherRoomText(), "Add another room");
+                f.clickTravellersAddRoom();
+            }
+        }
+        f.log(LogStatus.INFO, "The 'Children' labels inside the travellers panel displayed the correct text.");
+        sa.assertAll();
+    }
+
+    @Test
+    public void assertTravellersPanelDisplaysRemoveRoomButtonsCorrectly() {
+        test = f.createTestReport(report, "Assert That The Remove Room Buttons Inside The Travellers Panel Are Displaying The Correct Text");
+        SoftAssert sa = new SoftAssert();
+        f.clickStaysTab();
+        sa.assertEquals(f.getStaysTabSpanText(), "Stays");
+        f.clickTravellersButton();
+        sa.assertEquals(f.getTravellersButtonText(), "1 room, 2 travellers");
+        for (int x = 1; x < 9; x++) {
+            if (x > 1) {
+                Assert.assertEquals(f.getTravellersRemoveRoomButtonText(x), "Remove room");
+            }
+            if (x < 8) {
+                sa.assertEquals(f.getTravellersAddAnotherRoomText(), "Add another room");
+                f.clickTravellersAddRoom();
+            }
+        }
+        f.log(LogStatus.INFO, "The 'Remove room' buttons inside the travellers panel displayed the correct text.");
+        sa.assertAll();
+    }
+
+    @Test
+    public void assertTravellersChildrenSelectLabelsDisplayedCorrectly() {
+        test = f.createTestReport(report, "Assert That The Children Select Labels Inside The Travellers Panel Are Displayed Correctly");
+        SoftAssert sa = new SoftAssert();
+        f.clickStaysTab();
+        sa.assertEquals(f.getStaysTabSpanText(), "Stays");
+        f.clickTravellersButton();
+        sa.assertEquals(f.getTravellersButtonText(), "1 room, 2 travellers");
+        for (int room = 1; room < 9; room++) {
+            for (int child = 1; child < 7; child++) {
+                f.clickTravellersChildrenInc(room);
+                sa.assertEquals(f.getTravellersChildCount(room), Integer.toString(child));
+                Assert.assertEquals(f.getTravellersChildSelectLabelText(room, child), "Child " + child + " age");
+            }
+            if (room < 8) {
+                sa.assertEquals(f.getTravellersAddAnotherRoomText(), "Add another room");
+                f.clickTravellersAddRoom();
+            }
+        }
+        f.log(LogStatus.INFO, "The children select labels were displayed correctly.");
+        sa.assertAll();
+    }
+
+    @Test
+    public void assertTravellersChildrenSelectDisplaySelectedOption() {
+        test = f.createTestReport(report, "Assert That The Child Drop Down Menus Display The Selected Option");
+        SoftAssert sa = new SoftAssert();
+        f.clickStaysTab();
+        sa.assertEquals(f.getStaysTabSpanText(), "Stays");
+        f.clickTravellersButton();
+        sa.assertEquals(f.getTravellersButtonText(), "1 room, 2 travellers");
+        for (int room = 1; room < 9; room++) {
+            for (int child = 1; child < 7; child++) {
+                f.clickTravellersChildrenInc(room);
+                sa.assertEquals(f.getTravellersChildCount(room), Integer.toString(child));
+                f.selectChildAge(room, child, (room + child));
+                Assert.assertEquals(f.getTravellersChildSelectedText(room, child), Integer.toString(room + child));
+            }
+            if (room < 8) {
+                sa.assertEquals(f.getTravellersAddAnotherRoomText(), "Add another room");
+                f.clickTravellersAddRoom();
+            }
+        }
+        f.log(LogStatus.INFO, "All the child select elements displayed the option that was selected");
+        sa.assertAll();
+    }
+
+    @Test
+    public void assertTravellersChildrenSelectContainsCorrectOptions() {
+        test = f.createTestReport(report, "Assert That The Child Drop Down Menus Contain The Correct Options");
+        final String[] EXPECTED_CHILD_SELECT_OPTIONS = {"Under 1", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"
+                , "11", "12", "13", "14", "15", "16", "17"};
+        SoftAssert sa = new SoftAssert();
+        f.clickStaysTab();
+        sa.assertEquals(f.getStaysTabSpanText(), "Stays");
+        f.clickTravellersButton();
+        sa.assertEquals(f.getTravellersButtonText(), "1 room, 2 travellers");
+        for (int room = 1; room < 9; room++) {
+            for (int child = 1; child < 7; child++) {
+                f.clickTravellersChildrenInc(room);
+                sa.assertEquals(f.getTravellersChildCount(room), Integer.toString(child));
+                Assert.assertTrue(f.isChildSelectListingCorrectOptions(room, child, EXPECTED_CHILD_SELECT_OPTIONS));
+            }
+            if (room < 8) {
+                sa.assertEquals(f.getTravellersAddAnotherRoomText(), "Add another room");
+                f.clickTravellersAddRoom();
+            }
+        }
+        f.log(LogStatus.INFO, "The available options of all child select elements contained the expected options.");
+        sa.assertAll();
+    }
+
+    @Test
+    public void assertTravellersDoneButtonDisplaysCorrectRoomTravellersCount() {
+        test = f.createTestReport(report, "Assert That The Done Button In The Travellers Tab Displays The Correct Room & Travellers Count");
+        SoftAssert sa = new SoftAssert();
+        f.clickStaysTab();
+        sa.assertEquals(f.getStaysTabSpanText(), "Stays");
+        f.clickTravellersButton();
+        sa.assertEquals(f.getTravellersButtonText(), "1 room, 2 travellers");
+        int expectedTravellersCount = 2;
+        //1 room, 2 travellers
+        for (int room = 1; room < 9; room++) {
+            if (room > 1) {
+                for (int adult = 1; adult < 14; adult++) {
+                    f.clickTravellersAdultsInc(room);
+                    sa.assertEquals(f.getTravellersAdultsCount(room), Integer.toString(adult + 1));
+                    expectedTravellersCount++;
+                    if (room > 1) {
+                        Assert.assertEquals(f.getTravellersDoneButtonText(), "Done\n" + room + " rooms, " + expectedTravellersCount + " travellers");
+                    } else {
+                        Assert.assertEquals(f.getTravellersDoneButtonText(), "Done\n" + room + " room, " + expectedTravellersCount + " travellers");
+                    }
+                }
+            } else {
+                for (int adult = 1; adult < 13; adult++) {
+                    f.clickTravellersAdultsInc(room);
+                    sa.assertEquals(f.getTravellersAdultsCount(room), Integer.toString(adult + 2));
+                    expectedTravellersCount++;
+                    if (room > 1) {
+                        Assert.assertEquals(f.getTravellersDoneButtonText(), "Done\n" + room + " rooms, " + expectedTravellersCount + " travellers");
+                    } else {
+                        Assert.assertEquals(f.getTravellersDoneButtonText(), "Done\n" + room + " room, " + expectedTravellersCount + " travellers");
+                    }
+                }
+            }
+            for (int child = 1; child < 7; child++) {
+                f.clickTravellersChildrenInc(room);
+                sa.assertEquals(f.getTravellersChildCount(room), Integer.toString(child));
+                expectedTravellersCount++;
+                if (room > 1) {
+                    Assert.assertEquals(f.getTravellersDoneButtonText(), "Done\n" + room + " rooms, " + expectedTravellersCount + " travellers");
+                } else {
+                    Assert.assertEquals(f.getTravellersDoneButtonText(), "Done\n" + room + " room, " + expectedTravellersCount + " travellers");
+                }
+            }
+            if (room < 8) {
+                sa.assertEquals(f.getTravellersAddAnotherRoomText(), "Add another room");
+                f.clickTravellersAddRoom();
+                expectedTravellersCount++;
+            }
+        }
+        f.log(LogStatus.INFO, "The 'Done' button in the travellers tab displays the correct number of travellers and rooms.");
+        sa.assertAll();
     }
 }

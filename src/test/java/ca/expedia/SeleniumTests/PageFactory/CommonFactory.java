@@ -101,8 +101,10 @@ public abstract class CommonFactory {
     protected WebElement thingsToDoTab;
     @FindBy(xpath = "//a[@href='?pwaLob=wizard-package-pwa']")
     protected WebElement vacationPackagesTab;
-    @FindBy(xpath="//section[@class='header-region no-stripe']")
+    @FindBy(xpath = "//section[@class='header-region no-stripe']")
     protected WebElement clickOffMenuLocation;
+    @FindBy(xpath = "//a[@href='?pwaLob=wizard-hotel-pwa-v2']/span")
+    protected WebElement staysTabSpan;
     private WebDriver driver;
     private ExtentTest test;
 
@@ -387,7 +389,6 @@ public abstract class CommonFactory {
      * @param date  The day number for the date we are selecting.
      * @param year  The year for the date we are selecting.
      */
-//TODO: MAKE THIS PROTECTED, CHANGE METHOD NAME TO selectCalendarDay(), USE METHOD THAT NAVIGATES TO DATES BEFORE CLICKING
     protected void selectCalendarDay(Month month, int date, int year) {
         WebElement calendarDay = getCalendarDay(month, date, year);
         calendarDay.click();
@@ -397,9 +398,10 @@ public abstract class CommonFactory {
     /**
      * Clicks on the header of the website in order to close a menu.
      */
-    public void clickOffMenu(){
+    public void clickOffMenu() {
         clickOffMenuLocation.click();
     }
+
     /**
      * Starts the report for a specified test and returns the instance as an ExtentTest object.
      *
@@ -490,6 +492,13 @@ public abstract class CommonFactory {
      */
     public String getRightCalendarHeaderText() {
         return rightCalendarHeader.getText();
+    }
+
+    /**
+     * Returns the visible text of the span inside the 'Stays' tab button.
+     */
+    public String getStaysTabSpanText() {
+        return staysTabSpan.getText();
     }
 
     /**
@@ -617,7 +626,7 @@ public abstract class CommonFactory {
         // the current day minus one and count down until we reach 0.
         // While we are counting down the days, we are checking to see if they are disabled.
         if (dayToday != 1) {
-            if(isYesterdayDisabled) {
+            if (isYesterdayDisabled) {
                 for (int x = (dayToday - 1); x > 0; x--) {
                     try {
                         // If driver finds the element using this xpath then we know it's disabled.
@@ -632,7 +641,7 @@ public abstract class CommonFactory {
                         return false;
                     }
                 }
-            }else{
+            } else {
                 for (int x = (dayToday - 2); x > 0; x--) {
                     try {
                         // If driver finds the element using this xpath then we know it's disabled.
@@ -795,7 +804,7 @@ public abstract class CommonFactory {
                     highlighted correctly.*/
                     try {
                         System.out.println("Found calender day button for: " + checkOutDate.getMonth().getDisplayName(TextStyle.SHORT, Locale.US) + " "
-                                + dayCounter+ ", " + checkOutDate.getYear() + " on the right side.");
+                                + dayCounter + ", " + checkOutDate.getYear() + " on the right side.");
                         driver.findElement(By.xpath("//button[@class='uitk-date-picker-day uitk-new-date-picker-day selected' and @aria-label='"
                                 + checkOutDate.getMonth().getDisplayName(TextStyle.SHORT, Locale.US)
                                 + " " + dayCounter + ", " + checkOutDate.getYear() + ".']"));

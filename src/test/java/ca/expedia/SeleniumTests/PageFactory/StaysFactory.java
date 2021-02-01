@@ -9,6 +9,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
+import java.util.List;
+
 public class StaysFactory extends CommonFactory {
 
     private WebDriver driver;
@@ -55,15 +57,14 @@ public class StaysFactory extends CommonFactory {
     @FindBy(xpath = "//button[@data-testid='guests-done-button']/span")
     private WebElement travellersDoneSubText;
 
-    @FindBy(xpath = "//div[@class='uitk-empty-state-body']")
-    private WebElement goingToEmptyState;
-
     @FindBy(xpath = "//label[@for='add-flight-switch']")
     private WebElement addAFlightLabel;
 
     @FindBy(xpath = "//label[@for='add-car-switch']")
     private WebElement addACarLabel;
 
+    @FindBy(xpath = "//h3[text()='Travellers']")
+    private WebElement travellersMenuHeader;
 
     /**
      * This button opens the calendar to select a check in date.
@@ -76,6 +77,9 @@ public class StaysFactory extends CommonFactory {
      */
     @FindBy(id = "d2-btn")
     private WebElement checkOutButton;
+
+    @FindBy(xpath = "//div[@data-testid='lob-error-summary']/div/h3")
+    private WebElement travellersErrorMessage;
 
     /**
      * Constructor
@@ -348,76 +352,198 @@ public class StaysFactory extends CommonFactory {
         log(LogStatus.INFO, "Clicked on the done button in the 'Travellers' panel.");
     }
 
+    /**
+     * Returns the visible text of the "Going to" button.
+     */
     public String getGoingToButtonText() {
         return goingToButton.getText();
     }
 
+    /**
+     * Returns the visible text of the "Leaving from" button.
+     */
     public String getLeavingFromButtonText() {
         return leavingFromButton.getText();
     }
 
-    public String getGoingToPlaceholderText() {
+    /**
+     * Returns the placeholder text that is displayed on the "Going to" input when nothing has been entered.
+     */
+    public String getGoingToInputPlaceholderText() {
         return goingToInput.getAttribute("placeholder");
     }
 
-    public String getGoingToEmptyStateText() {
-        return goingToEmptyState.getText();
-    }
-
+    /**
+     * Returns the visible text of the "Check-in" button.
+     */
     public String getCheckInButtonText() {
         return checkInButton.getText();
     }
 
+    /**
+     * Returns the visible text of the "Check-out" button.
+     */
     public String getCheckOutButtonText() {
         return checkOutButton.getText();
     }
 
-    public String getTravellersText() {
+    /**
+     * Returns the visible text of the "Travellers" button.
+     */
+    public String getTravellersButtonText() {
         try {
-            WebElement staysTravellerButton = driver
-                    .findElement(By.xpath("//button[@data-testid='travelers-field-trigger']"));
-            return staysTravellerButton.getText();
-
+            return driver.findElement(By.xpath("//button[@data-testid='travelers-field-trigger']")).getText();
         } catch (NoSuchElementException e) {
-            WebElement alternativeStaysTravellerButton = driver
-                    .findElement(By.xpath("//a[@data-testid='travelers-field']"));
-            return alternativeStaysTravellerButton.getText();
+            return driver.findElement(By.xpath("//a[@data-testid='travelers-field']")).getText();
         }
     }
 
+    /**
+     * Returns the visible text of the "Add a flight" label.
+     */
     public String getAddAFlightLabelText() {
         return addAFlightLabel.getText();
     }
 
+    /**
+     * Returns the visible text of the "Add a car" label.
+     */
     public String getAddACarLabelText() {
         return addACarLabel.getText();
     }
 
+    /**
+     * Returns the text currently displayed in the "Leaving from" input.
+     */
     public String getLeavingFromInputValue() {
         return leavingFromInput.getAttribute("value");
     }
 
+    /**
+     * Returns the text currently displayed in the "Going to" input.
+     */
     public String getGoingToInputValue() {
         return goingToInput.getAttribute("value");
     }
 
-    public String getTravellersDoneButtonSubText(){
-        return travellersDoneSubText.getText();
+    /**
+     * Returns the visible text of the "Done" button in the travellers panel.
+     */
+    public String getTravellersDoneButtonText() {
+        return travellersDoneButton.getText();
     }
-    //TODO: MAKE THIS WORK FOR 1 ROOM AT A TIME.
-    public Boolean isTravellersPanelDisplayingRooms(int rooms) {
-        for (int x = rooms; x > 0; x--) {
-            try {
-                driver.findElement(By.xpath("//div[@data-testid='room-" + x + "']"));
-            } catch (NoSuchElementException e) {
-                log(LogStatus.ERROR, "Room " + x + " was not displayed on the travellers panel correctly.");
+
+    /**
+     * Returns the visible text of the "Travellers" header in the travellers panel.
+     */
+    public String getTravellersPanelHeaderText() {
+        return travellersMenuHeader.getText();
+    }
+
+    /**
+     * Returns the visible text of a specific "Room" header.
+     *
+     * @param room The room which the "Room" header you are looking for is in. Range: 1-8
+     */
+
+    public String getTravellersRoomHeaderText(int room) {
+        return driver.findElement((By.xpath("//div[@data-testid='room-" + room + "']/h3/span"))).getText();
+    }
+
+    /**
+     * Returns the visible text of a specific "Adults" label.
+     *
+     * @param room The room which the "Adults" label you are looking for is in. Range: 1-8
+     */
+    public String getTravellersAdultsLabelText(int room) {
+        return driver.findElement(By.xpath("//label[@for='adult-input-" + (room - 1) + "']")).getText();
+    }
+
+    /**
+     * Returns the visible text of a specific "Children" label.
+     *
+     * @param room The room which the "Children" label you are looking for is in. Range: 1-8
+     */
+    public String getTravellersChildrenLabelText(int room) {
+        return driver.findElement(By.xpath("//label[@for='child-input-" + (room - 1) + "']")).getText();
+    }
+
+    /**
+     * Returns the visible text of the label displayed above the selected option on a Child select element.
+     *
+     * @param room  The room which the label is located in. Range 1-8
+     * @param child The specific child select which contains the label. Range: 1-6
+     */
+    public String getTravellersChildSelectLabelText(int room, int child) {
+        return driver.findElement(By.xpath("//label[@for='child-age-input-" + (room - 1) + "-" + (child - 1) + "']")).getText();
+    }
+
+    /**
+     * Returns the selected option of a child select element.
+     *
+     * @param room  The room which the child select element is in. Range: 1-8
+     * @param child The specific child select. Range 1-6
+     */
+    public String getTravellersChildSelectedText(int room, int child) {
+        return getChildAgeSelect(room, child).getFirstSelectedOption().getText();
+    }
+
+    /**
+     * Returns the "Adults" count.
+     *
+     * @param room The specific room which the counter is located. Range: 1-8
+     */
+    public String getTravellersAdultsCount(int room) {
+        return driver.findElement(By.id("adult-input-" + (room - 1))).getAttribute("value");
+    }
+
+    /**
+     * Returns the "Children" count.
+     *
+     * @param room The specific room which the counter is located. Range: 1-8
+     */
+    public String getTravellersChildCount(int room) {
+        return driver.findElement(By.id("child-input-" + (room - 1))).getAttribute("value");
+    }
+
+    /**
+     * Returns the visible text of the "Add another room" button.
+     */
+    public String getTravellersAddAnotherRoomText() {
+        return travellersAddAnotherRoomButton.getText();
+    }
+
+    /**
+     * Returns the visible text of the "Remove room" button.
+     *
+     * @param room The specific room in which the element is located in. Range: 2-8
+     */
+    public String getTravellersRemoveRoomButtonText(int room) {
+        return getTravellersRemoveRoom(room).getText();
+    }
+
+    /**
+     * Returns the visible text of the error message that is displayed when you try to book more than 14 people.
+     */
+    public String getTravellersErrorMessageText() {
+        return travellersErrorMessage.getText();
+    }
+
+    /**
+     * Checks that a specific child select element is displaying the correct options.
+     *
+     * @param room            The room in which the child select is located. Range 1-8
+     * @param child           The specific child select we are checking. Range 1-6
+     * @param expectedOptions What options the child select should have.
+     * @return True if all the options are correct, else false.
+     */
+    public Boolean isChildSelectListingCorrectOptions(int room, int child, String[] expectedOptions) {
+        List<WebElement> actualOptions = getChildAgeSelect(room, child).getOptions();
+        for (int x = 0; x < actualOptions.size(); x++) {
+            if (!actualOptions.get(x).getText().equals(expectedOptions[x])) {
+                log(LogStatus.ERROR, "The available options of child select element " + child + " room " + room + " did not contain the expected options.");
                 return false;
             }
-        }
-        if (rooms > 1) {
-            log(LogStatus.INFO, rooms + " rooms were displayed on the travellers panel correctly.");
-        } else {
-            log(LogStatus.INFO, rooms + " room was displayed on the travellers panel correctly.");
         }
         return true;
     }

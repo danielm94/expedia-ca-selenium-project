@@ -72,6 +72,7 @@ public abstract class TestBase {
             //Log pass message on success.
             test.log(LogStatus.PASS, testResult.getMethod().getMethodName() + " has passed.");
         }
+
         //Stop reporting for the test and flush it so that the report document will be updated with the test results.
         report.endTest(test);
         report.flush();
