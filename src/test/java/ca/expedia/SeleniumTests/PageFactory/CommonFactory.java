@@ -755,6 +755,26 @@ public abstract class CommonFactory {
         selectCalendarDay(month, day, year);
     }
 
+    //     if(validateHighlightedCalendarDay(checkOutDate.getMonth().getDisplayName(TextStyle.SHORT, Locale.US),dayCounter,checkOutDate.getYear()))
+    //                    {
+    //                        return false;
+    //                    }
+    private Boolean validateHighlightedCalendarDay(String month, int day, int year) {
+        try {
+            driver.findElement(By.xpath("//button[@class='uitk-date-picker-day uitk-new-date-picker-day selected' and @aria-label='"
+                    + month
+                    + " " + day + ", " + year + ".']"));
+            //If driver finds this element with this xpath, we know it's highlighted correctly.
+        } catch (NoSuchElementException e) {
+            log(LogStatus.ERROR,
+                    "The calendar day button for: " + month
+                            + " " + day + ", " + year
+                            + " was not highlighted correctly.");
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Checks that the check in day button, check out day button and all the day buttons between are highlighted
      * correctly. You must have the check in button & check out button selected and be at the check out button's month
@@ -803,8 +823,6 @@ public abstract class CommonFactory {
                     /*Verify that the day buttons in between the check in date and check out date are
                     highlighted correctly.*/
                     try {
-                        System.out.println("Found calender day button for: " + checkOutDate.getMonth().getDisplayName(TextStyle.SHORT, Locale.US) + " "
-                                + dayCounter + ", " + checkOutDate.getYear() + " on the right side.");
                         driver.findElement(By.xpath("//button[@class='uitk-date-picker-day uitk-new-date-picker-day selected' and @aria-label='"
                                 + checkOutDate.getMonth().getDisplayName(TextStyle.SHORT, Locale.US)
                                 + " " + dayCounter + ", " + checkOutDate.getYear() + ".']"));
@@ -833,8 +851,6 @@ public abstract class CommonFactory {
                     if (dayCounter == checkInDate.getDayOfMonth() && checkOutDate.getMonth().equals(checkInDate.getMonth())
                             && checkOutDate.getYear() == checkInDate.getYear()) {
                         try {
-                            System.out.println("Found calender check in day button for: " + checkOutDate.getMonth().getDisplayName(TextStyle.SHORT, Locale.US) + " "
-                                    + dayCounter + ", " + checkOutDate.getYear());
                             driver.findElement(By.xpath("//button[@aria-label='"
                                     + checkInDate.getMonth().getDisplayName(TextStyle.SHORT, Locale.US) + " "
                                     + checkInDate.getDayOfMonth() + ", " + checkInDate.getYear() + " selected, current check in date.']"));
@@ -853,8 +869,6 @@ public abstract class CommonFactory {
                     }
                     //Verify that the day buttons in between the check in date and check out date are highlighted correctly.
                     try {
-                        System.out.println("Found calender day button for: " + checkOutDate.getMonth().getDisplayName(TextStyle.SHORT, Locale.US) + " "
-                                + dayCounter + ", " + checkOutDate.getYear() + " on the left side.");
                         driver.findElement(By.xpath("//button[@class='uitk-date-picker-day uitk-new-date-picker-day selected' and @aria-label='"
                                 + checkOutDate.getMonth().getDisplayName(TextStyle.SHORT, Locale.US)
                                 + " " + dayCounter + ", " + checkOutDate.getYear() + ".']"));
