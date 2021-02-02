@@ -1,15 +1,13 @@
 package ca.expedia.SeleniumTests.PageFactory;
 
+import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class FlightsFactory extends CommonFactory {
     private WebDriver driver;
@@ -109,8 +107,8 @@ public class FlightsFactory extends CommonFactory {
      *
      * @param driver Driver instance from test class.
      */
-    public FlightsFactory(WebDriver driver) {
-        super(driver);
+    public FlightsFactory(WebDriver driver, ExtentTest test) {
+        super(driver, test);
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }

@@ -1,5 +1,6 @@
 package ca.expedia.SeleniumTests.PageFactory;
 
+import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -80,13 +81,9 @@ public class VacationFactory extends CommonFactory {
     @FindBy(xpath = "//button[@data-testid='guests-done-button']")
     private WebElement travellersDone;
 
-    /**
-     * Constructor
-     *
-     * @param driver Driver instance from test class.
-     */
-    public VacationFactory(WebDriver driver) {
-        super(driver);
+
+    public VacationFactory(WebDriver driver, ExtentTest test) {
+        super(driver,test);
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }

@@ -1,5 +1,6 @@
 package ca.expedia.SeleniumTests.PageFactory;
 
+import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -86,8 +87,8 @@ public class StaysFactory extends CommonFactory {
      *
      * @param driver Driver instance from test class.
      */
-    public StaysFactory(WebDriver driver) {
-        super(driver);
+    public StaysFactory(WebDriver driver, ExtentTest test) {
+        super(driver,test);
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }

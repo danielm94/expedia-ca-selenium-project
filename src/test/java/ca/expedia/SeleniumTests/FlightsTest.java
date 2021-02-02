@@ -1,135 +1,123 @@
 package ca.expedia.SeleniumTests;
 
-import ca.expedia.SeleniumTests.PageFactory.FlightsFactory;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.time.Month;
 
 public class FlightsTest extends TestBase {
-    private FlightsFactory f;
-
-    @BeforeMethod
-    public void beforeMethod() {
-        reportName = "flights-tab";
-        f = new FlightsFactory(driver);
-        super.beforeMethod();
-    }
-
-    @Test()
+    
+    @Test(description = "Flights Tab Test" )
     public void flightsTabTest() {
-        test = f.createTestReport(report, "Flights Tab Test");
-        f.clickFlightsTab();
-        f.clickLeavingFrom();
-        f.sendKeysLeaving("Delhi");
-        f.clickSearchResult("Delhi (DEL - Indira Gandhi Intl.)", "India");
-        f.clickGoingTo();
-        f.sendKeysGoing("Toronto");
-        f.clickSearchResult("Toronto (YYZ - Pearson Intl.)", "Ontario, Canada");
-        f.clickDeparting();
-        f.clickCalendarCheckInDate();
-        f.clickCalendarDay(Month.FEBRUARY, 5, 2021);
-        f.clickCalendarDone();
-        f.clickReturning();
-        f.clickCalendarCheckOutDate();
-        f.clickCalendarForwardArrow();
-        f.clickCalendarBackArrow();
-        f.clickCalendarDay(Month.FEBRUARY, 9, 2021);
-        f.clickCalendarDone();
-        f.clickPreferredClass();
-        f.clickPremiumEconomy();
-        f.clickOneWay();
-        f.clickLeavingFrom();
-        f.sendKeysLeaving("Delhi");
-        f.clickSearchResult("Delhi (DEL - Indira Gandhi Intl.)", "India");
-        f.clickGoingTo();
-        f.sendKeysGoing("Toronto");
-        f.clickSearchResult("Toronto (YYZ - Pearson Intl.)", "Ontario, Canada");
-        f.clickDeparting();
-        f.clickCalendarCheckInDate();
-        f.clickCalendarDay(Month.FEBRUARY, 9, 2021);
-        f.clickCalendarDone();
-        f.clickPreferredClass();
-        f.clickPremiumEconomy();
-        f.clickTraveller();
+        fli.clickFlightsTab();
+        fli.clickLeavingFrom();
+        fli.sendKeysLeaving("Delhi");
+        fli.clickSearchResult("Delhi (DEL - Indira Gandhi Intl.)", "India");
+        fli.clickGoingTo();
+        fli.sendKeysGoing("Toronto");
+        fli.clickSearchResult("Toronto (YYZ - Pearson Intl.)", "Ontario, Canada");
+        fli.clickDeparting();
+        fli.clickCalendarCheckInDate();
+        fli.clickCalendarDay(Month.FEBRUARY, 5, 2021);
+        fli.clickCalendarDone();
+        fli.clickReturning();
+        fli.clickCalendarCheckOutDate();
+        fli.clickCalendarForwardArrow();
+        fli.clickCalendarBackArrow();
+        fli.clickCalendarDay(Month.FEBRUARY, 9, 2021);
+        fli.clickCalendarDone();
+        fli.clickPreferredClass();
+        fli.clickPremiumEconomy();
+        fli.clickOneWay();
+        fli.clickLeavingFrom();
+        fli.sendKeysLeaving("Delhi");
+        fli.clickSearchResult("Delhi (DEL - Indira Gandhi Intl.)", "India");
+        fli.clickGoingTo();
+        fli.sendKeysGoing("Toronto");
+        fli.clickSearchResult("Toronto (YYZ - Pearson Intl.)", "Ontario, Canada");
+        fli.clickDeparting();
+        fli.clickCalendarCheckInDate();
+        fli.clickCalendarDay(Month.FEBRUARY, 9, 2021);
+        fli.clickCalendarDone();
+        fli.clickPreferredClass();
+        fli.clickPremiumEconomy();
+        fli.clickTraveller();
         for (int x = 0; x < 5; x++) {
-            f.clickTravellersChildrenInc();
+            fli.clickTravellersChildrenInc();
         }
-        f.selectChildAge(1, 2);
-        f.selectChildAge(2, 3);
-        f.selectChildAge(3, 10);
-        f.selectChildAge(4, 9);
-        f.selectChildAge(5, 7);
+        fli.selectChildAge(1, 2);
+        fli.selectChildAge(2, 3);
+        fli.selectChildAge(3, 10);
+        fli.selectChildAge(4, 9);
+        fli.selectChildAge(5, 7);
         for (int x = 0; x < 5; x++) {
-            f.clickTravellersChildrenDec();
+            fli.clickTravellersChildrenDec();
         }
         for (int x = 0; x < 5; x++) {
-            f.clickTravellersInfantsInc();
+            fli.clickTravellersInfantsInc();
         }
-        f.selectInfantAge(1, 1);
-        f.selectInfantAge(2, 1);
-        f.selectInfantAge(3, 1);
-        f.selectInfantAge(4, 1);
-        f.selectInfantAge(5, 1);
-        f.selectInfantAge(5, 0);
-        f.clickTravellersInSeat();
-        f.clickTravellersOnLap();
-        f.clickAirlineAgeRules();
-        f.clickTravellersDone();
+        fli.selectInfantAge(1, 1);
+        fli.selectInfantAge(2, 1);
+        fli.selectInfantAge(3, 1);
+        fli.selectInfantAge(4, 1);
+        fli.selectInfantAge(5, 1);
+        fli.selectInfantAge(5, 0);
+        fli.clickTravellersInSeat();
+        fli.clickTravellersOnLap();
+        fli.clickAirlineAgeRules();
+        fli.clickTravellersDone();
     }
 
-    @Test()
+    @Test(description = "Multi City Test")
     public void mutliCityTest() {
-        test = f.createTestReport(report, "Multi City Test");
-        f.clickFlightsTab();
-        f.clickMultiCity();
+        fli.clickFlightsTab();
+        fli.clickMultiCity();
         for (int x = 0; x < 3; x++) {
-            f.clickAddAnotherFlight();
+            fli.clickAddAnotherFlight();
         }
-        f.clickMultiCityLeavingFrom(1);
-        f.sendKeysMultiCityLeaving("Delhi", 1);
-        f.clickSearchResult("Delhi (DEL - Indira Gandhi Intl.)", "India");
-        f.clickMultiCityGoingTo(1);
-        f.sendKeysMultiCityGoing("Toronto", 1);
-        f.clickSearchResult("Toronto (YYZ - Pearson Intl.)", "Ontario, Canada");
-        f.clickMultiCityDeparting(1);
-        f.clickCalendarDay(Month.FEBRUARY, 8, 2021);
-        f.clickCalendarDone();
-        f.clickMultiCityLeavingFrom(2);
-        f.sendKeysMultiCityLeaving("Delhi", 2);
-        f.clickSearchResult("London (YXU - London Intl.)", "Near Delhi, Ontario, Canada");
-        f.clickMultiCityGoingTo(2);
-        f.sendKeysMultiCityGoing("Toronto", 2);
-        f.clickSearchResult("Toronto (YYZ - Pearson Intl.)", "Ontario, Canada");
-        f.clickMultiCityDeparting(2);
-        f.clickCalendarDay(Month.FEBRUARY, 9, 2021);
-        f.clickCalendarDone();
-        f.clickMultiCityLeavingFrom(3);
-        f.sendKeysMultiCityLeaving("Delhi", 3);
-        f.clickSearchResult("London (YXU - London Intl.)", "Near Delhi, Ontario, Canada");
-        f.clickMultiCityGoingTo(3);
-        f.sendKeysMultiCityGoing("Toronto", 3);
-        f.clickSearchResult("Toronto (YYZ - Pearson Intl.)", "Ontario, Canada");
-        f.clickMultiCityDeparting(3);
-        f.clickCalendarDay(Month.FEBRUARY, 10, 2021);
-        f.clickCalendarDone();
-        f.clickMultiCityLeavingFrom(4);
-        f.sendKeysMultiCityLeaving("Delhi", 4);
-        f.clickSearchResult("Delhi (DEL - Indira Gandhi Intl.)", "India");
-        f.clickMultiCityGoingTo(4);
-        f.sendKeysMultiCityGoing("Toronto", 4);
-        f.clickSearchResult("Toronto (YYZ - Pearson Intl.)", "Ontario, Canada");
-        f.clickMultiCityDeparting(4);
-        f.clickCalendarDay(Month.FEBRUARY, 11, 2021);
-        f.clickCalendarDone();
-        f.clickMultiCityLeavingFrom(5);
-        f.sendKeysMultiCityLeaving("Delhi", 5);
-        f.clickSearchResult("Delhi (DEL - Indira Gandhi Intl.)", "India");
-        f.clickMultiCityGoingTo(5);
-        f.sendKeysMultiCityGoing("Toronto", 5);
-        f.clickSearchResult("Toronto (YYZ - Pearson Intl.)", "Ontario, Canada");
-        f.clickMultiCityDeparting(5);
-        f.clickCalendarDay(Month.FEBRUARY, 12, 2021);
-        f.clickCalendarDone();
+        fli.clickMultiCityLeavingFrom(1);
+        fli.sendKeysMultiCityLeaving("Delhi", 1);
+        fli.clickSearchResult("Delhi (DEL - Indira Gandhi Intl.)", "India");
+        fli.clickMultiCityGoingTo(1);
+        fli.sendKeysMultiCityGoing("Toronto", 1);
+        fli.clickSearchResult("Toronto (YYZ - Pearson Intl.)", "Ontario, Canada");
+        fli.clickMultiCityDeparting(1);
+        fli.clickCalendarDay(Month.FEBRUARY, 8, 2021);
+        fli.clickCalendarDone();
+        fli.clickMultiCityLeavingFrom(2);
+        fli.sendKeysMultiCityLeaving("Delhi", 2);
+        fli.clickSearchResult("London (YXU - London Intl.)", "Near Delhi, Ontario, Canada");
+        fli.clickMultiCityGoingTo(2);
+        fli.sendKeysMultiCityGoing("Toronto", 2);
+        fli.clickSearchResult("Toronto (YYZ - Pearson Intl.)", "Ontario, Canada");
+        fli.clickMultiCityDeparting(2);
+        fli.clickCalendarDay(Month.FEBRUARY, 9, 2021);
+        fli.clickCalendarDone();
+        fli.clickMultiCityLeavingFrom(3);
+        fli.sendKeysMultiCityLeaving("Delhi", 3);
+        fli.clickSearchResult("London (YXU - London Intl.)", "Near Delhi, Ontario, Canada");
+        fli.clickMultiCityGoingTo(3);
+        fli.sendKeysMultiCityGoing("Toronto", 3);
+        fli.clickSearchResult("Toronto (YYZ - Pearson Intl.)", "Ontario, Canada");
+        fli.clickMultiCityDeparting(3);
+        fli.clickCalendarDay(Month.FEBRUARY, 10, 2021);
+        fli.clickCalendarDone();
+        fli.clickMultiCityLeavingFrom(4);
+        fli.sendKeysMultiCityLeaving("Delhi", 4);
+        fli.clickSearchResult("Delhi (DEL - Indira Gandhi Intl.)", "India");
+        fli.clickMultiCityGoingTo(4);
+        fli.sendKeysMultiCityGoing("Toronto", 4);
+        fli.clickSearchResult("Toronto (YYZ - Pearson Intl.)", "Ontario, Canada");
+        fli.clickMultiCityDeparting(4);
+        fli.clickCalendarDay(Month.FEBRUARY, 11, 2021);
+        fli.clickCalendarDone();
+        fli.clickMultiCityLeavingFrom(5);
+        fli.sendKeysMultiCityLeaving("Delhi", 5);
+        fli.clickSearchResult("Delhi (DEL - Indira Gandhi Intl.)", "India");
+        fli.clickMultiCityGoingTo(5);
+        fli.sendKeysMultiCityGoing("Toronto", 5);
+        fli.clickSearchResult("Toronto (YYZ - Pearson Intl.)", "Ontario, Canada");
+        fli.clickMultiCityDeparting(5);
+        fli.clickCalendarDay(Month.FEBRUARY, 12, 2021);
+        fli.clickCalendarDone();
     }
 }

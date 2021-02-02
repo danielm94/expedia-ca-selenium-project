@@ -1,10 +1,12 @@
 package ca.expedia.SeleniumTests;
-
+import ca.expedia.SeleniumTests.PageFactory.*;
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
+import org.testng.ITestContext;
+import org.testng.ITestListener;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -18,7 +20,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.concurrent.TimeUnit;
 
-public abstract class TestBase {
+public abstract class TestBase implements ITestListener {
     protected static URL gridHubUrl = null;
     protected static String baseUrl;
     protected static Capabilities capabilities;
@@ -29,26 +31,59 @@ public abstract class TestBase {
     protected ExtentTest test;
     protected String reportName;
     protected String originalWindowHandle;
+    protected StaysFactory sta;
+    protected FlightsFactory fli;
+    protected CarsFactory car;
+    protected VacationFactory vac;
+    protected AllInclusiveFactory all;
+    protected ThingsToDoFactory ttd;
+    protected CruisesFactory cru;
 
     @BeforeClass(alwaysRun = true)
-    public void beforeClass() throws IOException {
+    public void beforeClass(ITestContext context) throws IOException {
         SuiteConfiguration config = new SuiteConfiguration();
         baseUrl = config.getProperty("site.url");
         if (config.hasProperty("grid.url") && !"".equals(config.getProperty("grid.url"))) {
             gridHubUrl = new URL(config.getProperty("grid.url"));
         }
         capabilities = config.getCapabilities();
-
         driver = WebDriverPool.DEFAULT.getDriver(gridHubUrl, capabilities);
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
     @BeforeMethod
-    public void beforeMethod() {
-        report = ExtentReportsConfig.getInstance(reportName, false);
+    public void beforeMethod(ITestResult result) {
+        String className = result.getMethod().getRealClass().getSimpleName();
+        String description = result.getMethod().getDescription();
+        report = ExtentReportsConfig.getInstance(className, false);
+        test = ExtentReportsConfig.createTestReport(report, description);
+
         driver.get(baseUrl);
         originalWindowHandle = driver.getWindowHandle();
+        switch (className) {
+            case "StaysTest":
+                sta = new StaysFactory(driver, test);
+                break;
+            case "FlightsTest":
+                fli = new FlightsFactory(driver, test);
+                break;
+            case "CarsTest":
+                car = new CarsFactory(driver, test);
+                break;
+            case "VacationTest":
+                vac = new VacationFactory(driver, test);
+                break;
+            case "AllInclusiveTest":
+                all = new AllInclusiveFactory(driver, test);
+                break;
+            case "ThingsToDoTest":
+                ttd = new ThingsToDoFactory(driver, test);
+                break;
+            case "CruisesTest":
+                cru = new CruisesFactory(driver, test);
+                break;
+        }
     }
 
     @AfterMethod

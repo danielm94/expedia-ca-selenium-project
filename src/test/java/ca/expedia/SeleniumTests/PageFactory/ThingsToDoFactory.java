@@ -1,5 +1,6 @@
 package ca.expedia.SeleniumTests.PageFactory;
 
+import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -34,10 +35,11 @@ public class ThingsToDoFactory extends CommonFactory {
     /**
      * Constructor
      *
-     * @param driver Driver instance from test class.
+     * @param driver Driver instance from TestBase.
+     * @param test ExtentTest instance from TestBase.
      */
-    public ThingsToDoFactory(WebDriver driver) {
-        super(driver);
+    public ThingsToDoFactory(WebDriver driver, ExtentTest test) {
+        super(driver,test);
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }

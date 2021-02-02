@@ -1,5 +1,6 @@
 package ca.expedia.SeleniumTests.PageFactory;
 
+import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -45,10 +46,11 @@ public class CruisesFactory extends CommonFactory {
     /**
      * Constructor
      *
-     * @param driver Driver instance from test class.
+     * @param driver Driver instance from TestBase.
+     * @param test ExtentTest instance from TestBase.
      */
-    public CruisesFactory(WebDriver driver) {
-        super(driver);
+    public CruisesFactory(WebDriver driver, ExtentTest test) {
+        super(driver, test);
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
@@ -56,8 +58,7 @@ public class CruisesFactory extends CommonFactory {
     /**
      * Selects a cruise destination from the "Going to" select.
      *
-     * @param destination : The destination you wish to select. Use the exact text
-     *                    for the option you wish to select.
+     * @param destination : The destination you wish to select. Use the exact text for the option you wish to select.
      */
     public void selectCruiseDestination(String destination) {
         Select sel = new Select(goingTo);
@@ -66,8 +67,7 @@ public class CruisesFactory extends CommonFactory {
     }
 
     /**
-     * Clicks the "Departs as early as" button so that we may open the calendar date
-     * picker and select our first date.
+     * Clicks the "Departs as early as" button so that we may open the calendar date picker and select our first date.
      */
     public void clickDepartsAsEarlyAs() {
         departsAsEarlyAsButton.click();
@@ -75,8 +75,7 @@ public class CruisesFactory extends CommonFactory {
     }
 
     /**
-     * Clicks the "Departs as late as" button so that we may open the calendar date
-     * picker and select our second date.
+     * Clicks the "Departs as late as" button so that we may open the calendar date picker and select our second date.
      */
     public void clickDepartsAsLateAs() {
         departsAsLateAsButton.click();

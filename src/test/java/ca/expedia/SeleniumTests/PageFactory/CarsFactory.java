@@ -1,5 +1,6 @@
 package ca.expedia.SeleniumTests.PageFactory;
 
+import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -116,8 +117,8 @@ public class CarsFactory extends CommonFactory {
      *
      * @param driver Driver instance from test class.
      */
-    public CarsFactory(WebDriver driver) {
-        super(driver);
+    public CarsFactory(WebDriver driver, ExtentTest test) {
+        super(driver,test);
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }

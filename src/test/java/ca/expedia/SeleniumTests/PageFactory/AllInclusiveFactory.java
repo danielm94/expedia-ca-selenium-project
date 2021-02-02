@@ -1,5 +1,6 @@
 package ca.expedia.SeleniumTests.PageFactory;
 
+import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -41,10 +42,11 @@ public class AllInclusiveFactory extends CommonFactory {
     /**
      * Constructor
      *
-     * @param driver Driver instance from test class.
+     * @param driver Driver instance from TestBase.
+     * @param test ExtentTest instance from TestBase.
      */
-    public AllInclusiveFactory(WebDriver driver) {
-        super(driver);
+    public AllInclusiveFactory(WebDriver driver, ExtentTest test) {
+        super(driver,test);
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
