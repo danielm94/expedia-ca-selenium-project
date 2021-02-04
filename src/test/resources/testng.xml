@@ -3,13 +3,13 @@
 <suite name="Tests" verbose="5">
   <test name="Test1">
     <classes>
-      <class name="ca.expedia.SeleniumTests.StaysTest"/>
-      <class name="ca.expedia.SeleniumTests.FlightsTest"/>
-      <class name="ca.expedia.SeleniumTests.CarsTest"/>
-      <class name="ca.expedia.SeleniumTests.VacationTest"/>
-      <class name="ca.expedia.SeleniumTests.AllInclusiveTest"/>
-      <class name="ca.expedia.SeleniumTests.ThingsToDoTest"/>
-      <class name="ca.expedia.SeleniumTests.CruisesTest"/>
+      <class name="ca.expedia.SeleniumTests.Tests.StaysTest"/>
+      <class name="ca.expedia.SeleniumTests.Tests.FlightsTest"/>
+      <class name="ca.expedia.SeleniumTests.Tests.CarsTest"/>
+      <class name="ca.expedia.SeleniumTests.Tests.VacationTest"/>
+      <class name="ca.expedia.SeleniumTests.Tests.AllInclusiveTest"/>
+      <class name="ca.expedia.SeleniumTests.Tests.ThingsToDoTest"/>
+      <class name="ca.expedia.SeleniumTests.Tests.CruisesTest"/>
     </classes>
   </test>  
 </suite>

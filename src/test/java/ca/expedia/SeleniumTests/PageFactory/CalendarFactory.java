@@ -1,15 +1,15 @@
 package ca.expedia.SeleniumTests.PageFactory;
 
+import ca.expedia.SeleniumTests.FactoryBase.PageFactoryBase;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
-import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.PageFactory;
 
-import java.io.File;
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.YearMonth;
@@ -18,312 +18,28 @@ import java.time.format.TextStyle;
 import java.time.temporal.ChronoUnit;
 import java.util.Locale;
 
-public abstract class CommonFactory {
-    @FindBy(xpath = "//div[@class='uitk-grid']/a[@href='/']")
-    protected WebElement expediaLogo;
-    @FindBy(xpath = "//div[@id='gc-custom-header-tool-bar-shop-menu']/button")
-    protected WebElement moreTravelMenuButton;
-    @FindBy(xpath = "//div[@id='gc-custom-header-tool-bar-shop-menu']"
-            + "/div/div/div/div[@class='custom-menu-section custom-menu-section-list']/div/a[@href='/Hotels']")
-    protected WebElement moreTravelMenuStays;
-    @FindBy(xpath = "//div[@id='gc-custom-header-tool-bar-shop-menu']"
-            + "/div/div/div/div[@class='custom-menu-section custom-menu-section-list']/div/a[@href='/Flights']")
-    protected WebElement moreTravelMenuFlights;
-    @FindBy(xpath = "//div[@id='gc-custom-header-tool-bar-shop-menu']"
-            + "/div/div/div/div[@class='custom-menu-section custom-menu-section-list']/div/a[@href='/Cars']")
-    protected WebElement moreTravelMenuCars;
-    @FindBy(xpath = "//div[@id='gc-custom-header-tool-bar-shop-menu']"
-            + "/div/div/div/div[@class='custom-menu-section custom-menu-section-list']/div/a[@href='/Vacation-Packages']")
-    protected WebElement moreTravelMenuPackages;
-    @FindBy(xpath = "//div[@id='gc-custom-header-tool-bar-shop-menu']"
-            + "/div/div/div/div[@class='custom-menu-section custom-menu-section-list']/div/a[@href='/things-to-do']")
-    protected WebElement moreTravelMenuThingsToDo;
-    @FindBy(xpath = "//div[@id='gc-custom-header-tool-bar-shop-menu']"
-            + "/div/div/div/div[@class='custom-menu-section custom-menu-section-list']/div/a[@href='/Cruises']")
-    protected WebElement moreTravelMenuCruises;
-    @FindBy(xpath = "//div[@id='gc-custom-header-tool-bar-shop-menu']"
-            + "/div/div/div/div[@class='custom-menu-section custom-menu-section-list']/div/a[@href='/deals']")
-    protected WebElement moreTravelMenuDeals;
-    @FindBy(xpath = "//div[text()='Fran�ais']")
-    protected WebElement francais;
-    @FindBy(id = "listYourProperty")
-    protected WebElement listYourProperty;
-    @FindBy(id = "support-cs")
-    protected WebElement support;
-    @FindBy(id = "itinerary")
-    protected WebElement trips;
-    @FindBy(xpath = "//div[@id='gc-custom-header-nav-bar-acct-menu']/button")
-    protected WebElement signInMenuButton;
-    @FindBy(xpath = "//div[@class='actions']/a[@data-stid='link-header-account-signin']")
-    protected WebElement signInButton;
-    @FindBy(xpath = "//div[@class='actions']/a[@data-stid='link-header-account-signup']")
-    protected WebElement createAFreeAccount;
-    @FindBy(xpath = "//a[@href='/lists']")
-    protected WebElement listOfFavorites;
-    @FindBy(xpath = "//a[@href='/rewards/howitworks']")
-    protected WebElement expediaRewards;
-    @FindBy(xpath = "//a[@href='/p/info-other/feedback']")
-    protected WebElement feedback;
-    /**
-     * This button is in the calendar date selector panel. It allows the user to select a check in date.
-     */
+
+public class CalendarFactory extends PageFactoryBase {
+    private long globalTimeOutTime;
     @FindBy(xpath = "//button[1]/span[@class='uitk-date-picker-selection-date']")
-    protected WebElement calendarCheckInButton;
-    /**
-     * This button is in the calendar date selector panel. It allows the user to select a check out date.
-     */
+    private WebElement calendarCheckInButton;
     @FindBy(xpath = "//button[2]/span[@class='uitk-date-picker-selection-date']")
-    protected WebElement calendarCheckOutButton;
+    private WebElement calendarCheckOutButton;
     @FindBy(xpath = "//div[contains(@class,'uitk-date-picker-menu-pagination-container')]/button[1]")
-    protected WebElement calendarBackArrow;
+    private WebElement calendarBackArrow;
     @FindBy(xpath = "//div[contains(@class,'uitk-date-picker-menu-pagination-container')]/button[2]")
-    protected WebElement calendarForwardArrow;
+    private WebElement calendarForwardArrow;
     @FindBy(xpath = "//button[@data-stid='apply-date-picker']")
-    protected WebElement calendarDoneButton;
-    @FindBy(xpath = "//button[@data-testid='submit-button']")
-    protected WebElement searchButton;
+    private WebElement calendarDoneButton;
     @FindBy(xpath = "//div[@class='uitk-new-date-picker-month'][1]/h2")
-    protected WebElement leftCalendarHeader;
+    private WebElement leftCalendarHeader;
     @FindBy(xpath = "//div[@class='uitk-new-date-picker-month'][2]/h2")
-    protected WebElement rightCalendarHeader;
-    @FindBy(xpath = "//a[@href='?pwaLob=wizard-thirdPartyPackage-pwa']")
-    protected WebElement allInclusiveVacationsTab;
-    @FindBy(xpath = "//a[@href='?pwaLob=wizard-car-pwa']")
-    protected WebElement carsTab;
-    @FindBy(xpath = "//a[@href='?pwaLob=wizard-cruise-pwa']")
-    protected WebElement cruisesTab;
-    @FindBy(xpath = "//a[@href='?pwaLob=wizard-flight-pwa']")
-    protected WebElement flightsTab;
-    @FindBy(xpath = "//a[@href='?pwaLob=wizard-hotel-pwa-v2']")
-    protected WebElement staysTab;
-    @FindBy(xpath = "//a[@href='?pwaLob=wizard-lx-pwa']")
-    protected WebElement thingsToDoTab;
-    @FindBy(xpath = "//a[@href='?pwaLob=wizard-package-pwa']")
-    protected WebElement vacationPackagesTab;
-    @FindBy(xpath = "//section[@class='header-region no-stripe']")
-    protected WebElement clickOffMenuLocation;
-    @FindBy(xpath = "//a[@href='?pwaLob=wizard-hotel-pwa-v2']/span")
-    protected WebElement staysTabSpan;
-    private WebDriver driver;
-    private ExtentTest test;
+    private WebElement rightCalendarHeader;
 
-    /**
-     * Constructor
-     *
-     * @param driver Driver instance from test class.
-     */
-    protected CommonFactory(WebDriver driver,ExtentTest test) {
-        this.driver = driver;
-        this.test = test;
-    }
-
-
-    /**
-     * Clicks on the "All-inclusive vacations" tab.
-     */
-    public void clickAllInclusiveVacationsTab() {
-        allInclusiveVacationsTab.click();
-        log(LogStatus.INFO, "Clicked on the 'All-inclusive vacations' tab.");
-    }
-
-
-    /**
-     * Clicks on the "Cars" tab.
-     */
-    public void clickCarsTab() {
-        carsTab.click();
-        log(LogStatus.INFO, "Clicked on the 'Cars' tab.");
-    }
-
-    /**
-     * Clicks on the "Flights" tab.
-     */
-    public void clickFlightsTab() {
-        flightsTab.click();
-        log(LogStatus.INFO, "Clicked on the 'Flights tab'.");
-    }
-
-    /**
-     * Clicks on the "Cruises" tab.
-     */
-    public void clickCruisesTab() {
-        cruisesTab.click();
-        log(LogStatus.INFO, "Clicked on the 'Cruises' tab.");
-    }
-
-    /**
-     * Clicks on the "Stays" tab.
-     */
-    public void clickStaysTab() {
-        staysTab.click();
-        log(LogStatus.INFO, "Clicked on the stays tab.");
-    }
-
-    /**
-     * Clicks on the "Things to do" tab.
-     */
-    public void clickThingsToDoTab() {
-        thingsToDoTab.click();
-        log(LogStatus.INFO, "Clicked on the 'Things to do' tab.");
-    }
-
-    /**
-     * Clicks on the "Vacation packages" tab.
-     */
-    public void clickVacationPackagesTab() {
-        vacationPackagesTab.click();
-        log(LogStatus.INFO, "Clicked on the 'Vacation packages' tab.");
-    }
-
-    /**
-     * Clicks on the more travel drop down menu.
-     */
-    public void clickMoreTravelMenu() {
-        moreTravelMenuButton.click();
-        log(LogStatus.INFO, "Clicked on the more travel drop down menu.");
-    }
-
-    /**
-     * Clicks on the "Stays" menu option in the "More travel" menu. This method will fail if the "More travel" menu
-     * hasn't been expanded previously, (Use clickMoreTravelMenu() first).
-     */
-    public void clickMoreTravelStays() {
-        moreTravelMenuStays.click();
-        log(LogStatus.INFO, "Clicked on the Stays option in the more travel drop down menu.");
-    }
-
-    /**
-     * Clicks on the "Flights" menu option in the "More travel" menu. This method will fail if the "More travel" menu
-     * hasn't been expanded previously, (Use clickMoreTravelMenu() first).
-     */
-    public void clickMoreTravelFlights() {
-        moreTravelMenuFlights.click();
-        log(LogStatus.INFO, "Clicked on the Flights option in the more travel drop down menu.");
-    }
-
-    /**
-     * Clicks on the "Cars" menu option in the "More travel" menu. This method will fail if the "More travel" menu
-     * hasn't been expanded previously, (Use clickMoreTravelMenu() first).
-     */
-    public void clickMoreTravelCars() {
-        moreTravelMenuCars.click();
-        log(LogStatus.INFO, "Clicked on the Cars option in the more travel drop down menu.");
-    }
-
-    /**
-     * Clicks on the "Packages" menu option in the "More travel" menu. This method will fail if the "More travel" menu
-     * hasn't been expanded previously, (Use clickMoreTravelMenu() first).
-     */
-    public void clickMoreTravelPackages() {
-        moreTravelMenuPackages.click();
-        log(LogStatus.INFO, "Clicked on the Travel Packages option in the more travel drop down menu.");
-    }
-
-    /**
-     * Clicks on the "Things to do" menu option in the "More travel" menu. This method will fail if the "More travel"
-     * menu hasn't been expanded previously, (Use clickMoreTravelMenu() first).
-     */
-    public void clickMoreTravelThingsToDo() {
-        moreTravelMenuThingsToDo.click();
-        log(LogStatus.INFO, "Clicked on the Things to Do option in the more travel drop down menu.");
-    }
-
-    /**
-     * Clicks on the "Cruises" menu option in the "More travel" menu. This method will fail if the "More travel" menu
-     * hasn't been expanded previously, (Use clickMoreTravelMenu() first).
-     */
-    public void clickMoreTravelCruises() {
-        moreTravelMenuCruises.click();
-        log(LogStatus.INFO, "Clicked on the Cruises option in the more travel drop down menu.");
-    }
-
-    /**
-     * Clicks on the "Deals" menu option in the "More travel" menu. This method will fail if the "More travel" menu
-     * hasn't been expanded previously, (Use clickMoreTravelMenu() first).
-     */
-    public void clickMoreTravelDeals() {
-        moreTravelMenuDeals.click();
-        log(LogStatus.INFO, "Clicked on the Deals option in the more travel drop down menu.");
-    }
-
-    /**
-     * Clicks on the "Francais" link.
-     */
-    public void clickFrancais() {
-        francais.click();
-        log(LogStatus.INFO, "Clicked on Francais.");
-    }
-
-    /**
-     * Clicks on the "List your property" link.
-     */
-    public void clickListYourProperty() {
-        listYourProperty.click();
-        log(LogStatus.INFO, "Clicked on List Your property.");
-    }
-
-    /**
-     * Clicks on the "Support" link.
-     */
-    public void clickSupport() {
-        support.click();
-        log(LogStatus.INFO, "Clicked on Support.");
-    }
-
-    /**
-     * Clicks on the "Trips" link.
-     */
-    public void clickTrips() {
-        trips.click();
-        log(LogStatus.INFO, "Clicked on Trips.");
-    }
-
-    /**
-     * Clicks on the "Sign in" menu button.
-     */
-    public void clickSignInMenu() {
-        signInMenuButton.click();
-        log(LogStatus.INFO, "Clicked on Sign In menu.");
-    }
-
-    /**
-     * Clicks on the "Sign in" button on the "Sign in" submenu.
-     */
-    public void clickSignIn() {
-        signInButton.click();
-        log(LogStatus.INFO, "Clicked on 'Sign in' menu option on the Sign in submenu.");
-    }
-
-    /**
-     * Clicks on the "Create a free account" button on the "Sign in" submenu.
-     */
-    public void clickCreateAFreeAccount() {
-        createAFreeAccount.click();
-        log(LogStatus.INFO, "Clicked on 'Create a free account' button on the Sign in submenu.");
-    }
-
-    /**
-     * Clicks on the "List of favorites" button on the "Sign in" submenu.
-     */
-    public void clickListOfFavorites() {
-        listOfFavorites.click();
-        log(LogStatus.INFO, "Clicked on 'List of favorites' button on the Sign in submenu.");
-    }
-
-    /**
-     * Clicks on the "Expedia Rewards" button on the "Sign in" submenu.
-     */
-    public void clickExpediaRewards() {
-        expediaRewards.click();
-        log(LogStatus.INFO, "Clicked on 'Expedia Rewards' button on the Sign in submenu");
-    }
-
-    /**
-     * Clicks on the "Feedback" button on the "Sign in" submenu.
-     */
-    public void clickFeedback() {
-        feedback.click();
-        log(LogStatus.INFO, "Clicked on 'Feedback' button on the Sign in submenu.");
+    public CalendarFactory(WebDriver driver, ExtentTest test, long globalTimeOutTime) {
+        super(driver, test);
+        this.globalTimeOutTime = globalTimeOutTime;
+        PageFactory.initElements(driver, this);
     }
 
     /**
@@ -331,8 +47,7 @@ public abstract class CommonFactory {
      * calendar and set it as their check in date.
      */
     public void clickCalendarCheckInDate() {
-        calendarCheckInButton.click();
-        log(LogStatus.INFO, "Clicked on the check in date on the calendar");
+        click(calendarCheckInButton, globalTimeOutTime, "Clicked on the check in date on the calendar");
     }
 
     /**
@@ -340,32 +55,60 @@ public abstract class CommonFactory {
      * calendar and set it as their check out date.
      */
     public void clickCalendarCheckOutDate() {
-        calendarCheckOutButton.click();
-        log(LogStatus.INFO, "Clicked on the check out date on the calendar");
+        click(calendarCheckOutButton, globalTimeOutTime, "Clicked on the check out date on the calendar");
     }
 
     /**
      * Clicks on the back arrow button in the calendar date picker panel.
      */
     public void clickCalendarBackArrow() {
-        calendarBackArrow.click();
-        log(LogStatus.INFO, "Clicked on the back arrow on the calendar");
+        click(calendarBackArrow, globalTimeOutTime, "Clicked on the back arrow on the calendar");
     }
 
     /**
      * Clicks on the forward arrow button in the calendar date picker panel.
      */
     public void clickCalendarForwardArrow() {
-        calendarForwardArrow.click();
-        log(LogStatus.INFO, "Clicked on the forward arrow on the calendar");
+        click(calendarForwardArrow, globalTimeOutTime, "Clicked on the forward arrow on the calendar");
     }
 
     /**
      * Clicks on the done button in the calendar date picker panel.
      */
     public void clickCalendarDone() {
-        calendarDoneButton.click();
-        log(LogStatus.INFO, "Clicked on the done button on the calendar");
+        click(calendarDoneButton, globalTimeOutTime, "Clicked on the done button on the calendar");
+    }
+
+    /**
+     * Finds and returns the visible text of the check in button in the calendar panel.
+     */
+    public String getCalendarCheckInButtonText() {
+        return getText(calendarCheckInButton, globalTimeOutTime, "Calendar check in button was found with the following text");
+    }
+
+    /**
+     * Finds and returns the visible text of the check out button in the calendar panel.
+     */
+    public String getCalendarCheckOutButtonText() {
+        return getText(calendarCheckOutButton, globalTimeOutTime, "Calendar check out button was found with the following text");
+    }
+
+    /**
+     * Get the visible (i.e. not hidden by CSS) text of the left calendar header.
+     *
+     * @return The visible text of the left calendar header.
+     */
+    public String getLeftCalendarHeaderText() {
+        return getText(leftCalendarHeader, globalTimeOutTime, "Left calendar header was found with the following text");
+    }
+
+    /**
+     * Get the visible (i.e. not hidden by CSS) text of the right calendar header.
+     *
+     * @return The visible text of the right calendar header.
+     */
+    public String getRightCalendarHeaderText() {
+        return getText(rightCalendarHeader, globalTimeOutTime, "Right calendar header was found with the following text");
     }
 
 
@@ -377,15 +120,15 @@ public abstract class CommonFactory {
      * @param year  The year for the date we are selecting.
      * @return The calendar day button as a WebElement.
      */
-    protected WebElement getCalendarDay(Month month, int day, int year) {
+    private WebElement getCalendarDay(Month month, int day, int year) {
         try {
-            return driver.findElement(By.xpath("//button[@aria-label='"
-                    + month.getDisplayName(TextStyle.SHORT, Locale.US) + " " + day + ", " + year + ".']"));
+            return find(By.xpath("//button[@aria-label='"
+                    + month.getDisplayName(TextStyle.SHORT, Locale.US) + " " + day + ", " + year + ".']"), globalTimeOutTime);
         } catch (NoSuchElementException e) {
-            return driver.findElement(By.xpath("//button[@aria-label='"
+            return find(By.xpath("//button[@aria-label='"
                     + month.getDisplayName(TextStyle.SHORT, Locale.US) + " "
                     + day + ", " + year
-                    + " selected, current check out date.']"));
+                    + " selected, current check out date.']"), globalTimeOutTime);
         }
     }
 
@@ -396,124 +139,9 @@ public abstract class CommonFactory {
      * @param date  The day number for the date we are selecting.
      * @param year  The year for the date we are selecting.
      */
-    protected void selectCalendarDay(Month month, int date, int year) {
+    private void selectCalendarDay(Month month, int date, int year) {
         WebElement calendarDay = getCalendarDay(month, date, year);
-        calendarDay.click();
-        log(LogStatus.INFO, "Clicked on the calendar day button for " + month.getDisplayName(TextStyle.SHORT, Locale.US) + " " + date + ", " + year);
-    }
-
-    /**
-     * Clicks on the header of the website in order to close a menu.
-     */
-    public void clickOffMenu() {
-        clickOffMenuLocation.click();
-    }
-
-    /**
-     * Method used to log messages from the test class rather than the page factory, typically for pass/fail messages.
-     *
-     * @param status  The status of the log. E.g., 'LogStatus.INFO', 'LogStatus.ERROR'
-     * @param message The message inside the log.
-     */
-    public void log(LogStatus status, String message) {
-        test.log(status, message);
-    }
-
-    /**
-     * Takes a screenshot of the browser window.
-     *
-     * @param driver   The WebDriver instance.
-     * @param fileName The file name the screenshot will be saved as.
-     */
-    public void takeScreenshot(WebDriver driver, String fileName) throws IOException {
-        fileName = fileName + ".png";
-        String directory = "C:/Users/Daniel/Desktop/ExtentReports/";
-        File sourceFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-        FileUtils.copyFile(sourceFile, new File(directory + fileName));
-    }
-
-    /**
-     * Takes a screenshot of the browser window and returns its file path as a string.
-     *
-     * @param driver   The WebDriver instance.
-     * @param fileName The file name the screenshot will be saved as.
-     * @return The file path of the screenshot that will be taken.
-     */
-    public String takeScreenshotReturnPath(WebDriver driver, String directory, String fileName) throws IOException {
-        fileName = fileName + ".png";
-        File sourceFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-        FileUtils.copyFile(sourceFile, new File(directory + fileName));
-        return directory + fileName;
-    }
-
-    /**
-     * Formats the file path of a screenshot so that it may be added to the Extent Reports HTML document as a log.
-     *
-     * @param path The path of the screenshot.
-     * @return The formatted screenshot path as a string.
-     */
-    public String formatScreenshotPath(String path) {
-        return test.addScreenCapture(path);
-    }
-
-    /**
-     * Clicks the blue "Search" button so that we may submit our information.
-     */
-    public void clickSearchButton() {
-        searchButton.click();
-        log(LogStatus.INFO, "Clicked on the 'Search' button.");
-    }
-
-    public String getCalendarCheckInButtonText() {
-        return calendarCheckInButton.getText();
-    }
-
-    public String getCalendarCheckOutButtonText() {
-        return calendarCheckOutButton.getText();
-    }
-
-    /**
-     * Get the visible (i.e. not hidden by CSS) text of the left calendar header.
-     *
-     * @return The visible text of the left calendar header.
-     */
-    public String getLeftCalendarHeaderText() {
-        return leftCalendarHeader.getText();
-    }
-
-    /**
-     * Get the visible (i.e. not hidden by CSS) text of the right calendar header.
-     *
-     * @return The visible text of the right calendar header.
-     */
-    public String getRightCalendarHeaderText() {
-        return rightCalendarHeader.getText();
-    }
-
-    /**
-     * Returns the visible text of the span inside the 'Stays' tab button.
-     */
-    public String getStaysTabSpanText() {
-        return staysTabSpan.getText();
-    }
-
-    /**
-     * Clicks a search result generated after typing in a location in one of the search fields, (Leaving from, Going to,
-     * etc)
-     *
-     * @param city   - This parameter is the top bolded text that appears in one of the search results. (e.g., New York
-     *               (JFK - John F. Kennedy Intl.)
-     * @param region - This parameter is the bottom text that appears in one of the search results. (e.g., New York,
-     *               United States of America)
-     */
-
-    public void clickSearchResult(String city, String region) {
-        String xpath = "//button[normalize-space()='" + city + region
-                + "' and not(ancestor-or-self::div[@aria-hidden='true'])]";
-        WebDriverWait wait = new WebDriverWait(driver, 10);
-        WebElement searchResult = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
-        searchResult.click();
-        log(LogStatus.INFO, "Clicked on search result: '" + city + ", " + region + "'");
+        click(calendarDay, globalTimeOutTime, "Clicked on the calendar day button for " + month.getDisplayName(TextStyle.SHORT, Locale.US) + " " + date + ", " + year);
     }
 
     /**
@@ -626,9 +254,9 @@ public abstract class CommonFactory {
                 for (int x = (dayToday - 1); x > 0; x--) {
                     try {
                         // If driver finds the element using this xpath then we know it's disabled.
-                        driver.findElement(By.xpath("//button[@aria-label='"
+                        find(By.xpath("//button[@aria-label='"
                                 + now.getMonth().getDisplayName(TextStyle.SHORT, Locale.US)
-                                + " " + x + ", " + now.getYear() + ", date disabled']"));
+                                + " " + x + ", " + now.getYear() + ", date disabled']"), globalTimeOutTime);
                     } catch (NoSuchElementException e) {
                         // If NoSuchElementException is thrown, that means the calendar day button was enabled, return false.
                         log(LogStatus.ERROR, "The calendar day of "
@@ -641,9 +269,9 @@ public abstract class CommonFactory {
                 for (int x = (dayToday - 2); x > 0; x--) {
                     try {
                         // If driver finds the element using this xpath then we know it's disabled.
-                        driver.findElement(By.xpath("//button[@aria-label='"
+                        find(By.xpath("//button[@aria-label='"
                                 + now.getMonth().getDisplayName(TextStyle.SHORT, Locale.US)
-                                + " " + x + ", " + now.getYear() + ", date disabled']"));
+                                + " " + x + ", " + now.getYear() + ", date disabled']"), globalTimeOutTime);
                     } catch (NoSuchElementException e) {
                         // If NoSuchElementException is thrown, that means the calendar day button was enabled, return false.
                         log(LogStatus.ERROR, "The calendar day of "
@@ -692,9 +320,9 @@ public abstract class CommonFactory {
         // all of the expected days are disabled, return true, else return false.
         for (int x = startingDisabledDate; x < (daysInMonth + 1); x++) {
             try {
-                driver.findElement(By.xpath("//button[@aria-label='"
+                find(By.xpath("//button[@aria-label='"
                         + fiveHundredDaysIntoFuture.getMonth().getDisplayName(TextStyle.SHORT, Locale.US) + " "
-                        + x + ", " + fiveHundredDaysIntoFuture.getYear() + ", date disabled']"));
+                        + x + ", " + fiveHundredDaysIntoFuture.getYear() + ", date disabled']"), globalTimeOutTime);
                 // If driver finds the element using this xpath then we know it's disabled.
             } catch (NoSuchElementException e) {
                 // If NoSuchElementException is thrown, then we can infer that it was enabled,
@@ -761,9 +389,9 @@ public abstract class CommonFactory {
      */
     private Boolean validateHighlightedCalendarDay(String month, int day, int year) {
         try {
-            driver.findElement(By.xpath("//button[@class='uitk-date-picker-day uitk-new-date-picker-day selected' and @aria-label='"
+            find(By.xpath("//button[@class='uitk-date-picker-day uitk-new-date-picker-day selected' and @aria-label='"
                     + month
-                    + " " + day + ", " + year + ".']"));
+                    + " " + day + ", " + year + ".']"), globalTimeOutTime);
             //If driver finds this element with this xpath, we know it's highlighted correctly.
             return true;
         } catch (NoSuchElementException e) {
@@ -785,10 +413,10 @@ public abstract class CommonFactory {
      */
     private Boolean validateHighlightedCheckOutDay(String month, int day, int year) {
         try {
-            driver.findElement(By.xpath("//button[@aria-label='"
+            find(By.xpath("//button[@aria-label='"
                     + month + " "
                     + day + ", " + year
-                    + " selected, current check out date.']"));
+                    + " selected, current check out date.']"), globalTimeOutTime);
             log(LogStatus.INFO, "The calendar check out day button for: " + month
                     + " " + day + ", " + year
                     + " was highlighted correctly.");
@@ -813,9 +441,9 @@ public abstract class CommonFactory {
      */
     private Boolean validateHighlightedCheckInDay(String month, int day, int year) {
         try {
-            driver.findElement(By.xpath("//button[@aria-label='"
+            find(By.xpath("//button[@aria-label='"
                     + month + " "
-                    + day + ", " + year + " selected, current check in date.']"));
+                    + day + ", " + year + " selected, current check in date.']"), globalTimeOutTime);
             //If driver finds this element with this xpath, we know it's highlighted correctly.
             log(LogStatus.INFO, "All days between the check in and check out date were highlighted correctly.");
             log(LogStatus.INFO, "The calendar check in day button for: " + month

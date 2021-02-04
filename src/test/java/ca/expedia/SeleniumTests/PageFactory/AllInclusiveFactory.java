@@ -1,5 +1,6 @@
 package ca.expedia.SeleniumTests.PageFactory;
 
+import ca.expedia.SeleniumTests.FactoryBase.PageFactoryBase;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 import org.openqa.selenium.By;
@@ -9,26 +10,9 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
-public class AllInclusiveFactory extends CommonFactory {
+public class AllInclusiveFactory extends PageFactoryBase {
     private WebDriver driver;
-
-    @FindBy(xpath = "//a[@data-testid='travelers-field']")
-    private WebElement travelerAnchor;
-
-    @FindBy(xpath = "//button[@data-testid='guests-done-button']")
-    private WebElement travellersDone;
-
-    @FindBy(xpath = "//div[contains(@class,'adultStepInput')]/div/button[1]")
-    private WebElement travellersAdultDec;
-
-    @FindBy(xpath = "//div[contains(@class,'adultStepInput')]/div/button[2]")
-    private WebElement travellersAdultInc;
-
-    @FindBy(xpath = "//div[contains(@class,'childStepInput')][1]/div/button[1]")
-    private WebElement travellersChildDec;
-
-    @FindBy(xpath = "//div[contains(@class,'childStepInput')][1]/div/button[2]")
-    private WebElement travellersChildInc;
+    private long globalTimeOutTime;
 
     @FindBy(xpath = "//a[@href='http://allinclusiveforgroups.expedia.ca/en-CA/LandGroup']")
     private WebElement bookFor10;
@@ -42,63 +26,14 @@ public class AllInclusiveFactory extends CommonFactory {
     /**
      * Constructor
      *
-     * @param driver Driver instance from TestBase.
-     * @param test ExtentTest instance from TestBase.
+     * @param driver Driver instance from CommonTestBase.
+     * @param test   ExtentTest instance from CommonTestBase.
      */
-    public AllInclusiveFactory(WebDriver driver, ExtentTest test) {
-        super(driver,test);
+    public AllInclusiveFactory(WebDriver driver, ExtentTest test, long globalTimeOutTime) {
+        super(driver, test);
         this.driver = driver;
+        this.globalTimeOutTime = globalTimeOutTime;
         PageFactory.initElements(driver, this);
-    }
-
-    /**
-     * Clicks the traveler anchor tag so that the user may access the "Travellers"
-     * submenu.
-     */
-    public void clickTraveller() {
-        travelerAnchor.click();
-        log(LogStatus.INFO, "Clicked on the 'Travellers' button.");
-    }
-
-    /**
-     * Clicks the "Done" button in the "Travellers" panel.
-     */
-    public void clickTravellersDone() {
-        travellersDone.click();
-        log(LogStatus.INFO, "Clicked the 'Done' button in the 'Travellers' panel.");
-    }
-
-    /**
-     * Clicks on the decrease button for adults in the travellers panel.
-     */
-    public void clickTravellersAdultsDec() {
-        travellersAdultDec.click();
-        log(LogStatus.INFO, "Clicked the decrease adult count button in the Travellers panel.");
-    }
-
-    /**
-     * Clicks on the increase button for adults in the travellers panel.
-     */
-    public void clickTravellersAdultsInc() {
-        travellersAdultInc.click();
-        log(LogStatus.INFO, "Clicked the increase adult count button in the Travellers panel.");
-    }
-
-    /**
-     * Clicks on the decrease button for children in the travellers panel.
-     */
-    public void clickTravellersChildrenDec() {
-        travellersChildDec.click();
-        log(LogStatus.INFO, "Clicked the decrease child count button in the Travellers panel.");
-    }
-
-
-    /**
-     * Clicks on the increase button for children in the travellers panel.
-     */
-    public void clickTravellersChildrenInc() {
-        travellersChildInc.click();
-        log(LogStatus.INFO, "Clicked the increase child count button in the Travellers panel.");
     }
 
     /**
@@ -107,8 +42,7 @@ public class AllInclusiveFactory extends CommonFactory {
      * @return "Leaving from" drop down as a select.
      */
     private Select getLeavingFromSelect() {
-        WebElement leavingFromSelect = driver.findElement(By.id("leaving-3pp"));
-        return new Select(leavingFromSelect);
+        return new Select(find(By.id("leaving-3pp"), globalTimeOutTime));
 
     }
 
@@ -129,8 +63,7 @@ public class AllInclusiveFactory extends CommonFactory {
      * @return "Going to" drop down as a select.
      */
     private Select getGoingToSelect() {
-        WebElement goingToSelect = driver.findElement(By.id("going-3pp"));
-        return new Select(goingToSelect);
+        return new Select(find(By.id("going-3pp"), globalTimeOutTime));
     }
 
     /**
@@ -150,8 +83,7 @@ public class AllInclusiveFactory extends CommonFactory {
      * @return "Vacation length" drop down as a select.
      */
     private Select getVacationLengthSelect() {
-        WebElement vacationLengthSelect = driver.findElement(By.id("threepp-duration-select"));
-        return new Select(vacationLengthSelect);
+        return new Select(find(By.id("threepp-duration-select"), globalTimeOutTime));
     }
 
     /**
@@ -172,8 +104,7 @@ public class AllInclusiveFactory extends CommonFactory {
      * @return The age select element for the specified child.
      */
     private Select getChildAgeSelect(int child) {
-        WebElement element = driver.findElement(By.id("child-age-input-0-" + (child - 1)));
-        return new Select(element);
+        return new Select(find(By.id("child-age-input-0-" + (child - 1)), globalTimeOutTime));
     }
 
     /**
@@ -192,16 +123,13 @@ public class AllInclusiveFactory extends CommonFactory {
      * Clicks the "Book for 10+ people" hyperlink.
      */
     public void clickBookFor10() {
-        bookFor10.click();
-        log(LogStatus.INFO, "Clicked the 'Book for 10+ people' hyperlink.");
+        click(bookFor10, globalTimeOutTime, "Clicked the 'Book for 10+ people' hyperlink.");
     }
 
     /**
-     * Clicks the departing button so the user may select a check in date from
-     * the calendar date picker panel.
+     * Clicks the departing button so the user may select a check in date from the calendar date picker panel.
      */
     public void clickDeparting() {
-        departingButton.click();
-        log(LogStatus.INFO, "Clicked the 'Departing' button.");
+        click(departingButton, globalTimeOutTime, "Clicked the 'Departing' button.");
     }
 }
