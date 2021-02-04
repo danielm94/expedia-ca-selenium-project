@@ -1,10 +1,10 @@
-package ca.expedia.SeleniumTests;
-
+package ca.expedia.SeleniumTests.SetUp;
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
+import org.testng.ITestListener;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -18,8 +18,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.concurrent.TimeUnit;
 
-public abstract class TestBase {
-    protected static URL gridHubUrl = null;
+public class CommonTestBase implements ITestListener {
+    protected static URL gridHubUrl;
     protected static String baseUrl;
     protected static Capabilities capabilities;
     protected final String SCREENSHOT_DIRECTORY = "C:/Users/Daniel/Desktop/ExtentReports/";
@@ -38,44 +38,49 @@ public abstract class TestBase {
             gridHubUrl = new URL(config.getProperty("grid.url"));
         }
         capabilities = config.getCapabilities();
-
         driver = WebDriverPool.DEFAULT.getDriver(gridHubUrl, capabilities);
         driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
     @BeforeMethod
-    public void beforeMethod() {
-        report = ExtentReportsConfig.getInstance(reportName, false);
+    public void beforeMethod(ITestResult result) {
+        String className = result.getMethod().getRealClass().getSimpleName();
+        String description = result.getMethod().getDescription();
+        report = ExtentReportsConfig.getInstance(className, false);
+        test = ExtentReportsConfig.createTestReport(report, description);
         driver.get(baseUrl);
         originalWindowHandle = driver.getWindowHandle();
-    }
+        driver.manage().deleteAllCookies();
+        }
 
     @AfterMethod
-    public void afterMethod(ITestResult testResult) throws IOException {
+    public void afterMethod(ITestResult result) throws IOException {
         driver.switchTo().window(originalWindowHandle);
+        String className = result.getMethod().getRealClass().getSimpleName();
         // After each test, determine whether or not it passed with ITestResult.
-        if (testResult.getStatus() == ITestResult.FAILURE) {
+        if (result.getStatus() == ITestResult.FAILURE) {
             //Create DateTimeFormatter and LocalDateTime so that we may append the current date and time to our screenshots.
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern(SCREENSHOT_DATE_TIME_FORMAT);
             LocalDateTime now = LocalDateTime.now();
             // If it failed, take a screenshot at the moment of failure and return the path
             // of said screenshot with f.takeScreenshotReturnPath().
-            String path = ExtentReportsConfig.takeScreenshotReturnPath(driver, SCREENSHOT_DIRECTORY + reportName + "\\", testResult.getMethod().getMethodName() + "-failure-" + dtf.format(now));
+            String path = ExtentReportsConfig.takeScreenshotReturnPath(driver, SCREENSHOT_DIRECTORY + className + "\\", result.getMethod().getMethodName() + "-failure-" + dtf.format(now));
             // Format the path of the screenshot so that it may be attached to an Extent
             // Reports HTML document for review.
             String imagePath = test.addScreenCapture(path);
             // Log the failure message and the screenshot.
-            test.log(LogStatus.FAIL, testResult.getMethod().getMethodName() + " has failed.");
+            test.log(LogStatus.ERROR,result.getThrowable().getMessage());
+            test.log(LogStatus.FAIL, result.getMethod().getMethodName() + " has failed.");
             test.log(LogStatus.FAIL, imagePath);
-        } else if (testResult.getStatus() == ITestResult.SUCCESS) {
+        } else if (result.getStatus() == ITestResult.SUCCESS) {
             //Log pass message on success.
-            test.log(LogStatus.PASS, testResult.getMethod().getMethodName() + " has passed.");
+            test.log(LogStatus.PASS, result.getMethod().getMethodName() + " has passed.");
         }
 
         //Stop reporting for the test and flush it so that the report document will be updated with the test results.
         report.endTest(test);
         report.flush();
+        WebDriverPool.DEFAULT.dismissAll();
     }
 
     @AfterClass

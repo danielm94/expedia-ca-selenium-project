@@ -1,6 +1,7 @@
-package ca.expedia.SeleniumTests;
+package ca.expedia.SeleniumTests.SetUp;
 
 import com.relevantcodes.extentreports.ExtentReports;
+import com.relevantcodes.extentreports.ExtentTest;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -30,5 +31,15 @@ public class ExtentReportsConfig {
         File sourceFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         FileUtils.copyFile(sourceFile, new File(directory + fileName));
         return directory + fileName;
+    }
+
+    /**
+     * Starts the report for a specified test and returns the instance as an ExtentTest object.
+     *
+     * @param report The ExtentReports object from CommonTestBase
+     * @param name   The name of the test that will show up in the report.
+     */
+    public static ExtentTest createTestReport(ExtentReports report, String name) {
+        return report.startTest(name);
     }
 }
