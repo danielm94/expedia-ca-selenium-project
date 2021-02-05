@@ -365,6 +365,7 @@ public class CalendarFactory extends PageFactoryBase {
             navigateToPastMonth(month, year);
         }
     }
+//TODO: ADD HANDLING FOR WHEN TRYING TO CLICK A DAY THAT IS ALREADY SELECTED.
 
     /**
      * Navigates to the desired month & year of a calendar date and clicks it. Will fail if the date is either in the

@@ -41,7 +41,7 @@ public class VacationTest extends CommonTestBase {
         vacation.clickGoingTo();
         vacation.sendKeysGoingTo("Toronto");
         vacation.clickSearchResult("Toronto", "Ontario, Canada");
-        vacation.clickAccommodationsCheckbox();
+        vacation.clickAccommodationsCheckbox(false);
         vacation.clickDepartingButton();
         cal.clickCalendarDay(Month.FEBRUARY, 20, 2021);
         cal.clickCalendarDone();
@@ -116,8 +116,8 @@ public class VacationTest extends CommonTestBase {
             vacation.clickTravellersRemoveRoom(room);
         }
         vacation.clickTravellersInfantsInc(1);
-        travel.clickTravellersInSeat();
-        travel.clickTravellersOnLap();
+        travel.clickTravellersInSeat(false);
+        travel.clickTravellersOnLap(false);
         travel.clickTravellersDoneButton();
         travel.clickTravellersAnchorTag();
         travel.clickAirlineAgeRules();

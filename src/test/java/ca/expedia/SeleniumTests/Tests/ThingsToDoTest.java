@@ -7,8 +7,7 @@ import ca.expedia.SeleniumTests.SetUp.CommonTestBase;
 import org.testng.ITestResult;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
-import java.time.Month;
+import java.time.LocalDate;
 
 public class ThingsToDoTest extends CommonTestBase {
     private ThingsToDoFactory todo;
@@ -25,6 +24,8 @@ public class ThingsToDoTest extends CommonTestBase {
 
     @Test(description = "Things To Do Demo")
     public void thingsToDoDemo() {
+        LocalDate presentDate = LocalDate.now();
+        LocalDate futureDate = LocalDate.now().plusDays(14);
         tab.clickThingsToDoTab();
         todo.clickThingsToDoIn();
         todo.sendKeysThingsToDoIn("Toronto");
@@ -36,7 +37,7 @@ public class ThingsToDoTest extends CommonTestBase {
         cal.clickCalendarCheckInDate();
         cal.clickCalendarBackArrow();
         cal.clickCalendarBackArrow();
-        cal.clickCalendarDay(Month.FEBRUARY, 18, 2021);
+        cal.clickCalendarDay(presentDate.getMonth(), presentDate.getDayOfMonth(), presentDate.getYear());
         cal.clickCalendarDone();
         todo.clickToButton();
         cal.clickCalendarForwardArrow();
@@ -44,7 +45,7 @@ public class ThingsToDoTest extends CommonTestBase {
         cal.clickCalendarCheckInDate();
         cal.clickCalendarCheckOutDate();
         cal.clickCalendarBackArrow();
-        cal.clickCalendarDay(Month.MARCH, 1, 2021);
+        cal.clickCalendarDay(futureDate.getMonth(), futureDate.getDayOfMonth(), futureDate.getYear());
         cal.clickCalendarDone();
         todo.clickSearchButton();
     }

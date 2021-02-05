@@ -27,7 +27,7 @@ public class AllInclusiveTest extends CommonTestBase {
     }
 
     @Test(description = "All Inclusive Test")
-    public void allInclusiveTest() {
+    public void allInclusiveTest(){
         tab.clickAllInclusiveVacationsTab();
         all.selectLeavingFrom("Toronto");
         all.selectGoingTo("Bermuda");

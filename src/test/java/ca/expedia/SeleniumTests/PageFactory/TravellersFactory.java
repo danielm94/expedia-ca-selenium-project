@@ -3,13 +3,12 @@ package ca.expedia.SeleniumTests.PageFactory;
 import ca.expedia.SeleniumTests.FactoryBase.PageFactoryBase;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
@@ -58,9 +57,8 @@ public class TravellersFactory extends PageFactoryBase {
      * Clicks the "Travellers" button to open the travellers submenu.
      */
     public void clickTravellersButton() {
-        try {
-            click(By.xpath("//button[@data-testid='travelers-field-trigger']"), globalTimeOutTime, "Clicked on the 'Travellers' button");
-        } catch (NoSuchElementException e) {
+        if (!tryClicking(By.xpath("//button[@data-testid='travelers-field-trigger']"), globalTimeOutTime, "Clicked on the 'Travellers' button")) {
+            log(LogStatus.INFO, "Travellers button was not available, attempting to click anchor tag instead.");
             click(By.xpath("//a[@data-testid='travelers-field']"), globalTimeOutTime, "Clicked on the 'Travellers' anchor tag.");
         }
     }
@@ -257,10 +255,11 @@ public class TravellersFactory extends PageFactoryBase {
      * Returns the visible text of the "Travellers" button.
      */
     public String getTravellersButtonText() {
-        try {
-            return getText(By.xpath("//button[@data-testid='travelers-field-trigger']"), globalTimeOutTime, "'Travellers' button was found with the following text");
-        } catch (NoSuchElementException e) {
-            return getText(By.xpath("//a[@data-testid='travelers-field']"), globalTimeOutTime, "'Travellers' button was found with the following text");
+        if (isClickable(By.xpath("//button[@data-testid='travelers-field-trigger']"), globalTimeOutTime)) {
+            return find(By.xpath("//button[@data-testid='travelers-field-trigger']")).getText();
+        } else {
+            log(LogStatus.INFO, "Travellers button was not available, getting the text from travellers anchor tag instead.");
+            return find(By.xpath("//a[@data-testid='travelers-field']")).getText();
         }
     }
 
@@ -410,22 +409,28 @@ public class TravellersFactory extends PageFactoryBase {
      */
     public void selectChildAge(int child, int age) {
         Select childAge = getChildAgeSelect(child);
-        childAge.selectByIndex(age - 2);
+        if (childAge.getOptions().get(0).getText().equals("2")) {
+            childAge.selectByIndex(age - 2);
+        } else {
+            childAge.selectByIndex(age);
+        }
         log(LogStatus.INFO, "Set the age of child " + child + " to " + age);
     }
 
     /**
      * Clicks the "On lap" radio button in the travellers panel.
      */
-    public void clickTravellersOnLap() {
-        click(childOnLap, globalTimeOutTime, "Clicked the 'On lap' radio button in the travellers panel.");
+    public void clickTravellersOnLap(Boolean isRadioButtonSelected) {
+        click(childOnLap, ExpectedConditions.elementSelectionStateToBe(childOnLap, isRadioButtonSelected),
+                globalTimeOutTime, "Clicked the 'On lap' radio button in the travellers panel.");
     }
 
     /**
      * Clicks the "In seat" radio button in the travellers panel.
      */
-    public void clickTravellersInSeat() {
-        click(childInSeat, globalTimeOutTime, "Clicked the 'In seat' radio button in the travellers panel.");
+    public void clickTravellersInSeat(Boolean isRadioButtonSelected) {
+        click(childInSeat, ExpectedConditions.elementSelectionStateToBe(childInSeat, isRadioButtonSelected),
+                globalTimeOutTime, "Clicked the 'On lap' radio button in the travellers panel.");
     }
 
     /**
