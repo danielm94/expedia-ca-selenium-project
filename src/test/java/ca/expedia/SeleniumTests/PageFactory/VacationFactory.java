@@ -8,6 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 
 public class VacationFactory extends PageFactoryBase {
@@ -354,9 +355,11 @@ public class VacationFactory extends PageFactoryBase {
 
     /**
      * Clicks the "I only need accommodations for part of my trip" checkbox.
+     *
+     * @param isTheCheckBoxChecked If the checkbox is checked, true, else false.
      */
-    public void clickAccommodationsCheckbox() {
-        click(partAccommodations, globalTimeOutTime, "Clicked the 'I only need accommodations for part of my trip' checkbox.");
+    public void clickAccommodationsCheckbox(boolean isTheCheckBoxChecked) {
+        click(partAccommodations, ExpectedConditions.elementSelectionStateToBe(partAccommodations, isTheCheckBoxChecked), globalTimeOutTime, "Clicked the 'I only need accommodations for part of my trip' checkbox.");
     }
 
     /**

@@ -6,6 +6,7 @@ import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -96,34 +97,47 @@ public class PageFactoryBase {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
+
     /**
-     * Clicks on a WebElement.
+     * Finds an element by using an ExpectedCondition that returns a WebElement.
      *
-     * @param element The WebElement you wish to click.
+     * @param condition The desired ExpectedCondition that returns a WebElement.
+     * @param timeout   The time in seconds to wait for the element before throwing a TimeOutException.
+     * @return WebElement
+     */
+    public WebElement find(ExpectedCondition<WebElement> condition, long timeout) {
+        WebDriverWait wait = new WebDriverWait(driver, timeout);
+        return wait.until(condition);
+    }
+
+    /**
+     * Waits for an element to be clickable before clicking on it.
+     *
+     * @param element The WebElement you'd like to click.
      * @param timeout The time in seconds to wait for the element before throwing a TimeOutException.
      */
     public void click(WebElement element, long timeout) {
         WebDriverWait wait = new WebDriverWait(driver, timeout);
-        wait.until(ExpectedConditions.visibilityOf(element)).click();
+        wait.until(ExpectedConditions.elementToBeClickable(element)).click();
     }
 
     /**
-     * Clicks on a WebElement.
+     * Waits for an element to be clickable by using a locator before clicking on it.
      *
-     * @param locator Locator to find element (E.g., "By.Id")
+     * @param locator The locator to find the WebElement with.
      * @param timeout The time in seconds to wait for the element before throwing a TimeOutException.
      */
     public void click(By locator, long timeout) {
         WebDriverWait wait = new WebDriverWait(driver, timeout);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(locator)).click();
+        wait.until(ExpectedConditions.elementToBeClickable(locator)).click();
     }
 
     /**
-     * Clicks on a WebElement.
+     * Waits for an element to be clickable before clicking on it.
      *
-     * @param element The WebElement you wish to click.
+     * @param element The WebElement you'd like to click.
      * @param timeout The time in seconds to wait for the element before throwing a TimeOutException.
-     * @param log     The message you wish to log after performing the action.
+     * @param log     The message to log after successfully clicking the WebElement.
      */
     public void click(WebElement element, long timeout, String log) {
         WebDriverWait wait = new WebDriverWait(driver, timeout);
@@ -132,43 +146,121 @@ public class PageFactoryBase {
     }
 
     /**
-     * Clicks on a WebElement.
+     * Waits for an element to be clickable by using a locator before clicking on it.
      *
-     * @param locator Locator to find element (E.g., "By.Id")
+     * @param locator The locator to find the WebElement with.
      * @param timeout The time in seconds to wait for the element before throwing a TimeOutException.
-     * @param log     The message you wish to log after performing the action.
+     * @param log     The message to log after successfully clicking the WebElement.
      */
     public void click(By locator, long timeout, String log) {
         WebDriverWait wait = new WebDriverWait(driver, timeout);
-        wait.until(ExpectedConditions.elementToBeClickable(locator));
+        wait.until(ExpectedConditions.elementToBeClickable(locator)).click();
         log(LogStatus.INFO, log);
     }
 
-    //TODO: ADD JAVADOCS FOR ALL CHECKBOX METHODS
-    public void checkBox(WebElement element, long timeout, Boolean isTheBoxChecked) {
+
+    /**
+     * Waits for an element using an ExpectedCondition that returns a WebElement before clicking on it.
+     *
+     * @param condition The desired ExpectedCondition that returns a WebElement.
+     * @param timeout   The time in seconds to wait for the element before throwing a TimeOutException.
+     */
+    public void click(ExpectedCondition<WebElement> condition, long timeout) {
         WebDriverWait wait = new WebDriverWait(driver, timeout);
-        wait.until(ExpectedConditions.elementSelectionStateToBe(element, isTheBoxChecked));
+        wait.until(condition).click();
+    }
+
+    /**
+     * Waits for an element using an ExpectedCondition that returns a WebElement before clicking on it.
+     *
+     * @param condition The desired ExpectedCondition that returns a WebElement.
+     * @param timeout   The time in seconds to wait for the element before throwing a TimeOutException.
+     * @param log       The message to log after successfully clicking the WebElement.
+     */
+    public void click(ExpectedCondition<WebElement> condition, long timeout, String log) {
+        WebDriverWait wait = new WebDriverWait(driver, timeout);
+        wait.until(condition).click();
+        log(LogStatus.INFO, log);
+    }
+
+    /**
+     * Waits for an element using an ExpectedCondition that returns a boolean before clicking on it.
+     *
+     * @param element   The WebElement you wish to click.
+     * @param condition The desired ExpectedCondition that returns a Boolean.
+     * @param timeout   The time in seconds to wait for the element before throwing a TimeOutException.
+     */
+    public void click(WebElement element, ExpectedCondition<Boolean> condition, long timeout) {
+        WebDriverWait wait = new WebDriverWait(driver, timeout);
+        wait.until(condition);
         element.click();
     }
 
-    public void checkBox(By locator, long timeout, Boolean isTheBoxChecked) {
+    /**
+     * Waits for an element using an ExpectedCondition that returns a boolean before clicking on it.
+     *
+     * @param element   The WebElement you wish to click.
+     * @param condition The desired ExpectedCondition that returns a Boolean.
+     * @param timeout   The time in seconds to wait for the element before throwing a TimeOutException.
+     * @param log       The message to log after successfully clicking the WebElement.
+     */
+    public void click(WebElement element, ExpectedCondition<Boolean> condition, long timeout, String log) {
         WebDriverWait wait = new WebDriverWait(driver, timeout);
-        wait.until(ExpectedConditions.elementSelectionStateToBe(locator, isTheBoxChecked));
-        driver.findElement(locator).click();
-    }
-
-    public void checkBox(WebElement element, long timeout, Boolean isTheBoxChecked, String log) {
-        WebDriverWait wait = new WebDriverWait(driver, timeout);
-        wait.until(ExpectedConditions.elementSelectionStateToBe(element, isTheBoxChecked));
+        wait.until(condition);
         element.click();
         log(LogStatus.INFO, log);
     }
 
-    public void checkBox(By locator, long timeout, Boolean isTheBoxChecked, String log) {
+    /**
+     * Waits for an element using an ExpectedCondition that returns a boolean before clicking on it using a locator.
+     *
+     * @param locator   The locator to find the WebElement with.
+     * @param condition The desired ExpectedCondition that returns a Boolean.
+     * @param timeout   The time in seconds to wait for the element before throwing a TimeOutException.
+     */
+    public void click(By locator, ExpectedCondition<Boolean> condition, long timeout) {
         WebDriverWait wait = new WebDriverWait(driver, timeout);
-        wait.until(ExpectedConditions.elementSelectionStateToBe(locator, isTheBoxChecked));
-        driver.findElement(locator).click();
+        wait.until(condition);
+        find(locator).click();
+    }
+
+    /**
+     * Waits for an element using an ExpectedCondition that returns a boolean before clicking on it using a locator.
+     *
+     * @param locator   The locator to find the WebElement with.
+     * @param condition The desired ExpectedCondition that returns a Boolean.
+     * @param timeout   The time in seconds to wait for the element before throwing a TimeOutException.
+     * @param log       The message to log after successfully clicking the WebElement.
+     */
+    public void click(By locator, ExpectedCondition<Boolean> condition, long timeout, String log) {
+        WebDriverWait wait = new WebDriverWait(driver, timeout);
+        wait.until(condition);
+        find(locator).click();
         log(LogStatus.INFO, log);
+    }
+
+    //TODO: ADD JAVADOC
+    public Boolean tryClicking(WebElement element, long timeout, String log) {
+        WebDriverWait wait = new WebDriverWait(driver, timeout);
+        try {
+            wait.until(ExpectedConditions.elementToBeClickable(element)).click();
+            log(LogStatus.INFO, log);
+            return true;
+        } catch (TimeoutException e) {
+            return false;
+        }
+    }
+
+    //TODO: ADD JAVADOC
+    public Boolean tryClicking(By locator, long timeout, String log) {
+        WebDriverWait wait = new WebDriverWait(driver, timeout);
+        try {
+            wait.until(ExpectedConditions.elementToBeClickable(locator)).click();
+            log(LogStatus.INFO, log);
+            return true;
+        } catch (TimeoutException e) {
+            return false;
+        }
     }
 
     /**
@@ -242,7 +334,6 @@ public class PageFactoryBase {
             wait.until(ExpectedConditions.elementToBeClickable(element));
             return true;
         } catch (TimeoutException e) {
-            log(LogStatus.ERROR, e.getMessage());
             return false;
         }
     }
@@ -260,7 +351,6 @@ public class PageFactoryBase {
             wait.until(ExpectedConditions.elementToBeClickable(locator));
             return true;
         } catch (TimeoutException e) {
-            log(LogStatus.ERROR, e.getMessage());
             return false;
         }
     }
@@ -327,6 +417,33 @@ public class PageFactoryBase {
     }
 
     /**
+     * Uses a custom ExpectedCondition that returns an a WebElement to find the visible text of said element.
+     *
+     * @param condition The desired ExpectedCondition that returns a WebElement
+     * @param timeout   The time in seconds to wait for the element before throwing a TimeOutException.
+     * @return The visible text of an element as a string.
+     */
+    public String getText(ExpectedCondition<WebElement> condition, long timeout) {
+        WebDriverWait wait = new WebDriverWait(driver, timeout);
+        return wait.until(condition).getText();
+    }
+
+    /**
+     * Uses a custom ExpectedCondition that returns an a WebElement to find the visible text of said element.
+     *
+     * @param condition The desired ExpectedCondition that returns a WebElement
+     * @param timeout   The time in seconds to wait for the element before throwing a TimeOutException.
+     * @param log       The message to log if the element was found. ": " + the the found text is concatenated
+     * @return The visible text of an element as a string.
+     */
+    public String getText(ExpectedCondition<WebElement> condition, long timeout, String log) {
+        WebDriverWait wait = new WebDriverWait(driver, timeout);
+        String text = wait.until(condition).getText();
+        log(LogStatus.INFO, log + ": " + text);
+        return text;
+    }
+
+    /**
      * Waits before an element is visible before returning it. Useful for situations where you have an element already
      * declared in page factory but you want to make sure it's visible first before doing anything with it.
      *
@@ -355,14 +472,14 @@ public class PageFactoryBase {
      * Clicks on the header of the website in order to close a menu.
      */
     public void clickOffMenu() {
-        click(clickOffMenuLocation, 5);
+        click(ExpectedConditions.elementToBeClickable(clickOffMenuLocation), 5);
     }
 
     /**
      * Clicks the blue "Search" button so that we may submit our information.
      */
     public void clickSearchButton() {
-        click(searchButton, 5, "Clicked on the 'Search' button.");
+        click(ExpectedConditions.elementToBeClickable(searchButton), 5, "Clicked on the 'Search' button.");
     }
 
     /**
@@ -378,8 +495,7 @@ public class PageFactoryBase {
     public void clickSearchResult(String city, String region) {
         String xpath = "//button[normalize-space()='" + city + region
                 + "' and not(ancestor-or-self::div[@aria-hidden='true'])]";
-        WebDriverWait wait = new WebDriverWait(driver, 5);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath))).click();
-        log(LogStatus.INFO, "Clicked on search result: '" + city + ", " + region + "'");
+        click(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)),
+                5, "Clicked on search result: '" + city + ", " + region + "'");
     }
 }

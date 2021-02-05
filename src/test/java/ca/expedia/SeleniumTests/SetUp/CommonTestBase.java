@@ -80,7 +80,6 @@ public class CommonTestBase implements ITestListener {
         //Stop reporting for the test and flush it so that the report document will be updated with the test results.
         report.endTest(test);
         report.flush();
-        WebDriverPool.DEFAULT.dismissAll();
     }
 
     @AfterClass

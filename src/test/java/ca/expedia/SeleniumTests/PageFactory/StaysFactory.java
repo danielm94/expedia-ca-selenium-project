@@ -108,16 +108,22 @@ public class StaysFactory extends PageFactoryBase {
 
     /**
      * Clicks the add flight checkbox in the "Stays" tab.
+     *
+     * @param isTheCheckBoxChecked If the checkbox is checked, true, else false.
      */
-    public void clickAddFlight(Boolean isTheBoxChecked) {
-        checkBox(addFlightCheckbox, globalTimeOutTime, isTheBoxChecked, "Clicked on the 'Add a flight' checkbox.");
+    public void clickAddFlight(Boolean isTheCheckBoxChecked) {
+        click(addFlightCheckbox, ExpectedConditions.elementSelectionStateToBe(addFlightCheckbox, isTheCheckBoxChecked)
+                , globalTimeOutTime, "Clicked on the 'Add a flight' checkbox.");
     }
 
     /**
      * Clicks the add car checkbox in the "Stays" tab.
+     *
+     * @param isTheCheckBoxChecked If the checkbox is checked, true, else false.
      */
-    public void clickAddCar(Boolean isTheBoxChecked) {
-        checkBox(addCarCheckbox, globalTimeOutTime, isTheBoxChecked, "Clicked on the 'Add a car' checkbox");
+    public void clickAddCar(Boolean isTheCheckBoxChecked) {
+        click(addCarCheckbox, ExpectedConditions.elementSelectionStateToBe(addCarCheckbox, isTheCheckBoxChecked)
+                , globalTimeOutTime, "Clicked on the 'Add a flight' checkbox.");
     }
 
     /**

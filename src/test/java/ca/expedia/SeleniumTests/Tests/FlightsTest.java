@@ -23,7 +23,7 @@ public class FlightsTest extends CommonTestBase {
         flights = new FlightsFactory(driver, test, 5);
         cal = new CalendarFactory(driver, test, 5);
         travel = new TravellersFactory(driver, test, 5);
-        tab = new TabFactory(driver,test,5);
+        tab = new TabFactory(driver, test, 5);
     }
 
     @Test(description = "Flights Tab Test")
@@ -81,8 +81,8 @@ public class FlightsTest extends CommonTestBase {
         travel.selectInfantAge(4, 1);
         travel.selectInfantAge(5, 1);
         travel.selectInfantAge(5, 0);
-        travel.clickTravellersInSeat();
-        travel.clickTravellersOnLap();
+        travel.clickTravellersInSeat(false);
+        travel.clickTravellersOnLap(false);
         travel.clickAirlineAgeRules();
         travel.clickTravellersDoneButton();
     }

@@ -8,7 +8,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class AllInclusiveFactory extends PageFactoryBase {
     private WebDriver driver;
@@ -42,8 +44,9 @@ public class AllInclusiveFactory extends PageFactoryBase {
      * @return "Leaving from" drop down as a select.
      */
     private Select getLeavingFromSelect() {
-        return new Select(find(By.id("leaving-3pp"), globalTimeOutTime));
-
+        WebDriverWait wait = new WebDriverWait(driver, globalTimeOutTime);
+        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath("//select[@id='leaving-3pp']/option"), 1));
+        return new Select(find(ExpectedConditions.elementToBeClickable((By.id("leaving-3pp"))), globalTimeOutTime));
     }
 
     /**
@@ -63,7 +66,9 @@ public class AllInclusiveFactory extends PageFactoryBase {
      * @return "Going to" drop down as a select.
      */
     private Select getGoingToSelect() {
-        return new Select(find(By.id("going-3pp"), globalTimeOutTime));
+        WebDriverWait wait = new WebDriverWait(driver, globalTimeOutTime);
+        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath("//select[@id='going-3pp']/option"), 1));
+        return new Select(find(ExpectedConditions.elementToBeClickable((By.id("going-3pp"))), globalTimeOutTime));
     }
 
     /**

@@ -7,6 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 
 public class CarsFactory extends PageFactoryBase {
@@ -300,9 +301,10 @@ public class CarsFactory extends PageFactoryBase {
 
     /**
      * Clicks the "Book roundtrip" checkbox in the "Airport transportation" subtab in the "Cars" tab.
+     * @param isTheCheckBoxChecked If the checkbox is checked, true, else false.
      */
-    public void clickBookRoundtrip() {
-        click(bookRoundtrip, globalTimeOutTimer, "Clicked on the 'Book roundtrip' checkbox.");
+    public void clickBookRoundtrip(boolean isTheCheckBoxChecked) {
+        click(bookRoundtrip, ExpectedConditions.elementSelectionStateToBe(bookRoundtrip, isTheCheckBoxChecked), globalTimeOutTimer, "Clicked on the 'Book roundtrip' checkbox.");
     }
 
     /**

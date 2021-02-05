@@ -66,7 +66,7 @@ public class CarsTest extends CommonTestBase {
         cal.clickCalendarDay(Month.MARCH, 20, 2021);
         cal.clickCalendarDone();
         car.selectFlightArrivalTime("16:30");
-        car.clickBookRoundtrip();
+        car.clickBookRoundtrip(false);
         car.clickFlightDepartureDate();
         cal.clickCalendarDay(Month.MARCH, 25, 2021);
         cal.clickCalendarDone();
