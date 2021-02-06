@@ -318,7 +318,6 @@ public class TravellersFactory extends PageFactoryBase {
         return getText(By.xpath("//label[@for='child-age-input-" + (room - 1) + "-" + (child - 1) + "']"), globalTimeOutTime,
                 "The label for child " + child + " in room " + room + " had the following text");
     }
-    //TODO: Verify that having a log entry for this button isn't too much...
 
     /**
      * Returns the selected option of a child select element.
