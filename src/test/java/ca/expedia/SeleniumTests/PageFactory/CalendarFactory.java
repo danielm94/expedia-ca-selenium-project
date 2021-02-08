@@ -3,12 +3,10 @@ package ca.expedia.SeleniumTests.PageFactory;
 import ca.expedia.SeleniumTests.FactoryBase.PageFactoryBase;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -21,6 +19,7 @@ import java.util.Locale;
 
 public class CalendarFactory extends PageFactoryBase {
     private long globalTimeOutTime;
+    private WebDriver driver;
     @FindBy(xpath = "//button[1]/span[@class='uitk-date-picker-selection-date']")
     private WebElement calendarCheckInButton;
     @FindBy(xpath = "//button[2]/span[@class='uitk-date-picker-selection-date']")
@@ -39,6 +38,7 @@ public class CalendarFactory extends PageFactoryBase {
     public CalendarFactory(WebDriver driver, ExtentTest test, long globalTimeOutTime) {
         super(driver, test);
         this.globalTimeOutTime = globalTimeOutTime;
+        this.driver = driver;
         PageFactory.initElements(driver, this);
     }
 
@@ -121,15 +121,7 @@ public class CalendarFactory extends PageFactoryBase {
      * @return The calendar day button as a WebElement.
      */
     private WebElement getCalendarDay(Month month, int day, int year) {
-        try {
-            return find(By.xpath("//button[@aria-label='"
-                    + month.getDisplayName(TextStyle.SHORT, Locale.US) + " " + day + ", " + year + ".']"), globalTimeOutTime);
-        } catch (NoSuchElementException e) {
-            return find(By.xpath("//button[@aria-label='"
-                    + month.getDisplayName(TextStyle.SHORT, Locale.US) + " "
-                    + day + ", " + year
-                    + " selected, current check out date.']"), globalTimeOutTime);
-        }
+        return find(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@aria-label,'" + month.getDisplayName(TextStyle.SHORT, Locale.US) + " " + day + ", " + year + "')]")), globalTimeOutTime);
     }
 
     /**
@@ -141,7 +133,8 @@ public class CalendarFactory extends PageFactoryBase {
      */
     private void selectCalendarDay(Month month, int date, int year) {
         WebElement calendarDay = getCalendarDay(month, date, year);
-        click(calendarDay, globalTimeOutTime, "Clicked on the calendar day button for " + month.getDisplayName(TextStyle.SHORT, Locale.US) + " " + date + ", " + year);
+        click(calendarDay, globalTimeOutTime,
+                "Clicked on the calendar day button for " + month.getDisplayName(TextStyle.SHORT, Locale.US) + " " + date + ", " + year);
     }
 
     /**
@@ -190,41 +183,31 @@ public class CalendarFactory extends PageFactoryBase {
     }
 
     /**
-     * Checks whether the "disabled" attribute of the calendarBackArrow button equals true or not.
+     * Checks whether the back arrow on the calendar is enabled or not.
      *
-     * @return True if the button is disabled, else false.
+     * @return True if the button is enabled, else false.
      */
-    public boolean isCalendarBackArrowDisabled() {
-        final String attribute = "disabled";
-        if (calendarBackArrow.getAttribute(attribute) == null) {
-            log(LogStatus.ERROR, "The calendar back arrow button did not have the 'disabled' attribute.");
-            return false;
-        } else if (calendarBackArrow.getAttribute(attribute).equals("true")) {
-            log(LogStatus.INFO, "The calendar back arrow button is disabled, which is the expected behavior.");
+    public boolean isCalendarBackArrowEnabled() {
+        if (calendarBackArrow.isEnabled()) {
+            log(LogStatus.INFO, "The back arrow on the calendar panel was enabled.");
             return true;
         } else {
-            log(LogStatus.ERROR,
-                    "The calendar back arrow button's 'disabled' attribute is equal to something other than the expected values of 'null' and 'true', which means something has gone wrong.");
+            log(LogStatus.INFO, "The back arrow on the calendar panel was disabled.");
             return false;
         }
     }
 
     /**
-     * Checks whether the "disabled" attribute of the calendarForwardArrow button equals true or not.
+     * Checks whether the forward arrow on the calendar is enabled or not.
      *
-     * @return True if the button is disabled, else false.
+     * @return True if the button is enabled, else false.
      */
-    public boolean isCalendarForwardArrowDisabled() {
-        final String attribute = "disabled";
-        if (calendarForwardArrow.getAttribute(attribute) == null) {
-            log(LogStatus.ERROR, "The calendar forward arrow button did not have the 'disabled' attribute.");
-            return false;
-        } else if (calendarForwardArrow.getAttribute(attribute).equals("true")) {
-            log(LogStatus.INFO, "The calendar forward arrow button is disabled, which is the expected behavior.");
+    public boolean isCalendarForwardArrowEnabled() {
+        if (calendarForwardArrow.isEnabled()) {
+            log(LogStatus.INFO, "The forward arrow on the calendar panel was enabled.");
             return true;
         } else {
-            log(LogStatus.ERROR,
-                    "The calendar forward arrow button's 'disabled' attribute is equal to something other than the expected values of 'null' and 'true', which means something has gone wrong.");
+            log(LogStatus.INFO, "The forward arrow on the calendar panel was disabled.");
             return false;
         }
     }
@@ -294,7 +277,7 @@ public class CalendarFactory extends PageFactoryBase {
                 log(LogStatus.ERROR, "The first of the month calendar button is disabled.");
                 return false;
             }
-            if (!isCalendarBackArrowDisabled()) {
+            if (isCalendarBackArrowEnabled()) {
                 return false;
             }
         }
@@ -365,7 +348,6 @@ public class CalendarFactory extends PageFactoryBase {
             navigateToPastMonth(month, year);
         }
     }
-//TODO: ADD HANDLING FOR WHEN TRYING TO CLICK A DAY THAT IS ALREADY SELECTED.
 
     /**
      * Navigates to the desired month & year of a calendar date and clicks it. Will fail if the date is either in the

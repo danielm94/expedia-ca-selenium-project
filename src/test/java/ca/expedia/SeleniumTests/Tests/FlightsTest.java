@@ -37,13 +37,13 @@ public class FlightsTest extends CommonTestBase {
         flights.clickSearchResult("Toronto (YYZ - Pearson Intl.)", "Ontario, Canada");
         flights.clickDeparting();
         cal.clickCalendarCheckInDate();
-        cal.clickCalendarDay(Month.FEBRUARY, 5, 2021);
+        cal.clickCalendarDay(Month.MARCH, 5, 2021);
         cal.clickCalendarDone();
         flights.clickReturning();
         cal.clickCalendarCheckOutDate();
         cal.clickCalendarForwardArrow();
         cal.clickCalendarBackArrow();
-        cal.clickCalendarDay(Month.FEBRUARY, 9, 2021);
+        cal.clickCalendarDay(Month.MARCH, 9, 2021);
         cal.clickCalendarDone();
         flights.clickPreferredClass();
         flights.clickPremiumEconomy();
@@ -56,7 +56,7 @@ public class FlightsTest extends CommonTestBase {
         flights.clickSearchResult("Toronto (YYZ - Pearson Intl.)", "Ontario, Canada");
         flights.clickDeparting();
         cal.clickCalendarCheckInDate();
-        cal.clickCalendarDay(Month.FEBRUARY, 9, 2021);
+        cal.clickCalendarDay(Month.MARCH, 9, 2021);
         cal.clickCalendarDone();
         flights.clickPreferredClass();
         flights.clickPremiumEconomy();
@@ -101,7 +101,7 @@ public class FlightsTest extends CommonTestBase {
         flights.sendKeysMultiCityGoing("Toronto", 1);
         flights.clickSearchResult("Toronto (YYZ - Pearson Intl.)", "Ontario, Canada");
         flights.clickMultiCityDeparting(1);
-        cal.clickCalendarDay(Month.FEBRUARY, 8, 2021);
+        cal.clickCalendarDay(Month.MARCH, 8, 2021);
         cal.clickCalendarDone();
         flights.clickMultiCityLeavingFrom(2);
         flights.sendKeysMultiCityLeaving("Delhi", 2);
@@ -110,7 +110,7 @@ public class FlightsTest extends CommonTestBase {
         flights.sendKeysMultiCityGoing("Toronto", 2);
         flights.clickSearchResult("Toronto (YYZ - Pearson Intl.)", "Ontario, Canada");
         flights.clickMultiCityDeparting(2);
-        cal.clickCalendarDay(Month.FEBRUARY, 9, 2021);
+        cal.clickCalendarDay(Month.MARCH, 9, 2021);
         cal.clickCalendarDone();
         flights.clickMultiCityLeavingFrom(3);
         flights.sendKeysMultiCityLeaving("Delhi", 3);
@@ -119,7 +119,7 @@ public class FlightsTest extends CommonTestBase {
         flights.sendKeysMultiCityGoing("Toronto", 3);
         flights.clickSearchResult("Toronto (YYZ - Pearson Intl.)", "Ontario, Canada");
         flights.clickMultiCityDeparting(3);
-        cal.clickCalendarDay(Month.FEBRUARY, 10, 2021);
+        cal.clickCalendarDay(Month.MARCH, 10, 2021);
         cal.clickCalendarDone();
         flights.clickMultiCityLeavingFrom(4);
         flights.sendKeysMultiCityLeaving("Delhi", 4);
@@ -128,7 +128,7 @@ public class FlightsTest extends CommonTestBase {
         flights.sendKeysMultiCityGoing("Toronto", 4);
         flights.clickSearchResult("Toronto (YYZ - Pearson Intl.)", "Ontario, Canada");
         flights.clickMultiCityDeparting(4);
-        cal.clickCalendarDay(Month.FEBRUARY, 11, 2021);
+        cal.clickCalendarDay(Month.MARCH, 11, 2021);
         cal.clickCalendarDone();
         flights.clickMultiCityLeavingFrom(5);
         flights.sendKeysMultiCityLeaving("Delhi", 5);
@@ -137,7 +137,7 @@ public class FlightsTest extends CommonTestBase {
         flights.sendKeysMultiCityGoing("Toronto", 5);
         flights.clickSearchResult("Toronto (YYZ - Pearson Intl.)", "Ontario, Canada");
         flights.clickMultiCityDeparting(5);
-        cal.clickCalendarDay(Month.FEBRUARY, 12, 2021);
+        cal.clickCalendarDay(Month.MARCH, 12, 2021);
         cal.clickCalendarDone();
     }
 }

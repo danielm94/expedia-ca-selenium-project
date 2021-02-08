@@ -2,6 +2,7 @@ package ca.expedia.SeleniumTests.SetUp;
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
+import io.cucumber.testng.AbstractTestNGCucumberTests;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestListener;
@@ -18,11 +19,11 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.concurrent.TimeUnit;
 
-public class CommonTestBase implements ITestListener {
+public class CommonTestBase extends AbstractTestNGCucumberTests implements ITestListener {
     protected static URL gridHubUrl;
     protected static String baseUrl;
     protected static Capabilities capabilities;
-    protected final String SCREENSHOT_DIRECTORY = "C:/Users/Daniel/Desktop/ExtentReports/";
+    protected final String SCREENSHOT_DIRECTORY = System.getProperty("user.dir")+"\\target\\Extent_Reports\\";
     protected final String SCREENSHOT_DATE_TIME_FORMAT = "yyyy_dd_MMM-HH_mm_ss";
     protected WebDriver driver;
     protected ExtentReports report;

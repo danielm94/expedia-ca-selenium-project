@@ -12,6 +12,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
 import java.io.IOException;
+//TODO: ADD JAVADOC FOR ALL CLASSES.
 
 public class PageFactoryBase {
     @FindBy(xpath = "//button[@data-testid='submit-button']")
@@ -239,8 +240,15 @@ public class PageFactoryBase {
         log(LogStatus.INFO, log);
     }
 
-    //TODO: ADD JAVADOC
-    public Boolean tryClicking(WebElement element, long timeout, String log) {
+    /**
+     * Waits for element to be clickable.
+     *
+     * @param element The element to evaluate.
+     * @param timeout The time in seconds to wait for the element before throwing a TimeOutException.
+     * @param log     The message to log if the element was clickable within the expected time.
+     * @return True if the element was clickable within the expected time, else false.
+     */
+    public Boolean waitUntilClickable(WebElement element, long timeout, String log) {
         WebDriverWait wait = new WebDriverWait(driver, timeout);
         try {
             wait.until(ExpectedConditions.elementToBeClickable(element)).click();
@@ -251,8 +259,15 @@ public class PageFactoryBase {
         }
     }
 
-    //TODO: ADD JAVADOC
-    public Boolean tryClicking(By locator, long timeout, String log) {
+    /**
+     * Waits for element to be clickable.
+     *
+     * @param locator The locator to evaluate the element with.
+     * @param timeout The time in seconds to wait for the element before throwing a TimeOutException.
+     * @param log     The message to log if the element was clickable within the expected time.
+     * @return True if the element was clickable within the expected time, else false.
+     */
+    public Boolean waitUntilClickable(By locator, long timeout, String log) {
         WebDriverWait wait = new WebDriverWait(driver, timeout);
         try {
             wait.until(ExpectedConditions.elementToBeClickable(locator)).click();
@@ -363,6 +378,13 @@ public class PageFactoryBase {
     }
 
     /**
+     * Returns the current URL of the page as a String.
+     */
+    public String getCurrentUrl() {
+        return driver.getCurrentUrl();
+    }
+
+    /**
      * Returns the visible text of an element.
      *
      * @param element The WebElement to evaluate.
@@ -466,6 +488,16 @@ public class PageFactoryBase {
     public WebElement waitUntilVisible(By locator, long timeOut) {
         WebDriverWait wait = new WebDriverWait(driver, timeOut);
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+    }
+    //TODO: ADD JAVADOC
+    public Boolean waitUntilInvisible(WebElement element, long timeOut) {
+        WebDriverWait wait = new WebDriverWait(driver, timeOut);
+        return wait.until(ExpectedConditions.invisibilityOf(element));
+    }
+    //TODO: ADD JAVADOC
+    public Boolean waitUntilInvisible(By locator, long timeOut) {
+        WebDriverWait wait = new WebDriverWait(driver, timeOut);
+        return wait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
     }
 
     /**
