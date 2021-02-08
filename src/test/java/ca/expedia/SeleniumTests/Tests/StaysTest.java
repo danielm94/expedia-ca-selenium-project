@@ -10,7 +10,6 @@ import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -21,7 +20,6 @@ public class StaysTest extends CommonTestBase {
     private TabFactory tab;
     private TravellersFactory travel;
 
-    //TODO: ADD ASSERT FOR CORRECT TITLE + URL ON EACH TEST.
     @BeforeMethod()
     public void beforeMethod(ITestResult result) {
         super.beforeMethod(result);
@@ -31,15 +29,22 @@ public class StaysTest extends CommonTestBase {
         travel = new TravellersFactory(driver, test, 5);
     }
 
+    private void smokeTest() {
+        Assert.assertEquals(stay.getTitle(), "Travel with Expedia.ca: Vacation Homes, Hotels, Car Rentals, Flights & More",
+                "Page did not have expected title.");
+        Assert.assertEquals(stay.getCurrentUrl(), "https://www.expedia.ca/");
+    }
+
     @Test(description = "Basic Test")
     public void basicTest() {
+        smokeTest();
         tab.clickStaysTab();
         stay.clickGoingTo();
         stay.sendKeysGoingTo("Delhi");
         stay.clickSearchResult("Delhi (DEL - Indira Gandhi Intl.)", "India");
         stay.clickCheckIn();
         cal.clickCalendarCheckInDate();
-        cal.clickCalendarDay(Month.FEBRUARY, 22, 2021);
+        cal.clickCalendarDay(Month.FEBRUARY, 20, 2021);
         cal.clickCalendarCheckOutDate();
         cal.clickCalendarDay(Month.FEBRUARY, 24, 2021);
         cal.clickCalendarDone();
@@ -62,6 +67,7 @@ public class StaysTest extends CommonTestBase {
 
     @Test(description = "Leaving From Test")
     public void leavingFromTest() {
+        smokeTest();
         tab.clickStaysTab();
         stay.clickAddFlight(false);
         stay.clickLeavingFrom();
@@ -72,23 +78,26 @@ public class StaysTest extends CommonTestBase {
 
     @Test(description = "Assert User Cannot Access A Month That Is In The Past")
     public void userCannotAccessPastMonth() {
+        smokeTest();
         tab.clickStaysTab();
         stay.clickCheckIn();
         cal.navigateToPresentMonth();
-        Assert.assertTrue(cal.isCalendarBackArrowDisabled());
+        Assert.assertFalse(cal.isCalendarBackArrowEnabled());
     }
 
     @Test(description = "Assert User Cannot Access Month That Is Over 500 Days Ahead.")
     public void userCannotAccessMonth500DaysAhead() {
+        smokeTest();
         LocalDate fiveHundredDaysAhead = LocalDate.now().plusDays(500);
         tab.clickStaysTab();
         stay.clickCheckIn();
         cal.navigateToMonth(fiveHundredDaysAhead.getMonth(), fiveHundredDaysAhead.getYear());
-        Assert.assertTrue(cal.isCalendarForwardArrowDisabled());
+        Assert.assertFalse(cal.isCalendarForwardArrowEnabled());
     }
 
     @Test(description = "Assert User Cannot Select A Calendar Day That Is In The Past")
     public void userCannotSelectDayInPast() {
+        smokeTest();
         tab.clickStaysTab();
         stay.clickCheckIn();
         cal.navigateToPresentMonth();
@@ -97,6 +106,7 @@ public class StaysTest extends CommonTestBase {
 
     @Test(description = "Assert User Cannot Select A Day That Is Over 500 Days In The Future")
     public void userCannotSelectDaysThatAre500DaysInFuture() {
+        smokeTest();
         LocalDate fiveHundredDaysAhead = LocalDate.now().plusDays(500);
         tab.clickStaysTab();
         stay.clickCheckIn();
@@ -106,6 +116,7 @@ public class StaysTest extends CommonTestBase {
 
     @Test(description = "Assert Calendar Days Are Highlighted Correctly")
     public void calendarDaysAreHighlightedCorrectly() {
+        smokeTest();
         LocalDate presentDate = LocalDate.now();
         LocalDate date450DaysIntoFuture = LocalDate.now().plusDays(450);
         tab.clickStaysTab();
@@ -118,6 +129,7 @@ public class StaysTest extends CommonTestBase {
 
     @Test(description = "Assert User Can Clear Going To Field With 'x' Button")
     public void userCanClearGoingToFieldWithXButton() {
+        smokeTest();
         tab.clickStaysTab();
         stay.clickGoingTo();
         stay.sendKeysGoingTo("Toronto");
@@ -134,6 +146,7 @@ public class StaysTest extends CommonTestBase {
 
     @Test(description = "Assert User Can Clear Leaving From Field With 'x' Button")
     public void userCanClearLeavingFromFieldWithXButton() {
+        smokeTest();
         tab.clickStaysTab();
         stay.clickAddFlight(false);
         stay.clickLeavingFrom();
@@ -151,6 +164,7 @@ public class StaysTest extends CommonTestBase {
 
     @Test(description = "Assert That The Header Inside The Travellers Panel Is Displaying The Correct Text")
     public void travellersPanelDisplaysCorrectHeaderText() {
+        smokeTest();
         tab.clickStaysTab();
         travel.clickTravellersButton();
         Assert.assertEquals(travel.getTravellersPanelHeaderText(), "Travellers");
@@ -159,6 +173,7 @@ public class StaysTest extends CommonTestBase {
 
     @Test(description = "Assert That The Room Headers Inside The Travellers Panel Are Displaying The Correct Text")
     public void travellersPanelDisplaysCorrectRoomHeaderText() {
+        smokeTest();
         tab.clickStaysTab();
         travel.clickTravellersButton();
         for (int x = 1; x < 9; x++) {
@@ -171,6 +186,7 @@ public class StaysTest extends CommonTestBase {
 
     @Test(description = "Assert That The Adults Labels Inside The Travellers Panel Are Displaying The Correct Text")
     public void travellersPanelDisplaysCorrectAdultsLabel() {
+        smokeTest();
         tab.clickStaysTab();
         travel.clickTravellersButton();
         for (int x = 1; x < 9; x++) {
@@ -183,6 +199,7 @@ public class StaysTest extends CommonTestBase {
 
     @Test(description = "Assert That The Children Labels Inside The Travellers Panel Are Displaying The Correct Text")
     public void travellersPanelDisplaysCorrectChildrenLabel() {
+        smokeTest();
         tab.clickStaysTab();
         travel.clickTravellersButton();
         for (int x = 1; x < 9; x++) {
@@ -196,6 +213,7 @@ public class StaysTest extends CommonTestBase {
 
     @Test(description = "Assert That The Remove Room Buttons Inside The Travellers Panel Are Displaying The Correct Text")
     public void travellersPanelDisplaysRemoveRoomButtonsCorrectly() {
+        smokeTest();
         tab.clickStaysTab();
         travel.clickTravellersButton();
         for (int x = 1; x < 9; x++) {
@@ -210,6 +228,7 @@ public class StaysTest extends CommonTestBase {
 
     @Test(description = "Assert That The Children Select Labels Inside The Travellers Panel Are Displayed Correctly")
     public void travellersChildrenSelectLabelsDisplayedCorrectly() {
+        smokeTest();
         tab.clickStaysTab();
         travel.clickTravellersButton();
         for (int room = 1; room < 9; room++) {
@@ -225,6 +244,7 @@ public class StaysTest extends CommonTestBase {
 
     @Test(description = "Assert That The Child Drop Down Menus Display The Selected Option")
     public void travellersChildrenSelectDisplaySelectedOption() {
+        smokeTest();
         tab.clickStaysTab();
         travel.clickTravellersButton();
         for (int room = 1; room < 9; room++) {
@@ -241,6 +261,7 @@ public class StaysTest extends CommonTestBase {
 
     @Test(description = "Assert That The Child Drop Down Menus Contain The Correct Options")
     public void travellersChildrenSelectContainsCorrectOptions() {
+        smokeTest();
         final String[] EXPECTED_CHILD_SELECT_OPTIONS = {"Under 1", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"
                 , "11", "12", "13", "14", "15", "16", "17"};
         tab.clickStaysTab();
@@ -258,6 +279,7 @@ public class StaysTest extends CommonTestBase {
 
     @Test(description = "Assert That The Done Button In The Travellers Tab Displays The Correct Room & Travellers Count")
     public void travellersDoneButtonDisplaysCorrectRoomTravellersCount() {
+        smokeTest();
         final String assertFailureMessage = "Travellers done button did not display the correct number of travellers/rooms.";
         tab.clickStaysTab();
         travel.clickTravellersButton();
@@ -283,5 +305,59 @@ public class StaysTest extends CommonTestBase {
 
         travel.clickTravellersAdultsDec(1);
         Assert.assertEquals(travel.getTravellersDoneButtonText(), "Done\n1 room, 1 traveller", assertFailureMessage);
+    }
+
+    @Test(description = "Assert that the increase button for adults in the travellers tab will be disabled upon reaching limit.")
+    public void travellersAdultIncreaseButtonDisabledUponReachingLimit() {
+        smokeTest();
+        tab.clickStaysTab();
+        travel.clickTravellersButton();
+        while (!travel.getTravellersAdultsCount(1).equals("14")) {
+            travel.clickTravellersAdultsInc(1);
+        }
+        Assert.assertFalse(travel.isAdultIncreaseButtonEnabled(1),"The increase button for adults was not disabled upon reaching 14 adults.");
+    }
+
+    @Test(description = "Assert that the increase button for children in the travellers tab will be disabled upon reaching limit.")
+    public void travellersChildrenIncreaseButtonDisabledUponReachingLimit() {
+        smokeTest();
+        tab.clickStaysTab();
+        travel.clickTravellersButton();
+        while (!travel.getTravellersChildCount(1).equals("6")) {
+            travel.clickTravellersChildrenInc(1);
+        }
+        Assert.assertFalse(travel.isChildIncreaseButtonEnabled(1),"The increase button for children was not disabled upon reaching 6 children.");
+    }
+
+    @Test(description = "Assert that the decrease button for adults in the travellers tab will be disabled upon reaching limit.")
+    public void travellersAdultDecreaseButtonDisabledUponReachingLimit() {
+        smokeTest();
+        tab.clickStaysTab();
+        travel.clickTravellersButton();
+        while (!travel.getTravellersAdultsCount(1).equals("1")) {
+            travel.clickTravellersAdultsDec(1);
+        }
+        Assert.assertFalse(travel.isAdultDecreaseButtonEnabled(1),"The decrease button for adults was not disabled upon reaching 1 adult.");
+    }
+
+    @Test(description = "Assert that the decrease button for children in the travellers tab will be disabled upon reaching limit.")
+    public void travellersChildrenDecreaseButtonDisabledUponReachingLimit() {
+        smokeTest();
+        tab.clickStaysTab();
+        travel.clickTravellersButton();
+        while (!travel.getTravellersChildCount(1).equals("0")) {
+            travel.clickTravellersChildrenDec(1);
+        }
+        Assert.assertFalse(travel.isChildDecreaseButtonEnabled(1),"The decrease button for children was not disabled upon reaching 0 children.");
+    }
+
+    @Test(description="Assert that the remove room button in the travellers panel will remove the last room that was added.")
+    public void travellersRemoveRoomButtonShouldRemoveRoom(){
+        smokeTest();
+        tab.clickStaysTab();
+        travel.clickTravellersButton();
+        for(int room = 1;room<9;room++){
+
+        }
     }
 }

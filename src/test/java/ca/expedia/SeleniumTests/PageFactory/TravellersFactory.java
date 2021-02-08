@@ -57,7 +57,7 @@ public class TravellersFactory extends PageFactoryBase {
      * Clicks the "Travellers" button to open the travellers submenu.
      */
     public void clickTravellersButton() {
-        if (!tryClicking(By.xpath("//button[@data-testid='travelers-field-trigger']"), globalTimeOutTime, "Clicked on the 'Travellers' button")) {
+        if (!waitUntilClickable(By.xpath("//button[@data-testid='travelers-field-trigger']"), globalTimeOutTime, "Clicked on the 'Travellers' button")) {
             log(LogStatus.INFO, "Travellers button was not available, attempting to click anchor tag instead.");
             click(By.xpath("//a[@data-testid='travelers-field']"), globalTimeOutTime, "Clicked on the 'Travellers' anchor tag.");
         }
@@ -464,6 +464,52 @@ public class TravellersFactory extends PageFactoryBase {
                 return false;
             }
         }
+        return true;
+    }
+
+    /**
+     * Determines whether or not the increase button for adults in the travellers panel is enabled or not.
+     *
+     * @param room - The room in which the button is located in.
+     * @return True if it is enabled, else false.
+     */
+    public Boolean isAdultIncreaseButtonEnabled(int room) {
+        return getTravellersAdultsInc(1).isEnabled();
+    }
+
+    /**
+     * Determines whether or not the increase button for children in the travellers panel is enabled or not.
+     *
+     * @param room - The room in which the button is located in.
+     * @return True if it is enabled, else false.
+     */
+    public Boolean isChildIncreaseButtonEnabled(int room) {
+        return getTravellersChildrenInc(1).isEnabled();
+    }
+
+    /**
+     * Determines whether or not the decrease button for adults in the travellers panel is enabled or not.
+     *
+     * @param room - The room in which the button is located in.
+     * @return True if it is enabled, else false.
+     */
+    public Boolean isAdultDecreaseButtonEnabled(int room) {
+        return getTravellersAdultsDec(1).isEnabled();
+    }
+
+    /**
+     * Determines whether or not the decrease button for children in the travellers panel is enabled or not.
+     *
+     * @param room - The room in which the button is located in.
+     * @return True if it is enabled, else false.
+     */
+    public Boolean isChildDecreaseButtonEnabled(int room) {
+        return getTravellersChildrenDec(1).isEnabled();
+    }
+
+    public Boolean isRoomRemoved(int room){
+
+
         return true;
     }
 }
