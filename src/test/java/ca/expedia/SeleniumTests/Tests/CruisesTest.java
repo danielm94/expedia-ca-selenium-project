@@ -33,29 +33,29 @@ public class CruisesTest extends CommonTestBase {
         travel.clickTravellersButton();
         for (int x = 0; x < 4; x++) {
             if (x < 3) {
-                travel.clickTravellersAdultsInc();
+                travel.clickAdultsIncrease();
             }
-            travel.clickTravellersChildrenInc();
+            travel.clickChildrenIncrease();
             travel.selectChildAge(x + 1, x + 5);
         }
         for (int x = 0; x < 4; x++) {
-            travel.clickTravellersAdultsDec();
-            travel.clickTravellersChildrenDec();
+            travel.clickAdultsDecrease();
+            travel.clickChildrenDecrease();
         }
-        travel.clickTravellersDoneButton();
+        travel.clickDoneButton();
         cruise.clickDepartsAsEarlyAs();
         cal.clickCalendarCheckOutDate();
         cal.clickCalendarCheckInDate();
         cal.clickCalendarForwardArrow();
         cal.clickCalendarBackArrow();
         cal.clickCalendarDay(Month.FEBRUARY, 10, 2021);
-        cal.clickCalendarDone();
+        cal.clickDone();
         cruise.clickDepartsAsLateAs();
         cal.clickCalendarCheckInDate();
         cal.clickCalendarCheckOutDate();
         cal.clickCalendarForwardArrow();
         cal.clickCalendarBackArrow();
         cal.clickCalendarDay(Month.FEBRUARY, 20, 2021);
-        cal.clickCalendarDone();
+        cal.clickDone();
     }
 }

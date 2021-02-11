@@ -19,6 +19,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.concurrent.TimeUnit;
 
+//TODO: REPLACE ALL INSTANCES OF SELECT METHODS WITH WEBELEMENT METHODS
 public class CommonTestBase extends AbstractTestNGCucumberTests implements ITestListener {
     protected static URL gridHubUrl;
     protected static String baseUrl;

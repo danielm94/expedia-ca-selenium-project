@@ -21,15 +21,15 @@ public class CalendarFactory extends PageFactoryBase {
     private long globalTimeOutTime;
     private WebDriver driver;
     @FindBy(xpath = "//button[1]/span[@class='uitk-date-picker-selection-date']")
-    private WebElement calendarCheckInButton;
+    private WebElement checkInButton;
     @FindBy(xpath = "//button[2]/span[@class='uitk-date-picker-selection-date']")
-    private WebElement calendarCheckOutButton;
+    private WebElement checkOutButton;
     @FindBy(xpath = "//div[contains(@class,'uitk-date-picker-menu-pagination-container')]/button[1]")
-    private WebElement calendarBackArrow;
+    private WebElement backArrow;
     @FindBy(xpath = "//div[contains(@class,'uitk-date-picker-menu-pagination-container')]/button[2]")
-    private WebElement calendarForwardArrow;
+    private WebElement forwardArrow;
     @FindBy(xpath = "//button[@data-stid='apply-date-picker']")
-    private WebElement calendarDoneButton;
+    private WebElement doneButton;
     @FindBy(xpath = "//div[@class='uitk-new-date-picker-month'][1]/h2")
     private WebElement leftCalendarHeader;
     @FindBy(xpath = "//div[@class='uitk-new-date-picker-month'][2]/h2")
@@ -47,7 +47,7 @@ public class CalendarFactory extends PageFactoryBase {
      * calendar and set it as their check in date.
      */
     public void clickCalendarCheckInDate() {
-        click(calendarCheckInButton, globalTimeOutTime, "Clicked on the check in date on the calendar");
+        click(checkInButton, globalTimeOutTime, "Clicked on the check in date on the calendar");
     }
 
     /**
@@ -55,42 +55,42 @@ public class CalendarFactory extends PageFactoryBase {
      * calendar and set it as their check out date.
      */
     public void clickCalendarCheckOutDate() {
-        click(calendarCheckOutButton, globalTimeOutTime, "Clicked on the check out date on the calendar");
+        click(checkOutButton, globalTimeOutTime, "Clicked on the check out date on the calendar");
     }
 
     /**
      * Clicks on the back arrow button in the calendar date picker panel.
      */
     public void clickCalendarBackArrow() {
-        click(calendarBackArrow, globalTimeOutTime, "Clicked on the back arrow on the calendar");
+        click(backArrow, globalTimeOutTime, "Clicked on the back arrow on the calendar");
     }
 
     /**
      * Clicks on the forward arrow button in the calendar date picker panel.
      */
     public void clickCalendarForwardArrow() {
-        click(calendarForwardArrow, globalTimeOutTime, "Clicked on the forward arrow on the calendar");
+        click(forwardArrow, globalTimeOutTime, "Clicked on the forward arrow on the calendar");
     }
 
     /**
      * Clicks on the done button in the calendar date picker panel.
      */
-    public void clickCalendarDone() {
-        click(calendarDoneButton, globalTimeOutTime, "Clicked on the done button on the calendar");
+    public void clickDone() {
+        click(doneButton, globalTimeOutTime, "Clicked on the done button on the calendar");
     }
 
     /**
      * Finds and returns the visible text of the check in button in the calendar panel.
      */
     public String getCalendarCheckInButtonText() {
-        return getText(calendarCheckInButton, globalTimeOutTime, "Calendar check in button was found with the following text");
+        return getText(checkInButton, globalTimeOutTime, "Calendar check in button was found with the following text");
     }
 
     /**
      * Finds and returns the visible text of the check out button in the calendar panel.
      */
     public String getCalendarCheckOutButtonText() {
-        return getText(calendarCheckOutButton, globalTimeOutTime, "Calendar check out button was found with the following text");
+        return getText(checkOutButton, globalTimeOutTime, "Calendar check out button was found with the following text");
     }
 
     /**
@@ -187,8 +187,8 @@ public class CalendarFactory extends PageFactoryBase {
      *
      * @return True if the button is enabled, else false.
      */
-    public boolean isCalendarBackArrowEnabled() {
-        if (calendarBackArrow.isEnabled()) {
+    public boolean isBackArrowEnabled() {
+        if (backArrow.isEnabled()) {
             log(LogStatus.INFO, "The back arrow on the calendar panel was enabled.");
             return true;
         } else {
@@ -202,8 +202,8 @@ public class CalendarFactory extends PageFactoryBase {
      *
      * @return True if the button is enabled, else false.
      */
-    public boolean isCalendarForwardArrowEnabled() {
-        if (calendarForwardArrow.isEnabled()) {
+    public boolean isForwardArrowEnabled() {
+        if (forwardArrow.isEnabled()) {
             log(LogStatus.INFO, "The forward arrow on the calendar panel was enabled.");
             return true;
         } else {
@@ -277,7 +277,7 @@ public class CalendarFactory extends PageFactoryBase {
                 log(LogStatus.ERROR, "The first of the month calendar button is disabled.");
                 return false;
             }
-            if (isCalendarBackArrowEnabled()) {
+            if (isBackArrowEnabled()) {
                 return false;
             }
         }

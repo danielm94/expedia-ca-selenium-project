@@ -44,16 +44,16 @@ public class VacationTest extends CommonTestBase {
         vacation.clickAccommodationsCheckbox(false);
         vacation.clickDepartingButton();
         cal.clickCalendarDay(Month.FEBRUARY, 20, 2021);
-        cal.clickCalendarDone();
+        cal.clickDone();
         vacation.clickReturningButton();
         cal.clickCalendarDay(Month.FEBRUARY, 22, 2021);
-        cal.clickCalendarDone();
+        cal.clickDone();
         vacation.clickCheckIn();
         cal.clickCalendarDay(Month.FEBRUARY, 25, 2021);
-        cal.clickCalendarDone();
+        cal.clickDone();
         vacation.clickCheckOut();
         cal.clickCalendarDay(Month.FEBRUARY, 26, 2021);
-        cal.clickCalendarDone();
+        cal.clickDone();
         vacation.clickPreferredClass();
         vacation.clickFirstClass();
         vacation.clickPreferredClass();
@@ -70,7 +70,7 @@ public class VacationTest extends CommonTestBase {
         travel.clickTravellersAnchorTag();
         // Add 5 rooms
         for (int x = 0; x < 5; x++) {
-            travel.clickTravellersAddRoom();
+            travel.clickAddRoom();
         }
         // Set the number of adults, children and infants to 6 in all the rooms.
         for (int room = 1; room < 7; room++) {
@@ -118,7 +118,7 @@ public class VacationTest extends CommonTestBase {
         vacation.clickTravellersInfantsInc(1);
         travel.clickTravellersInSeat(false);
         travel.clickTravellersOnLap(false);
-        travel.clickTravellersDoneButton();
+        travel.clickDoneButton();
         travel.clickTravellersAnchorTag();
         travel.clickAirlineAgeRules();
     }

@@ -489,15 +489,16 @@ public class PageFactoryBase {
         WebDriverWait wait = new WebDriverWait(driver, timeOut);
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
-    //TODO: ADD JAVADOC
-    public Boolean waitUntilInvisible(WebElement element, long timeOut) {
-        WebDriverWait wait = new WebDriverWait(driver, timeOut);
-        return wait.until(ExpectedConditions.invisibilityOf(element));
-    }
+
     //TODO: ADD JAVADOC
     public Boolean waitUntilInvisible(By locator, long timeOut) {
         WebDriverWait wait = new WebDriverWait(driver, timeOut);
-        return wait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
+        try {
+            wait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
+            return true;
+        } catch (TimeoutException e) {
+            return false;
+        }
     }
 
     /**
