@@ -47,16 +47,16 @@ public class StaysTest extends CommonTestBase {
         cal.clickCalendarDay(Month.FEBRUARY, 20, 2021);
         cal.clickCalendarCheckOutDate();
         cal.clickCalendarDay(Month.FEBRUARY, 24, 2021);
-        cal.clickCalendarDone();
+        cal.clickDone();
         travel.clickTravellersButton();
-        travel.clickTravellersAddRoom();
-        travel.clickTravellersAddRoom();
-        travel.clickTravellersChildrenInc(3);
-        travel.clickTravellersChildrenInc(3);
-        travel.clickTravellersChildrenInc(3);
-        travel.clickTravellersChildrenInc(3);
-        travel.clickTravellersChildrenInc(3);
-        travel.clickTravellersChildrenInc(3);
+        travel.clickAddRoom();
+        travel.clickAddRoom();
+        travel.clickChildrenIncrease(3);
+        travel.clickChildrenIncrease(3);
+        travel.clickChildrenIncrease(3);
+        travel.clickChildrenIncrease(3);
+        travel.clickChildrenIncrease(3);
+        travel.clickChildrenIncrease(3);
         travel.selectChildAge(3, 1, 15);
         travel.selectChildAge(3, 2, 17);
         travel.selectChildAge(3, 3, 4);
@@ -82,7 +82,7 @@ public class StaysTest extends CommonTestBase {
         tab.clickStaysTab();
         stay.clickCheckIn();
         cal.navigateToPresentMonth();
-        Assert.assertFalse(cal.isCalendarBackArrowEnabled());
+        Assert.assertFalse(cal.isBackArrowEnabled());
     }
 
     @Test(description = "Assert User Cannot Access Month That Is Over 500 Days Ahead.")
@@ -92,7 +92,7 @@ public class StaysTest extends CommonTestBase {
         tab.clickStaysTab();
         stay.clickCheckIn();
         cal.navigateToMonth(fiveHundredDaysAhead.getMonth(), fiveHundredDaysAhead.getYear());
-        Assert.assertFalse(cal.isCalendarForwardArrowEnabled());
+        Assert.assertFalse(cal.isForwardArrowEnabled());
     }
 
     @Test(description = "Assert User Cannot Select A Calendar Day That Is In The Past")
@@ -167,7 +167,7 @@ public class StaysTest extends CommonTestBase {
         smokeTest();
         tab.clickStaysTab();
         travel.clickTravellersButton();
-        Assert.assertEquals(travel.getTravellersPanelHeaderText(), "Travellers");
+        Assert.assertEquals(travel.getPanelHeaderText(), "Travellers");
         stay.log(LogStatus.PASS, "The header inside the travellers panel displayed the correct text.");
     }
 
@@ -177,9 +177,9 @@ public class StaysTest extends CommonTestBase {
         tab.clickStaysTab();
         travel.clickTravellersButton();
         for (int x = 1; x < 9; x++) {
-            Assert.assertEquals(travel.getTravellersRoomHeaderText(x), "Room " + x);
+            Assert.assertEquals(travel.getRoomHeaderText(x), "Room " + x);
             if (x < 8) {
-                travel.clickTravellersAddRoom();
+                travel.clickAddRoom();
             }
         }
     }
@@ -190,9 +190,9 @@ public class StaysTest extends CommonTestBase {
         tab.clickStaysTab();
         travel.clickTravellersButton();
         for (int x = 1; x < 9; x++) {
-            Assert.assertEquals(travel.getTravellersAdultsLabelText(x), "Adults");
+            Assert.assertEquals(travel.getAdultsLabelText(x), "Adults");
             if (x < 8) {
-                travel.clickTravellersAddRoom();
+                travel.clickAddRoom();
             }
         }
     }
@@ -203,10 +203,10 @@ public class StaysTest extends CommonTestBase {
         tab.clickStaysTab();
         travel.clickTravellersButton();
         for (int x = 1; x < 9; x++) {
-            Assert.assertEquals(travel.getTravellersChildrenLabelText(x), "Children\n" +
+            Assert.assertEquals(travel.getChildrenLabelText(x), "Children\n" +
                     "Ages 0 to 17");
             if (x < 8) {
-                travel.clickTravellersAddRoom();
+                travel.clickAddRoom();
             }
         }
     }
@@ -218,10 +218,10 @@ public class StaysTest extends CommonTestBase {
         travel.clickTravellersButton();
         for (int x = 1; x < 9; x++) {
             if (x > 1) {
-                Assert.assertEquals(travel.getTravellersRemoveRoomButtonText(x), "Remove room");
+                Assert.assertEquals(travel.getRemoveRoomText(x), "Remove room");
             }
             if (x < 8) {
-                travel.clickTravellersAddRoom();
+                travel.clickAddRoom();
             }
         }
     }
@@ -233,11 +233,11 @@ public class StaysTest extends CommonTestBase {
         travel.clickTravellersButton();
         for (int room = 1; room < 9; room++) {
             for (int child = 1; child < 7; child++) {
-                travel.clickTravellersChildrenInc(room);
-                Assert.assertEquals(travel.getTravellersChildSelectLabelText(room, child), "Child " + child + " age");
+                travel.clickChildrenIncrease(room);
+                Assert.assertEquals(travel.getChildSelectLabelText(room, child), "Child " + child + " age");
             }
             if (room < 8) {
-                travel.clickTravellersAddRoom();
+                travel.clickAddRoom();
             }
         }
     }
@@ -249,12 +249,12 @@ public class StaysTest extends CommonTestBase {
         travel.clickTravellersButton();
         for (int room = 1; room < 9; room++) {
             for (int child = 1; child < 7; child++) {
-                travel.clickTravellersChildrenInc(room);
+                travel.clickChildrenIncrease(room);
                 travel.selectChildAge(room, child, (room + child));
-                Assert.assertEquals(travel.getTravellersChildSelectedText(room, child), Integer.toString(room + child));
+                Assert.assertEquals(travel.getChildSelectedText(room, child), Integer.toString(room + child));
             }
             if (room < 8) {
-                travel.clickTravellersAddRoom();
+                travel.clickAddRoom();
             }
         }
     }
@@ -268,11 +268,11 @@ public class StaysTest extends CommonTestBase {
         travel.clickTravellersButton();
         for (int room = 1; room < 9; room++) {
             for (int child = 1; child < 7; child++) {
-                travel.clickTravellersChildrenInc(room);
+                travel.clickChildrenIncrease(room);
                 Assert.assertTrue(travel.isChildSelectListingCorrectOptions(room, child, EXPECTED_CHILD_SELECT_OPTIONS));
             }
             if (room < 8) {
-                travel.clickTravellersAddRoom();
+                travel.clickAddRoom();
             }
         }
     }
@@ -283,28 +283,28 @@ public class StaysTest extends CommonTestBase {
         final String assertFailureMessage = "Travellers done button did not display the correct number of travellers/rooms.";
         tab.clickStaysTab();
         travel.clickTravellersButton();
-        Assert.assertEquals(travel.getTravellersDoneButtonText(), "Done\n1 room, 2 travellers", assertFailureMessage);
+        Assert.assertEquals(travel.getDoneButtonText(), "Done\n1 room, 2 travellers", assertFailureMessage);
 
-        travel.clickTravellersAdultsInc(1);
-        Assert.assertEquals(travel.getTravellersDoneButtonText(), "Done\n1 room, 3 travellers", assertFailureMessage);
+        travel.clickAdultsIncrease(1);
+        Assert.assertEquals(travel.getDoneButtonText(), "Done\n1 room, 3 travellers", assertFailureMessage);
 
-        travel.clickTravellersChildrenInc(1);
-        Assert.assertEquals(travel.getTravellersDoneButtonText(), "Done\n1 room, 4 travellers", assertFailureMessage);
+        travel.clickChildrenIncrease(1);
+        Assert.assertEquals(travel.getDoneButtonText(), "Done\n1 room, 4 travellers", assertFailureMessage);
 
-        travel.clickTravellersAddRoom();
-        Assert.assertEquals(travel.getTravellersDoneButtonText(), "Done\n2 rooms, 5 travellers", assertFailureMessage);
+        travel.clickAddRoom();
+        Assert.assertEquals(travel.getDoneButtonText(), "Done\n2 rooms, 5 travellers", assertFailureMessage);
 
-        travel.clickTravellersAdultsDec(1);
-        Assert.assertEquals(travel.getTravellersDoneButtonText(), "Done\n2 rooms, 4 travellers", assertFailureMessage);
+        travel.clickAdultsDecrease(1);
+        Assert.assertEquals(travel.getDoneButtonText(), "Done\n2 rooms, 4 travellers", assertFailureMessage);
 
-        travel.clickTravellersChildrenDec(1);
-        Assert.assertEquals(travel.getTravellersDoneButtonText(), "Done\n2 rooms, 3 travellers", assertFailureMessage);
+        travel.clickChildrenDecrease(1);
+        Assert.assertEquals(travel.getDoneButtonText(), "Done\n2 rooms, 3 travellers", assertFailureMessage);
 
-        travel.clickTravellersRemoveRoom(2);
-        Assert.assertEquals(travel.getTravellersDoneButtonText(), "Done\n1 room, 2 travellers", assertFailureMessage);
+        travel.clickRemoveRoom(2);
+        Assert.assertEquals(travel.getDoneButtonText(), "Done\n1 room, 2 travellers", assertFailureMessage);
 
-        travel.clickTravellersAdultsDec(1);
-        Assert.assertEquals(travel.getTravellersDoneButtonText(), "Done\n1 room, 1 traveller", assertFailureMessage);
+        travel.clickAdultsDecrease(1);
+        Assert.assertEquals(travel.getDoneButtonText(), "Done\n1 room, 1 traveller", assertFailureMessage);
     }
 
     @Test(description = "Assert that the increase button for adults in the travellers tab will be disabled upon reaching limit.")
@@ -312,10 +312,10 @@ public class StaysTest extends CommonTestBase {
         smokeTest();
         tab.clickStaysTab();
         travel.clickTravellersButton();
-        while (!travel.getTravellersAdultsCount(1).equals("14")) {
-            travel.clickTravellersAdultsInc(1);
+        while (!travel.getAdultsCountText(1).equals("14")) {
+            travel.clickAdultsIncrease(1);
         }
-        Assert.assertFalse(travel.isAdultIncreaseButtonEnabled(1),"The increase button for adults was not disabled upon reaching 14 adults.");
+        Assert.assertFalse(travel.isAdultIncreaseButtonEnabled(1), "The increase button for adults was not disabled upon reaching 14 adults.");
     }
 
     @Test(description = "Assert that the increase button for children in the travellers tab will be disabled upon reaching limit.")
@@ -323,10 +323,10 @@ public class StaysTest extends CommonTestBase {
         smokeTest();
         tab.clickStaysTab();
         travel.clickTravellersButton();
-        while (!travel.getTravellersChildCount(1).equals("6")) {
-            travel.clickTravellersChildrenInc(1);
+        while (!travel.getChildCountText(1).equals("6")) {
+            travel.clickChildrenIncrease(1);
         }
-        Assert.assertFalse(travel.isChildIncreaseButtonEnabled(1),"The increase button for children was not disabled upon reaching 6 children.");
+        Assert.assertFalse(travel.isChildIncreaseButtonEnabled(1), "The increase button for children was not disabled upon reaching 6 children.");
     }
 
     @Test(description = "Assert that the decrease button for adults in the travellers tab will be disabled upon reaching limit.")
@@ -334,10 +334,10 @@ public class StaysTest extends CommonTestBase {
         smokeTest();
         tab.clickStaysTab();
         travel.clickTravellersButton();
-        while (!travel.getTravellersAdultsCount(1).equals("1")) {
-            travel.clickTravellersAdultsDec(1);
+        while (!travel.getAdultsCountText(1).equals("1")) {
+            travel.clickAdultsDecrease(1);
         }
-        Assert.assertFalse(travel.isAdultDecreaseButtonEnabled(1),"The decrease button for adults was not disabled upon reaching 1 adult.");
+        Assert.assertFalse(travel.isAdultDecreaseButtonEnabled(1), "The decrease button for adults was not disabled upon reaching 1 adult.");
     }
 
     @Test(description = "Assert that the decrease button for children in the travellers tab will be disabled upon reaching limit.")
@@ -345,19 +345,42 @@ public class StaysTest extends CommonTestBase {
         smokeTest();
         tab.clickStaysTab();
         travel.clickTravellersButton();
-        while (!travel.getTravellersChildCount(1).equals("0")) {
-            travel.clickTravellersChildrenDec(1);
+        while (!travel.getChildCountText(1).equals("0")) {
+            travel.clickChildrenDecrease(1);
         }
-        Assert.assertFalse(travel.isChildDecreaseButtonEnabled(1),"The decrease button for children was not disabled upon reaching 0 children.");
+        Assert.assertFalse(travel.isChildDecreaseButtonEnabled(1), "The decrease button for children was not disabled upon reaching 0 children.");
     }
 
-    @Test(description="Assert that the remove room button in the travellers panel will remove the last room that was added.")
+    @Test(description = "Assert that the remove room button in the travellers panel will remove the last room that was added.")
     public void travellersRemoveRoomButtonShouldRemoveRoom(){
         smokeTest();
         tab.clickStaysTab();
         travel.clickTravellersButton();
-        for(int room = 1;room<9;room++){
-
+        travel.clickAddRoom();
+        for (int room = 2; room < 9; room++) {
+            for (int child = 1; child < 7; child++) {
+                travel.clickChildrenIncrease(room);
+            }
+            if (room != 8) {
+                travel.clickAddRoom();
+            }
+        }
+        //Validate that room gets removed.
+        for (int room = 8; room > 1; room--) {
+            travel.clickRemoveRoom(room);
+            Assert.assertTrue(travel.isRemoveRoomButtonRemoved(room));
+            Assert.assertTrue(travel.isRoomHeaderRemoved(room));
+            Assert.assertTrue(travel.isAdultsLabelRemoved(room));
+            Assert.assertTrue(travel.isChildrenLabelRemoved(room));
+            Assert.assertTrue(travel.isAdultsDecreaseButtonRemoved(room));
+            Assert.assertTrue(travel.isAdultsIncreaseButtonRemoved(room));
+            Assert.assertTrue(travel.isAdultsCountRemoved(room));
+            Assert.assertTrue(travel.isChildrenDecreaseButtonRemoved(room));
+            Assert.assertTrue(travel.isChildrenIncreaseButtonRemoved(room));
+            Assert.assertTrue(travel.isChildCountRemoved(room));
+            for (int child = 1; child < 7; child++) {
+                Assert.assertTrue(travel.isChildrenSelectRemoved(room, child));
+            }
         }
     }
 }

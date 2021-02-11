@@ -38,7 +38,7 @@ public class ThingsToDoTest extends CommonTestBase {
         cal.clickCalendarBackArrow();
         cal.clickCalendarBackArrow();
         cal.clickCalendarDay(presentDate.getMonth(), presentDate.getDayOfMonth(), presentDate.getYear());
-        cal.clickCalendarDone();
+        cal.clickDone();
         todo.clickToButton();
         cal.clickCalendarForwardArrow();
         cal.clickCalendarForwardArrow();
@@ -46,7 +46,7 @@ public class ThingsToDoTest extends CommonTestBase {
         cal.clickCalendarCheckOutDate();
         cal.clickCalendarBackArrow();
         cal.clickCalendarDay(futureDate.getMonth(), futureDate.getDayOfMonth(), futureDate.getYear());
-        cal.clickCalendarDone();
+        cal.clickDone();
         todo.clickSearchButton();
     }
 }

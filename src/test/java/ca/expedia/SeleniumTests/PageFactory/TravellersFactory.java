@@ -8,7 +8,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
@@ -76,7 +75,7 @@ public class TravellersFactory extends PageFactoryBase {
      * @param room The room number of the element.
      * @return Returns the adults decrease button.
      */
-    private WebElement getTravellersAdultsDec(int room) {
+    private WebElement getAdultsDecreaseButton(int room) {
         return find(By.xpath("//div[@data-testid='room-" + room + "']/div[contains(@class,'adultStepInput')]/div/button[1]"), globalTimeOutTime);
     }
 
@@ -86,7 +85,7 @@ public class TravellersFactory extends PageFactoryBase {
      * @param room The room number of the element.
      * @return Returns the adults increase button.
      */
-    private WebElement getTravellersAdultsInc(int room) {
+    private WebElement getAdultsIncreaseButton(int room) {
         return find(By.xpath("//div[@data-testid='room-" + room + "']/div[contains(@class,'adultStepInput')]/div/button[2]"), globalTimeOutTime);
     }
 
@@ -96,7 +95,7 @@ public class TravellersFactory extends PageFactoryBase {
      * @param room The room number of the element.
      * @return Returns the children decrease button.
      */
-    private WebElement getTravellersChildrenDec(int room) {
+    private WebElement getChildrenDecreaseButton(int room) {
         return find(By.xpath("//div[@data-testid='room-" + room + "']/div[contains(@class,'childStepInput')]/div/button[1]"), globalTimeOutTime);
     }
 
@@ -106,7 +105,7 @@ public class TravellersFactory extends PageFactoryBase {
      * @param room The room number of the element.
      * @return Returns the children increase button.
      */
-    private WebElement getTravellersChildrenInc(int room) {
+    private WebElement getChildrenIncreaseButton(int room) {
         return find(By.xpath("//div[@data-testid='room-" + room + "']/div[contains(@class,'childStepInput')]/div/button[2]"), globalTimeOutTime);
     }
 
@@ -117,14 +116,14 @@ public class TravellersFactory extends PageFactoryBase {
      * @param room The room number of the element.
      * @return Returns the remove room button.
      */
-    private WebElement getTravellersRemoveRoom(int room) {
+    private WebElement getRemoveRoom(int room) {
         return find(By.xpath("//div[@data-testid='room-" + room + "']/div[@class='removeRoomButton uitk-type-right all-t-padding-four']/button"), globalTimeOutTime);
     }
 
     /**
      * Clicks the add another room button. You may only have a maximum of 8 rooms.
      */
-    public void clickTravellersAddRoom() {
+    public void clickAddRoom() {
         click(travellersAddAnotherRoomButton, globalTimeOutTime, "Clicked on the 'Add another room button' in the travellers tab.");
     }
 
@@ -133,8 +132,8 @@ public class TravellersFactory extends PageFactoryBase {
      *
      * @param room The room number of the element.
      */
-    public void clickTravellersRemoveRoom(int room) {
-        click(getTravellersRemoveRoom(room), globalTimeOutTime, "Clicked on the 'Remove room' button for room " + room + ".");
+    public void clickRemoveRoom(int room) {
+        click(getRemoveRoom(room), globalTimeOutTime, "Clicked on the 'Remove room' button for room " + room + ".");
     }
 
     /**
@@ -142,8 +141,8 @@ public class TravellersFactory extends PageFactoryBase {
      *
      * @param room The room number in which the element is located.
      */
-    public void clickTravellersAdultsDec(int room) {
-        click(getTravellersAdultsDec(room), globalTimeOutTime, "Clicked on the '-' button for adults in the travellers panel for room " + room + ".");
+    public void clickAdultsDecrease(int room) {
+        click(getAdultsDecreaseButton(room), globalTimeOutTime, "Clicked on the '-' button for adults in the travellers panel for room " + room + ".");
     }
 
     /**
@@ -151,8 +150,8 @@ public class TravellersFactory extends PageFactoryBase {
      *
      * @param room The room number in which the element is located.
      */
-    public void clickTravellersAdultsInc(int room) {
-        click(getTravellersAdultsInc(room), globalTimeOutTime, "Clicked on the '+' button for adults in the travellers panel for room " + room + ".");
+    public void clickAdultsIncrease(int room) {
+        click(getAdultsIncreaseButton(room), globalTimeOutTime, "Clicked on the '+' button for adults in the travellers panel for room " + room + ".");
     }
 
     /**
@@ -160,8 +159,8 @@ public class TravellersFactory extends PageFactoryBase {
      *
      * @param room The room number in which the element is located.
      */
-    public void clickTravellersChildrenDec(int room) {
-        click(getTravellersChildrenDec(room), globalTimeOutTime, "Clicked on the '-' button for children in the travellers panel for room " + room + ".");
+    public void clickChildrenDecrease(int room) {
+        click(getChildrenDecreaseButton(room), globalTimeOutTime, "Clicked on the '-' button for children in the travellers panel for room " + room + ".");
     }
 
     /**
@@ -169,29 +168,29 @@ public class TravellersFactory extends PageFactoryBase {
      *
      * @param room The room number in which the element is located.
      */
-    public void clickTravellersChildrenInc(int room) {
-        click(getTravellersChildrenInc(room), globalTimeOutTime, "Clicked on the '+' button for children in the travellers panel for room " + room + ".");
+    public void clickChildrenIncrease(int room) {
+        click(getChildrenIncreaseButton(room), globalTimeOutTime, "Clicked on the '+' button for children in the travellers panel for room " + room + ".");
     }
 
 
     /**
      * Clicks on the decrease button for adults in the travellers panel.
      */
-    public void clickTravellersAdultsDec() {
+    public void clickAdultsDecrease() {
         click(travellersAdultDec, globalTimeOutTime, "Clicked the decrease adult count button in the Travellers panel.");
     }
 
     /**
      * Clicks on the increase button for adults in the travellers panel.
      */
-    public void clickTravellersAdultsInc() {
+    public void clickAdultsIncrease() {
         click(travellersAdultInc, globalTimeOutTime, "Clicked the increase adult count button in the Travellers panel.");
     }
 
     /**
      * Clicks on the decrease button for children in the travellers panel.
      */
-    public void clickTravellersChildrenDec() {
+    public void clickChildrenDecrease() {
         click(travellersChildDec, globalTimeOutTime, "Clicked the decrease child count button in the Travellers panel.");
     }
 
@@ -199,7 +198,7 @@ public class TravellersFactory extends PageFactoryBase {
     /**
      * Clicks on the increase button for children in the travellers panel.
      */
-    public void clickTravellersChildrenInc() {
+    public void clickChildrenIncrease() {
         click(travellersChildInc, globalTimeOutTime, "Clicked the increase child count button in the Travellers panel.");
     }
 
@@ -207,7 +206,7 @@ public class TravellersFactory extends PageFactoryBase {
     /**
      * Clicks on the decrease button for infants in the travellers panel.
      */
-    public void clickTravellersInfantsDec() {
+    public void clickInfantsDecrease() {
         click(travellersInfantsDec, globalTimeOutTime, "Clicked the decrease infants count button in the Travellers panel.");
     }
 
@@ -215,7 +214,7 @@ public class TravellersFactory extends PageFactoryBase {
     /**
      * Clicks on the increase button for infants in the travellers panel.
      */
-    public void clickTravellersInfantsInc() {
+    public void clickInfantsIncrease() {
         click(travellersInfantsInc, globalTimeOutTime, "Clicked the increase infants count button in the Travellers panel.");
     }
 
@@ -226,9 +225,8 @@ public class TravellersFactory extends PageFactoryBase {
      * @param child The child number.
      * @return The age select element for the specified child.
      */
-    private Select getChildAgeSelect(int room, int child) {
-        WebElement element = find(By.id("child-age-input-" + (room - 1) + "-" + (child - 1)), globalTimeOutTime);
-        return new Select(element);
+    private WebElement getChildAgeSelect(int room, int child) {
+        return find(By.id("child-age-input-" + (room - 1) + "-" + (child - 1)), globalTimeOutTime);
     }
 
     /**
@@ -239,7 +237,7 @@ public class TravellersFactory extends PageFactoryBase {
      * @param age   The age to be set.
      */
     public void selectChildAge(int room, int child, int age) {
-        Select childAge = getChildAgeSelect(room, child);
+        Select childAge = new Select(getChildAgeSelect(room, child));
         childAge.selectByIndex(age);
         log(LogStatus.INFO, "Set the age of child " + child + " in room " + room + " to " + age);
     }
@@ -247,7 +245,7 @@ public class TravellersFactory extends PageFactoryBase {
     /**
      * Clicks the "Done" button in the "Travellers" panel.
      */
-    public void clickTravellersDoneButton() {
+    public void clickDoneButton() {
         click(travellersDoneButton, globalTimeOutTime, "Clicked on the done button in the 'Travellers' panel.");
     }
 
@@ -266,15 +264,20 @@ public class TravellersFactory extends PageFactoryBase {
     /**
      * Returns the visible text of the "Done" button in the travellers panel.
      */
-    public String getTravellersDoneButtonText() {
+    public String getDoneButtonText() {
         return getText(travellersDoneButton, globalTimeOutTime, "'Done' button for travellers menu was found with the following text");
     }
 
     /**
      * Returns the visible text of the "Travellers" header in the travellers panel.
      */
-    public String getTravellersPanelHeaderText() {
+    public String getPanelHeaderText() {
         return getText(travellersMenuHeader, globalTimeOutTime, "'Travellers' header for travellers menu was found with the following text");
+    }
+
+    //TODO: ADD JAVADOC
+    private WebElement getRoomHeaderElement(int room) {
+        return find(By.xpath("//div[@data-testid='room-" + room + "']/h3/span"), globalTimeOutTime);
     }
 
     /**
@@ -283,9 +286,14 @@ public class TravellersFactory extends PageFactoryBase {
      * @param room The room which the "Room" header you are looking for is in.
      */
 
-    public String getTravellersRoomHeaderText(int room) {
-        return getText(By.xpath("//div[@data-testid='room-" + room + "']/h3/span"), globalTimeOutTime,
+    public String getRoomHeaderText(int room) {
+        return getText(getRoomHeaderElement(room), globalTimeOutTime,
                 "'Room' header for room " + room + " in the travellers menu was found with the following text");
+    }
+
+    //TODO:ADD JAVADOC
+    private WebElement getAdultsLabelElement(int room) {
+        return find(By.xpath("//label[@for='adult-input-" + (room - 1) + "']"), globalTimeOutTime);
     }
 
     /**
@@ -293,9 +301,13 @@ public class TravellersFactory extends PageFactoryBase {
      *
      * @param room The room which the "Adults" label you are looking for is in.
      */
-    public String getTravellersAdultsLabelText(int room) {
-        return getText(By.xpath("//label[@for='adult-input-" + (room - 1) + "']"), globalTimeOutTime,
+    public String getAdultsLabelText(int room) {
+        return getText(getAdultsLabelElement(room), globalTimeOutTime,
                 "'Adults' label for room " + room + " was found with the following text");
+    }
+
+    private WebElement getChildrenLabelElement(int room) {
+        return find(By.xpath("//label[@for='child-input-" + (room - 1) + "']"), globalTimeOutTime);
     }
 
     /**
@@ -303,8 +315,8 @@ public class TravellersFactory extends PageFactoryBase {
      *
      * @param room The room which the "Children" label you are looking for is in.
      */
-    public String getTravellersChildrenLabelText(int room) {
-        return getText(By.xpath("//label[@for='child-input-" + (room - 1) + "']"), globalTimeOutTime,
+    public String getChildrenLabelText(int room) {
+        return getText(getChildrenLabelElement(room), globalTimeOutTime,
                 "'Travellers' label for room " + room + " was found with the following text");
     }
 
@@ -314,7 +326,7 @@ public class TravellersFactory extends PageFactoryBase {
      * @param room  The room which the label is located in.
      * @param child The specific child select which contains the label.
      */
-    public String getTravellersChildSelectLabelText(int room, int child) {
+    public String getChildSelectLabelText(int room, int child) {
         return getText(By.xpath("//label[@for='child-age-input-" + (room - 1) + "-" + (child - 1) + "']"), globalTimeOutTime,
                 "The label for child " + child + " in room " + room + " had the following text");
     }
@@ -325,9 +337,14 @@ public class TravellersFactory extends PageFactoryBase {
      * @param room  The room which the child select element is in.
      * @param child The specific child select.
      */
-    public String getTravellersChildSelectedText(int room, int child) {
-        return getText(getChildAgeSelect(room, child).getFirstSelectedOption(), globalTimeOutTime,
+    public String getChildSelectedText(int room, int child) {
+        Select childAgeSelect = new Select(getChildAgeSelect(room, child));
+        return getText(childAgeSelect.getFirstSelectedOption(), globalTimeOutTime,
                 "The selected option for the drop menu for child " + child + " in room " + room + " had the following text");
+    }
+
+    private WebElement getAdultCountElement(int room) {
+        return find(By.id("adult-input-" + (room - 1)), globalTimeOutTime);
     }
 
     /**
@@ -335,8 +352,12 @@ public class TravellersFactory extends PageFactoryBase {
      *
      * @param room The specific room which the counter is located.
      */
-    public String getTravellersAdultsCount(int room) {
-        return find(By.id("adult-input-" + (room - 1)), globalTimeOutTime).getAttribute("value");
+    public String getAdultsCountText(int room) {
+        return getAdultCountElement(room).getAttribute("value");
+    }
+
+    private WebElement getChildCountElement(int room) {
+        return find(By.id("child-input-" + (room - 1)), globalTimeOutTime);
     }
 
     /**
@@ -344,14 +365,14 @@ public class TravellersFactory extends PageFactoryBase {
      *
      * @param room The specific room which the counter is located.
      */
-    public String getTravellersChildCount(int room) {
-        return find(By.id("child-input-" + (room - 1)), globalTimeOutTime).getAttribute("value");
+    public String getChildCountText(int room) {
+        return getChildCountElement(room).getAttribute("value");
     }
 
     /**
      * Returns the visible text of the "Add another room" button.
      */
-    public String getTravellersAddAnotherRoomText() {
+    public String getAddAnotherRoomText() {
         return getText(travellersAddAnotherRoomButton, globalTimeOutTime, "The 'Add another room' button was found with the following text");
     }
 
@@ -360,8 +381,8 @@ public class TravellersFactory extends PageFactoryBase {
      *
      * @param room The specific room in which the element is located in.
      */
-    public String getTravellersRemoveRoomButtonText(int room) {
-        return getText(getTravellersRemoveRoom(room), globalTimeOutTime,
+    public String getRemoveRoomText(int room) {
+        return getText(getRemoveRoom(room), globalTimeOutTime,
                 "The 'Remove room' button for room " + room + " was found with the following text");
     }
 
@@ -373,8 +394,8 @@ public class TravellersFactory extends PageFactoryBase {
      */
 
     public void selectInfantAge(int infant, int age) {
-        Select childAge = getInfantsAgeSelect(infant);
-        childAge.selectByIndex(age);
+        Select infantAge = new Select(getInfantsAgeSelect(infant));
+        infantAge.selectByIndex(age);
         log(LogStatus.INFO, "Set the age of infant " + infant + " to " + age);
     }
 
@@ -384,9 +405,8 @@ public class TravellersFactory extends PageFactoryBase {
      * @param infant The infant number for the select element you wish to find.
      * @return The age select element for the specified infant.
      */
-    private Select getInfantsAgeSelect(int infant) {
-        WebElement element = find(By.id("infant-age-input-0-" + (infant - 1)), globalTimeOutTime);
-        return new Select(element);
+    private WebElement getInfantsAgeSelect(int infant) {
+        return find(By.id("infant-age-input-0-" + (infant - 1)), globalTimeOutTime);
     }
 
     /**
@@ -395,9 +415,8 @@ public class TravellersFactory extends PageFactoryBase {
      * @param child The child number.
      * @return The age select element for the specified child.
      */
-    private Select getChildAgeSelect(int child) {
-        WebElement element = find(By.id("child-age-input-0-" + (child - 1)), globalTimeOutTime);
-        return new Select(element);
+    private WebElement getChildAgeSelect(int child) {
+        return find(By.id("child-age-input-0-" + (child - 1)), globalTimeOutTime);
     }
 
     /**
@@ -407,7 +426,7 @@ public class TravellersFactory extends PageFactoryBase {
      * @param age   The age to be set.
      */
     public void selectChildAge(int child, int age) {
-        Select childAge = getChildAgeSelect(child);
+        Select childAge = new Select(getChildAgeSelect(child));
         if (childAge.getOptions().get(0).getText().equals("2")) {
             childAge.selectByIndex(age - 2);
         } else {
@@ -433,9 +452,10 @@ public class TravellersFactory extends PageFactoryBase {
     }
 
     /**
-     * Returns the visible text of the error message that is displayed when you try to book more than 14 people.
+     * Returns the visible text of the error message that is displayed when you try to book more than 14 people in the
+     * 'Stays' travellers panel.
      */
-    public String getTravellersErrorMessageText() {
+    public String getStaysErrorMessageText() {
         return getText(travellersErrorMessage, globalTimeOutTime,
                 "The error message that is displayed when you try to book more than " +
                         "14 people in the travellers panel was found with the following text");
@@ -457,7 +477,8 @@ public class TravellersFactory extends PageFactoryBase {
      * @return True if all the options are correct, else false.
      */
     public Boolean isChildSelectListingCorrectOptions(int room, int child, String[] expectedOptions) {
-        List<WebElement> actualOptions = getChildAgeSelect(room, child).getOptions();
+        Select childAgeSelect = new Select(getChildAgeSelect(room, child));
+        List<WebElement> actualOptions = childAgeSelect.getOptions();
         for (int x = 0; x < actualOptions.size(); x++) {
             if (!actualOptions.get(x).getText().equals(expectedOptions[x])) {
                 log(LogStatus.ERROR, "The available options of child select element " + child + " room " + room + " did not contain the expected options.");
@@ -474,7 +495,7 @@ public class TravellersFactory extends PageFactoryBase {
      * @return True if it is enabled, else false.
      */
     public Boolean isAdultIncreaseButtonEnabled(int room) {
-        return getTravellersAdultsInc(1).isEnabled();
+        return getAdultsIncreaseButton(room).isEnabled();
     }
 
     /**
@@ -484,7 +505,7 @@ public class TravellersFactory extends PageFactoryBase {
      * @return True if it is enabled, else false.
      */
     public Boolean isChildIncreaseButtonEnabled(int room) {
-        return getTravellersChildrenInc(1).isEnabled();
+        return getChildrenIncreaseButton(room).isEnabled();
     }
 
     /**
@@ -494,7 +515,7 @@ public class TravellersFactory extends PageFactoryBase {
      * @return True if it is enabled, else false.
      */
     public Boolean isAdultDecreaseButtonEnabled(int room) {
-        return getTravellersAdultsDec(1).isEnabled();
+        return getAdultsDecreaseButton(room).isEnabled();
     }
 
     /**
@@ -504,12 +525,50 @@ public class TravellersFactory extends PageFactoryBase {
      * @return True if it is enabled, else false.
      */
     public Boolean isChildDecreaseButtonEnabled(int room) {
-        return getTravellersChildrenDec(1).isEnabled();
+        return getChildrenDecreaseButton(room).isEnabled();
     }
 
-    public Boolean isRoomRemoved(int room){
+    public Boolean isRoomHeaderRemoved(int room) {
+        return waitUntilInvisible(By.xpath("//div[@data-testid='room-" + room + "']/h3/span"), globalTimeOutTime);
+    }
 
+    public Boolean isAdultsLabelRemoved(int room) {
+        return waitUntilInvisible(By.xpath("//label[@for='adult-input-" + (room - 1) + "']"), globalTimeOutTime);
+    }
 
-        return true;
+    public Boolean isChildrenLabelRemoved(int room) {
+        return waitUntilInvisible(By.xpath("//label[@for='child-input-" + (room - 1) + "']"), globalTimeOutTime);
+    }
+
+    public Boolean isChildrenSelectRemoved(int room, int child) {
+        return waitUntilInvisible(By.id("child-age-input-" + (room - 1) + "-" + (child - 1)), globalTimeOutTime);
+    }
+
+    public Boolean isAdultsDecreaseButtonRemoved(int room) {
+        return waitUntilInvisible(By.xpath("//div[@data-testid='room-" + room + "']/div[contains(@class,'adultStepInput')]/div/button[1]"), globalTimeOutTime);
+    }
+
+    public Boolean isAdultsIncreaseButtonRemoved(int room) {
+        return waitUntilInvisible(By.xpath("//div[@data-testid='room-" + room + "']/div[contains(@class,'adultStepInput')]/div/button[2]"), globalTimeOutTime);
+    }
+
+    public Boolean isChildrenDecreaseButtonRemoved(int room) {
+        return waitUntilInvisible(By.xpath("//div[@data-testid='room-" + room + "']/div[contains(@class,'childStepInput')]/div/button[1]"), globalTimeOutTime);
+    }
+
+    public Boolean isChildrenIncreaseButtonRemoved(int room) {
+        return waitUntilInvisible(By.xpath("//div[@data-testid='room-" + room + "']/div[contains(@class,'childStepInput')]/div/button[2]"), globalTimeOutTime);
+    }
+
+    public Boolean isAdultsCountRemoved(int room) {
+        return waitUntilInvisible(By.id("adult-input-" + (room - 1)), globalTimeOutTime);
+    }
+
+    public Boolean isChildCountRemoved(int room) {
+        return waitUntilInvisible(By.id("child-input-" + (room - 1)), globalTimeOutTime);
+    }
+
+    public Boolean isRemoveRoomButtonRemoved(int room) {
+        return waitUntilInvisible(By.xpath("//div[@data-testid='room-" + room + "']/div[@class='removeRoomButton uitk-type-right all-t-padding-four']/button"), globalTimeOutTime);
     }
 }

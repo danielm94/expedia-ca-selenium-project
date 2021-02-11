@@ -37,23 +37,23 @@ public class AllInclusiveTest extends CommonTestBase {
         cal.clickCalendarForwardArrow();
         cal.clickCalendarBackArrow();
         cal.clickCalendarDay(Month.FEBRUARY, 24, 2021);
-        cal.clickCalendarDone();
+        cal.clickDone();
         all.selectVacationLength("7 days");
         travel.clickTravellersAnchorTag();
         for (int x = 0; x < 12; x++) {
-            travel.clickTravellersAdultsInc();
+            travel.clickAdultsIncrease();
             if (x < 6) {
-                travel.clickTravellersChildrenInc();
+                travel.clickChildrenIncrease();
                 travel.selectChildAge(x + 1, x + 1);
             }
         }
         for (int x = 0; x < 13; x++) {
-            travel.clickTravellersAdultsDec();
+            travel.clickAdultsDecrease();
             if (x < 6) {
-                travel.clickTravellersChildrenDec();
+                travel.clickChildrenDecrease();
             }
         }
-        travel.clickTravellersDoneButton();
+        travel.clickDoneButton();
         all.clickBookFor10();
     }
 }

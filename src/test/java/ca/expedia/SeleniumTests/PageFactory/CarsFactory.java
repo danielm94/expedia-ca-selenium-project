@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 
 public class CarsFactory extends PageFactoryBase {
+
     private long globalTimeOutTimer;
     @FindBy(xpath = "//a[@href='carsForm']")
     private WebElement rentalTab;
